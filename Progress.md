@@ -94,3 +94,4 @@ class sprite; empty tiles show a dashed marker. **Generic (unnamed) units** are 
   behind a header **"Composition ▸"** overlay (`openXref`, detail-overlay pattern); removed the grid
   orientation labels (Front/Back), the on-grid leader badge + cover shield 🛡, and the formation legend.
   Cover still conveyed by the subtle glow + hover "who shields whom" + tooltips.
+  DEPLOYED to live Pages (commit 7b7e11c).
