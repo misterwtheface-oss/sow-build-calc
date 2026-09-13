@@ -5,6 +5,8 @@ A build-first, overlay-driven planner for **Symphony of War: The Nephilim Saga**
 the **85-node class upgrade tree** (requirements, resource costs, mastery, `param_add`, stat
 curves) — a theorycraft sandbox instead of grinding experiments in-game.
 
+**Live:** https://misterwtheface-oss.github.io/sow-build-calc/
+
 Vanilla HTML/CSS/JS, no framework, no build server. Deployable as static files on GitHub Pages.
 
 ## Run it

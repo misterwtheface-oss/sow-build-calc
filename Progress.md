@@ -1,6 +1,11 @@
 # Symphony of War — Squad Build Calculator — Progress
 
 ## Current state
+**LIVE: https://misterwtheface-oss.github.io/sow-build-calc/** (repo
+`misterwtheface-oss/sow-build-calc`, GitHub Pages from `master`/root; Cloudflare Web
+Analytics beacon active). Repo pruned lean — only the ~107 assets the app references are
+committed (unused datamine art removed).
+
 **P0 skeleton scaffolded and runnable (2026-09-12).** Build-first 3×5 formation grid; roster
 selector overlay (21 named heroes, searchable); per-unit editor (level slider, affinity picker,
 class-via-tree, remove); squad summary (capacity bar from leader Leadership + aggregate power grid);
