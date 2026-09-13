@@ -89,3 +89,8 @@ class sprite; empty tiles show a dashed marker. **Generic (unnamed) units** are 
   grassland battleback (skybox+hills+grass, composited from Graphics/Battlebacks1 by slice_sprites.py
   → `assets/grid/battleback.png`) instead of black. `.battlefield` wrapper frames it; the grid sits low
   on the grass with the magenta sowgrid softened (screen blend, .55 opacity). Verified desktop + mobile.
+  DEPLOYED to live Pages (commit 0651661).
+- 2026-09-12 (session 2d): **Planner declutter** — moved the composition-coverage (trait×unit) table
+  behind a header **"Composition ▸"** overlay (`openXref`, detail-overlay pattern); removed the grid
+  orientation labels (Front/Back), the on-grid leader badge + cover shield 🛡, and the formation legend.
+  Cover still conveyed by the subtle glow + hover "who shields whom" + tooltips.

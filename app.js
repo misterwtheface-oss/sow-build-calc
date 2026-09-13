@@ -274,15 +274,15 @@
     return ts.length ? `<div class="primary-traits">${ts.map(traitBanner).join("")}</div>` : "";
   }
 
-  // ── cross-reference matrix (traits × units) ──
+  // ── cross-reference matrix (traits × units) — shown in the Composition overlay ──
   function xrefMatrixHTML() {
     const units = state.squad.map((u, i) => (u && unitClass(u) ? { u, i, cls: unitClass(u), hero: unitHero(u) } : null)).filter(Boolean);
-    if (units.length < 1) return "";
+    if (units.length < 1) return `<p class="muted">Add units to the squad to see shared traits.</p>`;
     const count = new Map();
     for (const { cls } of units) for (const t of cls.traits || []) count.set(t, (count.get(t) || 0) + 1);
     const cols = [...count.keys()].map((id) => traitById.get(id)).filter(Boolean)
       .sort((a, b) => (count.get(b.id) - count.get(a.id)) || a.name.localeCompare(b.name));
-    if (!cols.length) return "";
+    if (!cols.length) return `<p class="muted">No shared traits among the placed units.</p>`;
     const colHead = (t) => `<th class="xref-colhead"><div class="xref-col" data-action="nav-trait" data-trait="${esc(t.id)}"
         style="--aff-color:${esc(t.color)};--aff-text:${textColorFor(t.color)}">
         ${t.icon ? `<img class="xref-col-icon" src="${esc(t.icon)}" alt="" onerror="this.style.visibility='hidden'">` : ""}
@@ -295,13 +295,23 @@
     }).join("");
     const shared = `<tr class="xref-shared"><th class="xref-rowhead">Shared</th>
       ${cols.map((t) => { const n = count.get(t.id) || 0; return `<td class="${n >= 2 ? "xref-sh" : ""}">${n}</td>`; }).join("")}</tr>`;
-    return `<section class="xref-section">
-      <h2>Composition coverage</h2>
+    return `
       <div class="xref-wrap"><table class="squad-xref">
         <thead><tr><th class="xref-corner"></th>${cols.map(colHead).join("")}</tr></thead>
         <tbody>${rows}${shared}</tbody></table></div>
-      <div class="xref-legend"><span><b class="xref-on">●</b> unit has trait</span><span><b class="xref-sh">n</b> shared by n units</span></div>
-    </section>`;
+      <div class="xref-legend"><span><b class="xref-on">●</b> unit has trait</span><span><b class="xref-sh">n</b> shared by n units</span></div>`;
+  }
+  // Composition coverage now lives behind an overlay (opened from the header)
+  function openXref() {
+    const root = document.getElementById("detail-overlay-root");
+    root.innerHTML = `
+      <div class="overlay-panel detail-panel" role="dialog" aria-modal="true">
+        <div class="overlay-header"><h2>Composition coverage</h2><button class="overlay-close" data-action="close-detail" aria-label="Close">&times;</button></div>
+        <div class="overlay-body"><div class="ovl-center"><div class="ovl-center-scroll detail-main">${xrefMatrixHTML()}</div></div></div>
+        <div class="overlay-footer"><button class="ghost" data-action="close-detail">Close</button></div>
+      </div>`;
+    root.classList.remove("hidden"); root.setAttribute("aria-hidden", "false");
+    root.querySelector(".detail-main").scrollTop = 0;
   }
 
   // ═══ BUILD VIEW (home) — the game's 3D-angled formation grid ═══
@@ -322,7 +332,7 @@
     if (!u) {
       return `<button class="grid-slot empty ${isLeader ? "leader" : ""}" style="${style}"
         data-action="open-slot" data-slot="${i}" aria-label="Slot ${i + 1} — empty">
-        <span class="tile-mark">${isLeader ? "★" : "+"}</span></button>`;
+        <span class="tile-mark">+</span></button>`;
     }
     const hero = unitHero(u), cls = unitClass(u), sprite = unitSprite(u);
     const name = hero ? hero.name : (cls ? cls.name : "?");
@@ -339,8 +349,6 @@
       data-action="open-slot" data-slot="${i}" data-covers="${covers.join(",")}" title="${esc(parts.join(" · "))}" aria-label="${esc(parts.join(". "))}">
       ${sprite ? `<img class="grid-sprite" src="${esc(sprite)}" alt="${esc(name)}" onerror="this.style.display='none'">`
                : `<span class="tile-mark">${esc(name[0] || "?")}</span>`}
-      ${isLeader ? '<img class="leader-badge" src="assets/ui/sowleader.png" alt="leader" onerror="this.style.display=\'none\'">' : ""}
-      ${cov.covered ? `<span class="cover-badge" title="covered ×${COMBAT.coverMod}">🛡</span>` : ""}
       <span class="grid-tag">${affIcon(u.affinity) ? `<img src="${esc(affIcon(u.affinity))}" alt="" onerror="this.style.display='none'">` : ""}<span class="gt-name">${esc(name)}</span> <em>L${u.level}</em></span>
     </button>`;
   }
@@ -359,8 +367,6 @@
       <div class="formation-stage" style="aspect-ratio:${GRID.width} / ${GRID.height}">
         <img class="grid-bg" src="assets/grid/sowgrid.png" alt="Formation grid" onerror="this.style.display='none'">
         ${slots}
-        <span class="rank-label front">Front ▸ (facing enemy)</span>
-        <span class="rank-label back">◂ Back</span>
       </div>
     </div>`;
   }
@@ -372,19 +378,17 @@
     app.innerHTML = `
       <header class="app-header">
         <div><h1>Symphony of War — Squad Builder</h1><div class="tagline">Formation sandbox · class upgrade-tree analysis</div></div>
-        <button class="ghost" data-action="clear">Clear</button>
+        <div class="header-actions">
+          <button class="ghost" data-action="open-xref">Composition ▸</button>
+          <button class="ghost" data-action="clear">Clear</button>
+        </div>
       </header>
       <main class="planning-main">
         <section class="formation-wrap">
           <h2>Formation</h2>
-          <div class="formation-legend">
-            <span>★ leader · 🛡 covered (−${Math.round((1 - COMBAT.coverMod) * 100)}% dmg)</span>
-            <span>Units are 2 wide — max 3 per rank; hover a unit to see whom it shields</span>
-          </div>
           ${formationStageHTML()}
         </section>
         <section class="squad-summary"><h2>Squad summary</h2>${squadSummaryHTML()}</section>
-        ${xrefMatrixHTML()}
       </main>`;
 
     const newMain = app.querySelector(".planning-main");
@@ -586,6 +590,7 @@
     const el = e.target.closest("[data-action]"); if (!el) return;
     switch (el.dataset.action) {
       case "open-slot": openOverlay(Number(el.dataset.slot)); break;
+      case "open-xref": openXref(); break;
       case "clear": if (state.squad.some(Boolean)) { state.squad = state.squad.map(() => null); persist(); renderApp(); } break;
       case "nav-trait": openTraitDetail(el.dataset.trait); break;
       case "nav-class": openClassDetail(el.dataset.class, false); break;

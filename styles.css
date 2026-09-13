@@ -63,11 +63,11 @@ button.danger { background: linear-gradient(var(--crimson-lite), var(--crimson))
   border-bottom: 2px solid var(--border);
 }
 .app-header .tagline { font-size: .72rem; color: var(--muted); font-weight: 400; }
+.header-actions { display: flex; gap: .4rem; flex-shrink: 0; }
 .planning-main { padding: 1rem; max-height: 100dvh; overflow-y: auto; }
 
 /* ── formation stage: the game's 3D-angled squad grid (sowgrid.png) ── */
 .formation-wrap { margin-bottom: 1.2rem; }
-.formation-legend { display: flex; gap: .8rem; flex-wrap: wrap; font-size: .75rem; color: var(--muted); margin-bottom: .5rem; }
 /* battlefield: the game's own grassland battleback (skybox+hills+grass), grid sits on it */
 .battlefield {
   position: relative; width: 100%; max-width: 620px; margin: 0 auto 1rem;
@@ -110,7 +110,6 @@ button.danger { background: linear-gradient(var(--crimson-lite), var(--crimson))
 }
 .grid-slot:hover .grid-sprite,
 .grid-slot:focus-visible .grid-sprite { transform: translateY(-3px); filter: drop-shadow(0 3px 4px rgba(0,0,0,.6)) brightness(1.08); }
-.grid-slot .leader-badge { position: absolute; top: -6px; left: 50%; transform: translateX(-50%); width: 16px; height: 16px; z-index: 5; }
 /* name/level tag: subtle at rest, full on hover (mobile taps open the editor) */
 .grid-slot .grid-tag {
   display: inline-flex; align-items: center; gap: 3px;
@@ -123,7 +122,6 @@ button.danger { background: linear-gradient(var(--crimson-lite), var(--crimson))
 .grid-slot .grid-tag em { color: var(--gold-bright); font-style: normal; }
 .grid-slot .grid-tag .gt-name { max-width: 84px; overflow: hidden; text-overflow: ellipsis; }
 .grid-slot:hover .grid-tag, .grid-slot:focus-visible .grid-tag { opacity: 1; }
-.grid-slot.leader .grid-tag { opacity: .85; }
 /* empty tiles: a faint marker sitting on the tile */
 .grid-slot.empty { transform: translate(-50%, calc(-50% + var(--foot-drop))); }
 .grid-slot.empty .tile-mark {
@@ -134,22 +132,9 @@ button.danger { background: linear-gradient(var(--crimson-lite), var(--crimson))
   line-height: 1;
 }
 .grid-slot.empty:hover .tile-mark { color: var(--gold-bright); border-color: var(--gold); }
-.grid-slot.empty.leader .tile-mark { color: var(--gold); border-color: var(--gold); border-style: solid; }
 .grid-slot.filled .tile-mark { font-size: 1.4rem; color: var(--gold-bright); }
-/* rank orientation hints */
-.formation-stage .rank-label {
-  position: absolute; bottom: -1.15rem; font-size: .62rem; letter-spacing: .5px;
-  color: var(--muted); text-transform: uppercase; pointer-events: none;
-}
-.formation-stage .rank-label.front { right: 2%; color: var(--gold); }
-.formation-stage .rank-label.back { left: 2%; }
 
-/* cover: badge on covered units + on-hover "who shields whom" highlight */
-.grid-slot .cover-badge {
-  position: absolute; top: -4px; right: -2px; z-index: 6;
-  font-size: .72rem; line-height: 1; filter: drop-shadow(0 1px 1px rgba(0,0,0,.7));
-  pointer-events: none;
-}
+/* cover: subtle glow on covered units + on-hover "who shields whom" highlight */
 .grid-slot.is-covered .grid-sprite { filter: drop-shadow(0 0 3px var(--steel-bright)) drop-shadow(0 1px 0 rgba(0,0,0,.5)); }
 .grid-slot.coverer .grid-sprite { filter: drop-shadow(0 0 4px var(--gold-bright)) brightness(1.1); }
 .grid-slot.coverer::after {
@@ -212,7 +197,6 @@ button.danger { background: linear-gradient(var(--crimson-lite), var(--crimson))
 .trait-banner-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 /* ── cross-reference matrix (traits × units) ── */
-.xref-section { margin-top: 1rem; }
 .xref-wrap { overflow: auto; max-height: 60vh; border: 1px solid var(--border); border-radius: 6px; }
 table.squad-xref { border-collapse: collapse; font-size: .8rem; }
 table.squad-xref th, table.squad-xref td { border: 1px solid rgba(255,255,255,.08); padding: 3px 6px; text-align: center; }
