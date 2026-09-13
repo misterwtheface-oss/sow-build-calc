@@ -1,0 +1,15 @@
+# Node
+node_modules/
+*.log
+
+# The datamine workspace is a SIBLING and is never shipped here.
+# Only the subset copied into data/ and assets/ is tracked.
+../_sow_extract/
+
+# raw / intermediate data that isn't the shipped subset
+data/_raw/
+assets/_full_export/
+
+# OS cruft
+.DS_Store
+Thumbs.db

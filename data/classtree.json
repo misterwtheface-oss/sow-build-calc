@@ -1,0 +1,5933 @@
+{
+ "cxp_limits": {
+  "CXP_LIMIT_T1": 500,
+  "CXP_LIMIT_T2": 3000,
+  "CXP_LIMIT_T3": 4500,
+  "CXP_LIMIT_T1_DRAGON": 2000,
+  "CXP_LIMIT_T2_DRAGON": 2000,
+  "CXP_LIMIT_T3_DRAGON": 3000,
+  "CXP_LIMIT_T4_DRAGONRIDER": 4500
+ },
+ "param_index": {
+  "0": "HP",
+  "1": "Morale",
+  "2": "Attack",
+  "3": "Armor",
+  "4": "Magic",
+  "5": "Leadership",
+  "6": "Skill",
+  "7": "WeaponPower"
+ },
+ "note": "class-upgrade graph + per-class stats. cxp_limit=mastery to be class-up-ready; param_req=stat gate to enter (id->min); resource_cost=paid to change into this class. Stats are raw class-table values (pre level-variance/affinity/homegrown).",
+ "classes": {
+  "fighter": {
+   "symbol": "fighter",
+   "class_id": 2,
+   "name": "Fighter",
+   "tier": 1,
+   "cxp_limit": 500,
+   "classup": [
+    "soldier",
+    "spearman",
+    "cavalier",
+    "scout",
+    "skirmisher",
+    "rogue",
+    "archer",
+    "apprentice",
+    "crossbowman"
+   ],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": true,
+   "description": "Basic Infantry. Front line warrior who can provide cover. Has the most options for growth into other unit types.",
+   "resource_cost": {},
+   "param_add": {
+    "armor": 6,
+    "weapon_power": 7
+   },
+   "capacitycost": "100",
+   "archetype": "heavy_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": "500",
+   "stats_L1": {
+    "HP": 50,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 118,
+    "Morale": 100,
+    "Attack": 28,
+    "Armor": 40,
+    "Magic": 14,
+    "Leadership": 30,
+    "Skill": 23,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 225,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 70,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 35,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 3.57,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 1.02,
+    "Magic": 0.2,
+    "Leadership": 0.0,
+    "Skill": 0.41,
+    "WeaponPower": 1.33
+   }
+  },
+  "drakeling": {
+   "symbol": "drakeling",
+   "class_id": 47,
+   "name": "Drakeling",
+   "tier": 1,
+   "cxp_limit": 2000,
+   "classup": [
+    "dragon"
+   ],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": true,
+   "description": "A child dragon with basic fire breath. In time, will mature in a formidable adult.",
+   "resource_cost": {},
+   "param_add": {
+    "def": 5
+   },
+   "capacitycost": "200",
+   "archetype": "dragon",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 100,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 10,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 1
+   },
+   "stats_L20": {
+    "HP": 197,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 26,
+    "Magic": 28,
+    "Leadership": 30,
+    "Skill": 25,
+    "WeaponPower": 1
+   },
+   "stats_L50": {
+    "HP": 350,
+    "Morale": 100,
+    "Attack": 71,
+    "Armor": 50,
+    "Magic": 40,
+    "Leadership": 30,
+    "Skill": 40,
+    "WeaponPower": 1
+   },
+   "growth_per_level_1to50": {
+    "HP": 5.1,
+    "Morale": 0.0,
+    "Attack": 1.04,
+    "Armor": 0.82,
+    "Magic": 0.41,
+    "Leadership": 0.0,
+    "Skill": 0.51,
+    "WeaponPower": 0.0
+   }
+  },
+  "dragon": {
+   "symbol": "dragon",
+   "class_id": 46,
+   "name": "Dragon",
+   "tier": 2,
+   "cxp_limit": 2000,
+   "classup": [
+    "reddragon",
+    "bluedragon",
+    "silverdragon"
+   ],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": true,
+   "description": "A young adult dragon, breathes fire in a wide swath. Can specialize into more advanced dragons.",
+   "resource_cost": {},
+   "param_add": {
+    "def": 5
+   },
+   "capacitycost": "200",
+   "archetype": "dragon",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 100,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 10,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 1
+   },
+   "stats_L20": {
+    "HP": 197,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 26,
+    "Magic": 28,
+    "Leadership": 30,
+    "Skill": 25,
+    "WeaponPower": 1
+   },
+   "stats_L50": {
+    "HP": 350,
+    "Morale": 100,
+    "Attack": 71,
+    "Armor": 50,
+    "Magic": 40,
+    "Leadership": 30,
+    "Skill": 40,
+    "WeaponPower": 1
+   },
+   "growth_per_level_1to50": {
+    "HP": 5.1,
+    "Morale": 0.0,
+    "Attack": 1.04,
+    "Armor": 0.82,
+    "Magic": 0.41,
+    "Leadership": 0.0,
+    "Skill": 0.51,
+    "WeaponPower": 0.0
+   }
+  },
+  "reddragon": {
+   "symbol": "reddragon",
+   "class_id": 51,
+   "name": "Red Dragon",
+   "tier": 3,
+   "cxp_limit": 3000,
+   "classup": [
+    "reddragonrider"
+   ],
+   "classdown": [
+    "dragon"
+   ],
+   "param_req": {
+    "4": 48
+   },
+   "can_classup": true,
+   "description": "A mature dragon specializing in powerful fire breath. May learn how to become a Red Dragon Rider.",
+   "resource_cost": {},
+   "param_add": {
+    "def": 5
+   },
+   "capacitycost": "200",
+   "archetype": "dragon",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 60,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 10,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 1
+   },
+   "stats_L20": {
+    "HP": 165,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 26,
+    "Magic": 28,
+    "Leadership": 30,
+    "Skill": 25,
+    "WeaponPower": 1
+   },
+   "stats_L50": {
+    "HP": 330,
+    "Morale": 100,
+    "Attack": 70,
+    "Armor": 50,
+    "Magic": 40,
+    "Leadership": 30,
+    "Skill": 40,
+    "WeaponPower": 1
+   },
+   "growth_per_level_1to50": {
+    "HP": 5.51,
+    "Morale": 0.0,
+    "Attack": 1.02,
+    "Armor": 0.82,
+    "Magic": 0.41,
+    "Leadership": 0.0,
+    "Skill": 0.51,
+    "WeaponPower": 0.0
+   }
+  },
+  "bluedragon": {
+   "symbol": "bluedragon",
+   "class_id": 49,
+   "name": "Blue Dragon",
+   "tier": 3,
+   "cxp_limit": 3000,
+   "classup": [
+    "bluedragonrider"
+   ],
+   "classdown": [
+    "dragon"
+   ],
+   "param_req": {
+    "6": 40
+   },
+   "can_classup": true,
+   "description": "A mature dragon specializing in powerful lightning breath. May learn how to become a Blue Dragon Rider.",
+   "resource_cost": {},
+   "param_add": {
+    "def": 5
+   },
+   "capacitycost": "200",
+   "archetype": "dragon",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 100,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 10,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 1
+   },
+   "stats_L20": {
+    "HP": 201,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 26,
+    "Magic": 28,
+    "Leadership": 30,
+    "Skill": 25,
+    "WeaponPower": 1
+   },
+   "stats_L50": {
+    "HP": 360,
+    "Morale": 100,
+    "Attack": 71,
+    "Armor": 50,
+    "Magic": 40,
+    "Leadership": 30,
+    "Skill": 40,
+    "WeaponPower": 1
+   },
+   "growth_per_level_1to50": {
+    "HP": 5.31,
+    "Morale": 0.0,
+    "Attack": 1.04,
+    "Armor": 0.82,
+    "Magic": 0.41,
+    "Leadership": 0.0,
+    "Skill": 0.51,
+    "WeaponPower": 0.0
+   }
+  },
+  "silverdragon": {
+   "symbol": "silverdragon",
+   "class_id": 50,
+   "name": "Silver Dragon",
+   "tier": 3,
+   "cxp_limit": 3000,
+   "classup": [
+    "silverdragonrider"
+   ],
+   "classdown": [
+    "dragon"
+   ],
+   "param_req": {
+    "2": 55
+   },
+   "can_classup": true,
+   "description": "A mature dragon specializing in powerful ice breath. May learn how to become a Silver Dragon Rider.",
+   "resource_cost": {},
+   "param_add": {
+    "def": 5
+   },
+   "capacitycost": "200",
+   "archetype": "dragon",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 80,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 10,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 1
+   },
+   "stats_L20": {
+    "HP": 191,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 26,
+    "Magic": 28,
+    "Leadership": 30,
+    "Skill": 25,
+    "WeaponPower": 1
+   },
+   "stats_L50": {
+    "HP": 365,
+    "Morale": 100,
+    "Attack": 71,
+    "Armor": 50,
+    "Magic": 40,
+    "Leadership": 30,
+    "Skill": 40,
+    "WeaponPower": 1
+   },
+   "growth_per_level_1to50": {
+    "HP": 5.82,
+    "Morale": 0.0,
+    "Attack": 1.04,
+    "Armor": 0.82,
+    "Magic": 0.41,
+    "Leadership": 0.0,
+    "Skill": 0.51,
+    "WeaponPower": 0.0
+   }
+  },
+  "reddragonrider": {
+   "symbol": "reddragonrider",
+   "class_id": 56,
+   "name": "Red Dragon Rider",
+   "tier": 4,
+   "cxp_limit": 4500,
+   "classup": [],
+   "classdown": [
+    "reddragon"
+   ],
+   "param_req": {},
+   "can_classup": false,
+   "description": "The ultimate evolution of the Red Dragon, it can now take to the skies and deliver devastating fire breath.",
+   "resource_cost": {
+    "obsidian": 2,
+    "gems": 2
+   },
+   "param_add": {
+    "def": 5
+   },
+   "capacitycost": "200",
+   "archetype": "dragon",
+   "moveset_type": "flying",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 60,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 10,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 1
+   },
+   "stats_L20": {
+    "HP": 165,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 26,
+    "Magic": 28,
+    "Leadership": 30,
+    "Skill": 25,
+    "WeaponPower": 1
+   },
+   "stats_L50": {
+    "HP": 330,
+    "Morale": 100,
+    "Attack": 70,
+    "Armor": 50,
+    "Magic": 40,
+    "Leadership": 30,
+    "Skill": 40,
+    "WeaponPower": 1
+   },
+   "growth_per_level_1to50": {
+    "HP": 5.51,
+    "Morale": 0.0,
+    "Attack": 1.02,
+    "Armor": 0.82,
+    "Magic": 0.41,
+    "Leadership": 0.0,
+    "Skill": 0.51,
+    "WeaponPower": 0.0
+   }
+  },
+  "bluedragonrider": {
+   "symbol": "bluedragonrider",
+   "class_id": 52,
+   "name": "Blue Dragon Rider",
+   "tier": 4,
+   "cxp_limit": 4500,
+   "classup": [],
+   "classdown": [
+    "bluedragon"
+   ],
+   "param_req": {},
+   "can_classup": false,
+   "description": "The ultimate evolution of the Blue Dragon, it can now take to the skies and deliver devastating lightning breath.",
+   "resource_cost": {
+    "obsidian": 2,
+    "gems": 2
+   },
+   "param_add": {
+    "def": 5
+   },
+   "capacitycost": "200",
+   "archetype": "dragon",
+   "moveset_type": "flying",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 100,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 10,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 1
+   },
+   "stats_L20": {
+    "HP": 201,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 26,
+    "Magic": 28,
+    "Leadership": 30,
+    "Skill": 25,
+    "WeaponPower": 1
+   },
+   "stats_L50": {
+    "HP": 360,
+    "Morale": 100,
+    "Attack": 71,
+    "Armor": 50,
+    "Magic": 40,
+    "Leadership": 30,
+    "Skill": 40,
+    "WeaponPower": 1
+   },
+   "growth_per_level_1to50": {
+    "HP": 5.31,
+    "Morale": 0.0,
+    "Attack": 1.04,
+    "Armor": 0.82,
+    "Magic": 0.41,
+    "Leadership": 0.0,
+    "Skill": 0.51,
+    "WeaponPower": 0.0
+   }
+  },
+  "silverdragonrider": {
+   "symbol": "silverdragonrider",
+   "class_id": 54,
+   "name": "Silver Dragon Rider",
+   "tier": 4,
+   "cxp_limit": 4500,
+   "classup": [],
+   "classdown": [
+    "silverdragon"
+   ],
+   "param_req": {},
+   "can_classup": false,
+   "description": "The ultimate evolution of the Silver Dragon, it can now take to the skies and deliver devastating ice breath.",
+   "resource_cost": {
+    "obsidian": 2,
+    "gems": 2
+   },
+   "param_add": {
+    "def": 5
+   },
+   "capacitycost": "200",
+   "archetype": "dragon",
+   "moveset_type": "flying",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 80,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 10,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 1
+   },
+   "stats_L20": {
+    "HP": 191,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 26,
+    "Magic": 28,
+    "Leadership": 30,
+    "Skill": 25,
+    "WeaponPower": 1
+   },
+   "stats_L50": {
+    "HP": 365,
+    "Morale": 100,
+    "Attack": 71,
+    "Armor": 50,
+    "Magic": 40,
+    "Leadership": 30,
+    "Skill": 40,
+    "WeaponPower": 1
+   },
+   "growth_per_level_1to50": {
+    "HP": 5.82,
+    "Morale": 0.0,
+    "Attack": 1.04,
+    "Armor": 0.82,
+    "Magic": 0.41,
+    "Leadership": 0.0,
+    "Skill": 0.51,
+    "WeaponPower": 0.0
+   }
+  },
+  "militia": {
+   "symbol": "militia",
+   "class_id": 90,
+   "name": "Militia",
+   "tier": 1,
+   "cxp_limit": 500,
+   "classup": [
+    "hospitaller",
+    "acolyte",
+    "priestess",
+    "swordfighter",
+    "archer"
+   ],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": true,
+   "description": "Basic Infantry. Can be part of a Light Squad, who specialize in rough terrain and ambushes.",
+   "resource_cost": {},
+   "param_add": {
+    "weapon_power": 6,
+    "armor": 5
+   },
+   "capacitycost": "100",
+   "archetype": "light_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": "500",
+   "stats_L1": {
+    "HP": 45,
+    "Morale": 100,
+    "Attack": 18,
+    "Armor": 10,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 25,
+    "WeaponPower": 18
+   },
+   "stats_L20": {
+    "HP": 108,
+    "Morale": 100,
+    "Attack": 28,
+    "Armor": 19,
+    "Magic": 14,
+    "Leadership": 30,
+    "Skill": 35,
+    "WeaponPower": 40
+   },
+   "stats_L50": {
+    "HP": 205,
+    "Morale": 100,
+    "Attack": 42,
+    "Armor": 33,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 50,
+    "WeaponPower": 74
+   },
+   "growth_per_level_1to50": {
+    "HP": 3.27,
+    "Morale": 0.0,
+    "Attack": 0.49,
+    "Armor": 0.47,
+    "Magic": 0.2,
+    "Leadership": 0.0,
+    "Skill": 0.51,
+    "WeaponPower": 1.14
+   }
+  },
+  "bowman": {
+   "symbol": "bowman",
+   "class_id": 22,
+   "name": "Bowman",
+   "tier": 1,
+   "cxp_limit": 500,
+   "classup": [
+    "scout",
+    "horsebow",
+    "skirmisher",
+    "rogue",
+    "archer",
+    "apprentice",
+    "crossbowman"
+   ],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": true,
+   "description": "Basic Archery unit. Can attack from 2 tiles away.",
+   "resource_cost": {},
+   "param_add": {
+    "def": -5,
+    "weapon_power": 5,
+    "armor": 3
+   },
+   "capacitycost": "100",
+   "archetype": "archery",
+   "moveset_type": "normal",
+   "combatrange": "1:2",
+   "classup_maxmastery": "500",
+   "stats_L1": {
+    "HP": 35,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 5,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 15
+   },
+   "stats_L20": {
+    "HP": 87,
+    "Morale": 100,
+    "Attack": 28,
+    "Armor": 14,
+    "Magic": 14,
+    "Leadership": 30,
+    "Skill": 26,
+    "WeaponPower": 32
+   },
+   "stats_L50": {
+    "HP": 168,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 28,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 43,
+    "WeaponPower": 58
+   },
+   "growth_per_level_1to50": {
+    "HP": 2.71,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 0.47,
+    "Magic": 0.2,
+    "Leadership": 0.0,
+    "Skill": 0.57,
+    "WeaponPower": 0.88
+   }
+  },
+  "medic": {
+   "symbol": "medic",
+   "class_id": 28,
+   "name": "Medic",
+   "tier": 1,
+   "cxp_limit": 500,
+   "classup": [
+    "hospitaller",
+    "acolyte",
+    "priestess",
+    "siren"
+   ],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": true,
+   "description": "Basic Support unit. Able to provide healing in and out of battle.",
+   "resource_cost": {},
+   "param_add": {
+    "def": -10,
+    "weapon_power": 0,
+    "armor": 1
+   },
+   "capacitycost": "100",
+   "archetype": "support",
+   "moveset_type": "normal",
+   "combatrange": "0:0",
+   "classup_maxmastery": "500",
+   "stats_L1": {
+    "HP": 30,
+    "Morale": 100,
+    "Attack": 5,
+    "Armor": 1,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 10,
+    "WeaponPower": 30
+   },
+   "stats_L20": {
+    "HP": 73,
+    "Morale": 100,
+    "Attack": 13,
+    "Armor": 1,
+    "Magic": 40,
+    "Leadership": 30,
+    "Skill": 20,
+    "WeaponPower": 44
+   },
+   "stats_L50": {
+    "HP": 140,
+    "Morale": 100,
+    "Attack": 25,
+    "Armor": 1,
+    "Magic": 70,
+    "Leadership": 30,
+    "Skill": 35,
+    "WeaponPower": 65
+   },
+   "growth_per_level_1to50": {
+    "HP": 2.24,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 0.0,
+    "Magic": 1.02,
+    "Leadership": 0.0,
+    "Skill": 0.51,
+    "WeaponPower": 0.71
+   }
+  },
+  "soldier": {
+   "symbol": "soldier",
+   "class_id": 3,
+   "name": "Soldier",
+   "tier": 2,
+   "cxp_limit": 3000,
+   "classup": [
+    "knight",
+    "sentinel",
+    "champion",
+    "zweihander",
+    "gunner",
+    "siegecannon",
+    "fieldcannon",
+    "arbalest"
+   ],
+   "classdown": [
+    "fighter"
+   ],
+   "param_req": {
+    "2": 25
+   },
+   "can_classup": true,
+   "description": "Front line Heavy Infantry. Heavily armored, and protects back lines with Cover.",
+   "resource_cost": {
+    "iron": 1
+   },
+   "param_add": {
+    "atk": 5,
+    "mhp": 20,
+    "def": 5,
+    "weapon_power": 9,
+    "armor": 10
+   },
+   "capacitycost": "100",
+   "archetype": "heavy_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 50,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 118,
+    "Morale": 100,
+    "Attack": 28,
+    "Armor": 40,
+    "Magic": 14,
+    "Leadership": 30,
+    "Skill": 23,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 225,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 70,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 35,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 3.57,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 1.02,
+    "Magic": 0.2,
+    "Leadership": 0.0,
+    "Skill": 0.41,
+    "WeaponPower": 1.33
+   }
+  },
+  "spearman": {
+   "symbol": "spearman",
+   "class_id": 4,
+   "name": "Spearman",
+   "tier": 2,
+   "cxp_limit": 3000,
+   "classup": [
+    "hussar",
+    "sentinel",
+    "centurion",
+    "samurai",
+    "gunner",
+    "siegecannon",
+    "fieldcannon"
+   ],
+   "classdown": [
+    "fighter"
+   ],
+   "param_req": {
+    "2": 21
+   },
+   "can_classup": true,
+   "description": "Front line Heavy Infantry. Polearms are strong against Cavalry.",
+   "resource_cost": {
+    "iron": 1
+   },
+   "param_add": {
+    "atk": 3,
+    "mhp": 10,
+    "def": 5,
+    "weapon_power": 8,
+    "armor": 9
+   },
+   "capacitycost": "100",
+   "archetype": "heavy_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 50,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 118,
+    "Morale": 100,
+    "Attack": 28,
+    "Armor": 40,
+    "Magic": 14,
+    "Leadership": 30,
+    "Skill": 23,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 225,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 70,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 35,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 3.57,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 1.02,
+    "Magic": 0.2,
+    "Leadership": 0.0,
+    "Skill": 0.41,
+    "WeaponPower": 1.33
+   }
+  },
+  "cavalier": {
+   "symbol": "cavalier",
+   "class_id": 10,
+   "name": "Cavalier",
+   "tier": 2,
+   "cxp_limit": 3000,
+   "classup": [
+    "knight",
+    "dragoon",
+    "zweihander",
+    "hussar",
+    "gunner",
+    "siegecannon",
+    "fieldcannon"
+   ],
+   "classdown": [
+    "fighter"
+   ],
+   "param_req": {
+    "2": 21
+   },
+   "can_classup": true,
+   "description": "Basic Heavy Cavalry. Heavily armored, and protects back lines with Cover.",
+   "resource_cost": {
+    "iron": 1,
+    "horse": 1
+   },
+   "param_add": {
+    "atk": 5,
+    "mhp": 10,
+    "def": 5,
+    "weapon_power": 9,
+    "armor": 10
+   },
+   "capacitycost": "100",
+   "archetype": "heavy_cavalry",
+   "moveset_type": "cavalry",
+   "combatrange": "0:1",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 50,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 118,
+    "Morale": 100,
+    "Attack": 28,
+    "Armor": 40,
+    "Magic": 14,
+    "Leadership": 30,
+    "Skill": 23,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 225,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 70,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 35,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 3.57,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 1.02,
+    "Magic": 0.2,
+    "Leadership": 0.0,
+    "Skill": 0.41,
+    "WeaponPower": 1.33
+   }
+  },
+  "acolyte": {
+   "symbol": "acolyte",
+   "class_id": 93,
+   "name": "Acolyte",
+   "tier": 2,
+   "cxp_limit": 3000,
+   "classup": [
+    "valkyrie",
+    "paladin",
+    "templar",
+    "gunner",
+    "siegecannon",
+    "fieldcannon"
+   ],
+   "classdown": [
+    "militia"
+   ],
+   "param_req": {
+    "2": 18
+   },
+   "can_classup": true,
+   "description": "Heavy Infantry. Deals Striking damage. Gets a bonus to Magic Defense from a portion of her Armor.",
+   "resource_cost": {
+    "iron": 1
+   },
+   "param_add": {
+    "mhp": 20,
+    "atk": 5,
+    "def": 5,
+    "weapon_power": 8,
+    "armor": 10
+   },
+   "capacitycost": "100",
+   "archetype": "heavy_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 50,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 118,
+    "Morale": 100,
+    "Attack": 28,
+    "Armor": 40,
+    "Magic": 30,
+    "Leadership": 30,
+    "Skill": 24,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 225,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 70,
+    "Magic": 45,
+    "Leadership": 30,
+    "Skill": 38,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 3.57,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 1.02,
+    "Magic": 0.51,
+    "Leadership": 0.0,
+    "Skill": 0.47,
+    "WeaponPower": 1.33
+   }
+  },
+  "skirmisher": {
+   "symbol": "skirmisher",
+   "class_id": 15,
+   "name": "Skirmisher",
+   "tier": 2,
+   "cxp_limit": 3000,
+   "classup": [
+    "ranger",
+    "zweihander",
+    "gunner",
+    "siegecannon",
+    "fieldcannon"
+   ],
+   "classdown": [
+    "fighter",
+    "bowman"
+   ],
+   "param_req": {
+    "6": 20
+   },
+   "can_classup": true,
+   "description": "Basic Light Infantry. Can Ambush, and gets a significant SKL bonus while fighting in Rough terrain.",
+   "resource_cost": {},
+   "param_add": {
+    "atk": 3,
+    "agi": 10,
+    "weapon_power": 8,
+    "armor": 2
+   },
+   "capacitycost": "100",
+   "archetype": "light_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": "1000",
+   "stats_L1": {
+    "HP": 35,
+    "Morale": 100,
+    "Attack": 18,
+    "Armor": 5,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 20,
+    "WeaponPower": 18
+   },
+   "stats_L20": {
+    "HP": 87,
+    "Morale": 100,
+    "Attack": 26,
+    "Armor": 14,
+    "Magic": 14,
+    "Leadership": 30,
+    "Skill": 32,
+    "WeaponPower": 40
+   },
+   "stats_L50": {
+    "HP": 168,
+    "Morale": 100,
+    "Attack": 37,
+    "Armor": 28,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 50,
+    "WeaponPower": 74
+   },
+   "growth_per_level_1to50": {
+    "HP": 2.71,
+    "Morale": 0.0,
+    "Attack": 0.39,
+    "Armor": 0.47,
+    "Magic": 0.2,
+    "Leadership": 0.0,
+    "Skill": 0.61,
+    "WeaponPower": 1.14
+   }
+  },
+  "scout": {
+   "symbol": "scout",
+   "class_id": 19,
+   "name": "Scout",
+   "tier": 2,
+   "cxp_limit": 3000,
+   "classup": [
+    "hussar",
+    "ranger",
+    "dragoon",
+    "gunner",
+    "siegecannon",
+    "fieldcannon"
+   ],
+   "classdown": [
+    "fighter",
+    "bowman"
+   ],
+   "param_req": {
+    "6": 22
+   },
+   "can_classup": true,
+   "description": "Basic Light Cavalry. Can Ambush, and is strong against enemy Cavalry.",
+   "resource_cost": {
+    "horse": 1
+   },
+   "param_add": {
+    "mhp": 10,
+    "agi": 10,
+    "weapon_power": 8,
+    "armor": 2
+   },
+   "capacitycost": "100",
+   "archetype": "light_cavalry",
+   "moveset_type": "cavalry",
+   "combatrange": "0:1",
+   "classup_maxmastery": "1000",
+   "stats_L1": {
+    "HP": 35,
+    "Morale": 100,
+    "Attack": 18,
+    "Armor": 5,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 20,
+    "WeaponPower": 18
+   },
+   "stats_L20": {
+    "HP": 87,
+    "Morale": 100,
+    "Attack": 26,
+    "Armor": 14,
+    "Magic": 14,
+    "Leadership": 30,
+    "Skill": 32,
+    "WeaponPower": 40
+   },
+   "stats_L50": {
+    "HP": 168,
+    "Morale": 100,
+    "Attack": 37,
+    "Armor": 28,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 50,
+    "WeaponPower": 74
+   },
+   "growth_per_level_1to50": {
+    "HP": 2.71,
+    "Morale": 0.0,
+    "Attack": 0.39,
+    "Armor": 0.47,
+    "Magic": 0.2,
+    "Leadership": 0.0,
+    "Skill": 0.61,
+    "WeaponPower": 1.14
+   }
+  },
+  "rogue": {
+   "symbol": "rogue",
+   "class_id": 16,
+   "name": "Rogue",
+   "tier": 2,
+   "cxp_limit": 3000,
+   "classup": [
+    "ranger",
+    "assassin",
+    "gunner",
+    "siegecannon",
+    "fieldcannon"
+   ],
+   "classdown": [
+    "fighter",
+    "bowman"
+   ],
+   "param_req": {
+    "6": 25
+   },
+   "can_classup": true,
+   "description": "Specialized Light Infantry. On offense, will execute a Stealth attack, striking the back row.",
+   "resource_cost": {},
+   "param_add": {
+    "agi": 5,
+    "weapon_power": 6,
+    "armor": 1
+   },
+   "capacitycost": "100",
+   "archetype": "light_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 35,
+    "Morale": 100,
+    "Attack": 15,
+    "Armor": 5,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 20,
+    "WeaponPower": 18
+   },
+   "stats_L20": {
+    "HP": 87,
+    "Morale": 100,
+    "Attack": 23,
+    "Armor": 14,
+    "Magic": 14,
+    "Leadership": 30,
+    "Skill": 32,
+    "WeaponPower": 40
+   },
+   "stats_L50": {
+    "HP": 168,
+    "Morale": 100,
+    "Attack": 34,
+    "Armor": 28,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 50,
+    "WeaponPower": 74
+   },
+   "growth_per_level_1to50": {
+    "HP": 2.71,
+    "Morale": 0.0,
+    "Attack": 0.39,
+    "Armor": 0.47,
+    "Magic": 0.2,
+    "Leadership": 0.0,
+    "Skill": 0.61,
+    "WeaponPower": 1.14
+   }
+  },
+  "archer": {
+   "symbol": "archer",
+   "class_id": 23,
+   "name": "Archer",
+   "tier": 2,
+   "cxp_limit": 3000,
+   "classup": [
+    "samurai",
+    "warbow",
+    "raider",
+    "gunner",
+    "siegecannon",
+    "fieldcannon"
+   ],
+   "classdown": [
+    "bowman",
+    "fighter",
+    "militia"
+   ],
+   "param_req": {
+    "2": 18
+   },
+   "can_classup": true,
+   "description": "Standard Archery unit. Can attack from 2 tiles away. Has the potential to upgrade to a class with 3 tile range.",
+   "resource_cost": {},
+   "param_add": {
+    "mhp": 5,
+    "atk": 5,
+    "agi": 3,
+    "def": -5,
+    "weapon_power": 8,
+    "armor": 3
+   },
+   "capacitycost": "100",
+   "archetype": "archery",
+   "moveset_type": "normal",
+   "combatrange": "1:2",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 35,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 5,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 15
+   },
+   "stats_L20": {
+    "HP": 87,
+    "Morale": 100,
+    "Attack": 28,
+    "Armor": 14,
+    "Magic": 14,
+    "Leadership": 30,
+    "Skill": 26,
+    "WeaponPower": 32
+   },
+   "stats_L50": {
+    "HP": 168,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 28,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 43,
+    "WeaponPower": 58
+   },
+   "growth_per_level_1to50": {
+    "HP": 2.71,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 0.47,
+    "Magic": 0.2,
+    "Leadership": 0.0,
+    "Skill": 0.57,
+    "WeaponPower": 0.88
+   }
+  },
+  "crossbowman": {
+   "symbol": "crossbowman",
+   "class_id": 41,
+   "name": "Crossbowman",
+   "tier": 2,
+   "cxp_limit": 3000,
+   "classup": [
+    "ranger",
+    "warbow",
+    "gunner",
+    "siegecannon",
+    "fieldcannon",
+    "arbalest"
+   ],
+   "classdown": [
+    "fighter",
+    "bowman"
+   ],
+   "param_req": {},
+   "can_classup": true,
+   "description": "Specialized Archery unit. Can attack from 2 tiles away, and gets a bonus against Heavy troops.",
+   "resource_cost": {
+    "iron": 1
+   },
+   "param_add": {
+    "atk": 5,
+    "mat": -50,
+    "def": 5,
+    "weapon_power": 0,
+    "armor": 3
+   },
+   "capacitycost": "100",
+   "archetype": "archery",
+   "moveset_type": "normal",
+   "combatrange": "1:2",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 35,
+    "Morale": 100,
+    "Attack": 17,
+    "Armor": 5,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 10,
+    "WeaponPower": 55
+   },
+   "stats_L20": {
+    "HP": 87,
+    "Morale": 100,
+    "Attack": 25,
+    "Armor": 14,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 20,
+    "WeaponPower": 87
+   },
+   "stats_L50": {
+    "HP": 168,
+    "Morale": 100,
+    "Attack": 37,
+    "Armor": 28,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 35,
+    "WeaponPower": 135
+   },
+   "growth_per_level_1to50": {
+    "HP": 2.71,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 0.47,
+    "Magic": 0.0,
+    "Leadership": 0.0,
+    "Skill": 0.51,
+    "WeaponPower": 1.63
+   }
+  },
+  "horsebow": {
+   "symbol": "horsebow",
+   "class_id": 25,
+   "name": "Horsebow",
+   "tier": 2,
+   "cxp_limit": 3000,
+   "classup": [
+    "samurai",
+    "hussar",
+    "raider",
+    "dragoon",
+    "gunner",
+    "siegecannon",
+    "fieldcannon"
+   ],
+   "classdown": [
+    "bowman"
+   ],
+   "param_req": {
+    "2": 20
+   },
+   "can_classup": true,
+   "description": "Light Cavalry Archer. Can fire from 2 tiles, ambush, and hit-and-run.",
+   "resource_cost": {
+    "horse": 1
+   },
+   "param_add": {
+    "mhp": 5,
+    "atk": 5,
+    "weapon_power": 8,
+    "armor": 3
+   },
+   "capacitycost": "100",
+   "archetype": "light_cavalry",
+   "moveset_type": "cavalry",
+   "combatrange": "1:2",
+   "classup_maxmastery": "1000",
+   "stats_L1": {
+    "HP": 35,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 5,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 15
+   },
+   "stats_L20": {
+    "HP": 87,
+    "Morale": 100,
+    "Attack": 28,
+    "Armor": 14,
+    "Magic": 14,
+    "Leadership": 30,
+    "Skill": 26,
+    "WeaponPower": 32
+   },
+   "stats_L50": {
+    "HP": 168,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 28,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 43,
+    "WeaponPower": 58
+   },
+   "growth_per_level_1to50": {
+    "HP": 2.71,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 0.47,
+    "Magic": 0.2,
+    "Leadership": 0.0,
+    "Skill": 0.57,
+    "WeaponPower": 0.88
+   }
+  },
+  "swordfighter": {
+   "symbol": "swordfighter",
+   "class_id": 91,
+   "name": "Swordfighter",
+   "tier": 2,
+   "cxp_limit": 3000,
+   "classup": [
+    "swordmaster",
+    "gunner",
+    "siegecannon",
+    "fieldcannon"
+   ],
+   "classdown": [
+    "militia"
+   ],
+   "param_req": {
+    "6": 20
+   },
+   "can_classup": true,
+   "description": "Standard Light Infantry. Very strong attack, but sacrifices almost all defense.",
+   "resource_cost": {},
+   "param_add": {
+    "atk": 5,
+    "agi": 15,
+    "weapon_power": 10,
+    "armor": 1
+   },
+   "capacitycost": "100",
+   "archetype": "light_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 35,
+    "Morale": 100,
+    "Attack": 18,
+    "Armor": 5,
+    "Magic": 5,
+    "Leadership": 30,
+    "Skill": 30,
+    "WeaponPower": 18
+   },
+   "stats_L20": {
+    "HP": 87,
+    "Morale": 100,
+    "Attack": 27,
+    "Armor": 14,
+    "Magic": 8,
+    "Leadership": 30,
+    "Skill": 42,
+    "WeaponPower": 40
+   },
+   "stats_L50": {
+    "HP": 168,
+    "Morale": 100,
+    "Attack": 39,
+    "Armor": 28,
+    "Magic": 13,
+    "Leadership": 30,
+    "Skill": 60,
+    "WeaponPower": 74
+   },
+   "growth_per_level_1to50": {
+    "HP": 2.71,
+    "Morale": 0.0,
+    "Attack": 0.43,
+    "Armor": 0.47,
+    "Magic": 0.16,
+    "Leadership": 0.0,
+    "Skill": 0.61,
+    "WeaponPower": 1.14
+   }
+  },
+  "apprentice": {
+   "symbol": "apprentice",
+   "class_id": 33,
+   "name": "Apprentice",
+   "tier": 2,
+   "cxp_limit": 3000,
+   "classup": [
+    "firemage",
+    "icemage",
+    "lightningmage",
+    "gunner",
+    "siegecannon",
+    "fieldcannon",
+    "oracle"
+   ],
+   "classdown": [
+    "fighter",
+    "bowman"
+   ],
+   "param_req": {},
+   "can_classup": true,
+   "description": "Basic Magician unit. Launches a Fire elemental magic attack with a small area effect.",
+   "resource_cost": {
+    "gems": 1
+   },
+   "param_add": {
+    "mat": 5,
+    "def": -50,
+    "weapon_power": 0,
+    "armor": 1
+   },
+   "capacitycost": "100",
+   "archetype": "magician",
+   "moveset_type": "normal",
+   "combatrange": "1:1",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 25,
+    "Morale": 100,
+    "Attack": 3,
+    "Armor": 1,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 59,
+    "Morale": 100,
+    "Attack": 6,
+    "Armor": 1,
+    "Magic": 35,
+    "Leadership": 30,
+    "Skill": 26,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 113,
+    "Morale": 100,
+    "Attack": 11,
+    "Armor": 1,
+    "Magic": 58,
+    "Leadership": 30,
+    "Skill": 43,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 1.8,
+    "Morale": 0.0,
+    "Attack": 0.16,
+    "Armor": 0.0,
+    "Magic": 0.78,
+    "Leadership": 0.0,
+    "Skill": 0.57,
+    "WeaponPower": 1.33
+   }
+  },
+  "priestess": {
+   "symbol": "priestess",
+   "class_id": 29,
+   "name": "Priestess",
+   "tier": 2,
+   "cxp_limit": 3000,
+   "classup": [
+    "paladin",
+    "templar",
+    "valkyrie",
+    "gunner",
+    "siegecannon",
+    "fieldcannon",
+    "oracle"
+   ],
+   "classdown": [
+    "medic"
+   ],
+   "param_req": {
+    "4": 20
+   },
+   "can_classup": true,
+   "description": "Standard Support unit. Able to provide healing in and out of battle, with much greater ability than the Medic.",
+   "resource_cost": {
+    "gems": 1
+   },
+   "param_add": {
+    "def": 5,
+    "mhp": 10,
+    "mat": 10,
+    "weapon_power": 20,
+    "armor": 5
+   },
+   "capacitycost": "100",
+   "archetype": "support",
+   "moveset_type": "normal",
+   "combatrange": "0:0",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 30,
+    "Morale": 100,
+    "Attack": 5,
+    "Armor": 1,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 10,
+    "WeaponPower": 30
+   },
+   "stats_L20": {
+    "HP": 73,
+    "Morale": 100,
+    "Attack": 13,
+    "Armor": 1,
+    "Magic": 40,
+    "Leadership": 30,
+    "Skill": 20,
+    "WeaponPower": 44
+   },
+   "stats_L50": {
+    "HP": 140,
+    "Morale": 100,
+    "Attack": 25,
+    "Armor": 1,
+    "Magic": 70,
+    "Leadership": 30,
+    "Skill": 35,
+    "WeaponPower": 65
+   },
+   "growth_per_level_1to50": {
+    "HP": 2.24,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 0.0,
+    "Magic": 1.02,
+    "Leadership": 0.0,
+    "Skill": 0.51,
+    "WeaponPower": 0.71
+   }
+  },
+  "siren": {
+   "symbol": "siren",
+   "class_id": 34,
+   "name": "Siren",
+   "tier": 2,
+   "cxp_limit": 3000,
+   "classup": [
+    "sorceress",
+    "gunner",
+    "siegecannon",
+    "oracle",
+    "fieldcannon"
+   ],
+   "classdown": [
+    "medic"
+   ],
+   "param_req": {
+    "4": 20
+   },
+   "can_classup": true,
+   "description": "Specialized Magician unit. Launches a Dark elemental magic attack that has a chance to stun and/or daze the target.",
+   "resource_cost": {
+    "gems": 1
+   },
+   "param_add": {
+    "mat": 5,
+    "agi": 5,
+    "def": -50,
+    "weapon_power": 0,
+    "armor": 1
+   },
+   "capacitycost": "100",
+   "archetype": "magician",
+   "moveset_type": "normal",
+   "combatrange": "1:1",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 25,
+    "Morale": 100,
+    "Attack": 3,
+    "Armor": 1,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 59,
+    "Morale": 100,
+    "Attack": 6,
+    "Armor": 1,
+    "Magic": 40,
+    "Leadership": 30,
+    "Skill": 26,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 113,
+    "Morale": 100,
+    "Attack": 11,
+    "Armor": 1,
+    "Magic": 70,
+    "Leadership": 30,
+    "Skill": 43,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 1.8,
+    "Morale": 0.0,
+    "Attack": 0.16,
+    "Armor": 0.0,
+    "Magic": 1.02,
+    "Leadership": 0.0,
+    "Skill": 0.57,
+    "WeaponPower": 1.33
+   }
+  },
+  "sentinel": {
+   "symbol": "sentinel",
+   "class_id": 9,
+   "name": "Sentinel",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [],
+   "classdown": [
+    "soldier",
+    "spearman"
+   ],
+   "param_req": {
+    "2": 42
+   },
+   "can_classup": false,
+   "description": "Powerhouse defensive Heavy Infantry. Uses a polearm and has a special defense against Firearms attacks.",
+   "resource_cost": {
+    "iron": 3
+   },
+   "param_add": {
+    "atk": 5,
+    "mhp": 50,
+    "def": 20,
+    "weapon_power": 9,
+    "armor": 20
+   },
+   "capacitycost": "100",
+   "archetype": "heavy_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 50,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 118,
+    "Morale": 100,
+    "Attack": 28,
+    "Armor": 40,
+    "Magic": 14,
+    "Leadership": 30,
+    "Skill": 23,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 225,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 70,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 35,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 3.57,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 1.02,
+    "Magic": 0.2,
+    "Leadership": 0.0,
+    "Skill": 0.41,
+    "WeaponPower": 1.33
+   }
+  },
+  "champion": {
+   "symbol": "champion",
+   "class_id": 6,
+   "name": "Champion",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [],
+   "classdown": [
+    "soldier"
+   ],
+   "param_req": {
+    "2": 47
+   },
+   "can_classup": false,
+   "description": "Powerhouse Heavy Infantry. Executes a double-attack against a single enemy.",
+   "resource_cost": {
+    "iron": 2,
+    "obsidian": 2
+   },
+   "param_add": {
+    "atk": 25,
+    "mhp": 50,
+    "def": 20,
+    "weapon_power": 18,
+    "armor": 14
+   },
+   "capacitycost": "100",
+   "archetype": "heavy_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 50,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 118,
+    "Morale": 100,
+    "Attack": 28,
+    "Armor": 40,
+    "Magic": 14,
+    "Leadership": 30,
+    "Skill": 23,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 225,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 70,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 35,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 3.57,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 1.02,
+    "Magic": 0.2,
+    "Leadership": 0.0,
+    "Skill": 0.41,
+    "WeaponPower": 1.33
+   }
+  },
+  "zweihander": {
+   "symbol": "zweihander",
+   "class_id": 5,
+   "name": "Zweihander",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [],
+   "classdown": [
+    "soldier",
+    "cavalier",
+    "skirmisher"
+   ],
+   "param_req": {
+    "2": 42
+   },
+   "can_classup": false,
+   "description": "Specialized Heavy Infantry. Attack hits a wide-arc, striking the units adjacent to the target in the same row.",
+   "resource_cost": {
+    "iron": 2
+   },
+   "param_add": {
+    "atk": 15,
+    "mhp": 30,
+    "def": 15,
+    "weapon_power": 15,
+    "armor": 12
+   },
+   "capacitycost": "100",
+   "archetype": "heavy_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 50,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 118,
+    "Morale": 100,
+    "Attack": 28,
+    "Armor": 40,
+    "Magic": 14,
+    "Leadership": 30,
+    "Skill": 23,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 225,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 70,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 35,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 3.57,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 1.02,
+    "Magic": 0.2,
+    "Leadership": 0.0,
+    "Skill": 0.41,
+    "WeaponPower": 1.33
+   }
+  },
+  "centurion": {
+   "symbol": "centurion",
+   "class_id": 8,
+   "name": "Centurion",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [],
+   "classdown": [
+    "spearman"
+   ],
+   "param_req": {
+    "2": 45
+   },
+   "can_classup": false,
+   "description": "Specialized Heavy Infantry. The ultimate Polearm attacker, whose attacks strike the units behind the target.",
+   "resource_cost": {
+    "iron": 2,
+    "obsidian": 1
+   },
+   "param_add": {
+    "atk": 15,
+    "mhp": 40,
+    "def": 10,
+    "weapon_power": 16,
+    "armor": 13
+   },
+   "capacitycost": "100",
+   "archetype": "heavy_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 50,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 118,
+    "Morale": 100,
+    "Attack": 28,
+    "Armor": 40,
+    "Magic": 14,
+    "Leadership": 30,
+    "Skill": 23,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 225,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 70,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 35,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 3.57,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 1.02,
+    "Magic": 0.2,
+    "Leadership": 0.0,
+    "Skill": 0.41,
+    "WeaponPower": 1.33
+   }
+  },
+  "samurai": {
+   "symbol": "samurai",
+   "class_id": 7,
+   "name": "Samurai",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [],
+   "classdown": [
+    "spearman",
+    "horsebow",
+    "archer"
+   ],
+   "param_req": {
+    "2": 45
+   },
+   "can_classup": false,
+   "description": "Versatile Heavy Infantry. Possesses the Polearm skill of a Spearman with the bow attacks of an Archer. 35% More base Evasion than other Heavy classes.",
+   "resource_cost": {
+    "iron": 2
+   },
+   "param_add": {
+    "atk": 5,
+    "mhp": 25,
+    "agi": 20,
+    "def": 15,
+    "weapon_power": 14,
+    "armor": 12
+   },
+   "capacitycost": "100",
+   "archetype": "heavy_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:2",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 50,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 118,
+    "Morale": 100,
+    "Attack": 28,
+    "Armor": 40,
+    "Magic": 14,
+    "Leadership": 30,
+    "Skill": 23,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 225,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 70,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 35,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 3.57,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 1.02,
+    "Magic": 0.2,
+    "Leadership": 0.0,
+    "Skill": 0.41,
+    "WeaponPower": 1.33
+   }
+  },
+  "paladin": {
+   "symbol": "paladin",
+   "class_id": 12,
+   "name": "Paladin",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [],
+   "classdown": [
+    "priestess",
+    "acolyte",
+    "hospitaller"
+   ],
+   "param_req": {
+    "2": 35
+   },
+   "can_classup": false,
+   "description": "Specialized Heavy Infantry. Deals Striking damage. Gets a bonus to Magic Defense from a portion of her Armor, and deals extra damage to Magicians. Can heal self or ally under 50% HP once per battle.",
+   "resource_cost": {
+    "iron": 2,
+    "sunstone": 1
+   },
+   "param_add": {
+    "atk": 15,
+    "mhp": 50,
+    "mat": 10,
+    "def": 15,
+    "weapon_power": 12,
+    "armor": 15
+   },
+   "capacitycost": "100",
+   "archetype": "heavy_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 50,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 118,
+    "Morale": 100,
+    "Attack": 28,
+    "Armor": 40,
+    "Magic": 30,
+    "Leadership": 30,
+    "Skill": 23,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 225,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 70,
+    "Magic": 45,
+    "Leadership": 30,
+    "Skill": 35,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 3.57,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 1.02,
+    "Magic": 0.51,
+    "Leadership": 0.0,
+    "Skill": 0.41,
+    "WeaponPower": 1.33
+   }
+  },
+  "knight": {
+   "symbol": "knight",
+   "class_id": 11,
+   "name": "Knight",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [],
+   "classdown": [
+    "soldier",
+    "cavalier"
+   ],
+   "param_req": {
+    "2": 45
+   },
+   "can_classup": false,
+   "description": "Powerhouse Heavy Cavalry. Has a special defense against Archery attacks.",
+   "resource_cost": {
+    "iron": 2,
+    "obsidian": 1,
+    "horse": 1
+   },
+   "param_add": {
+    "atk": 15,
+    "mhp": 20,
+    "agi": 5,
+    "def": 15,
+    "weapon_power": 15,
+    "armor": 12
+   },
+   "capacitycost": "100",
+   "archetype": "heavy_cavalry",
+   "moveset_type": "cavalry",
+   "combatrange": "0:1",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 50,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 118,
+    "Morale": 100,
+    "Attack": 28,
+    "Armor": 40,
+    "Magic": 14,
+    "Leadership": 30,
+    "Skill": 23,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 225,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 70,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 35,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 3.57,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 1.02,
+    "Magic": 0.2,
+    "Leadership": 0.0,
+    "Skill": 0.41,
+    "WeaponPower": 1.33
+   }
+  },
+  "valkyrie": {
+   "symbol": "valkyrie",
+   "class_id": 13,
+   "name": "Valkyrie",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [],
+   "classdown": [
+    "acolyte",
+    "priestess",
+    "hospitaller"
+   ],
+   "param_req": {
+    "2": 25
+   },
+   "can_classup": false,
+   "description": "Versatile Heavy Cavalry. Brings the healing ability of the Hospitaller, but can now attack in battle and execute Charge attacks.",
+   "resource_cost": {
+    "iron": 2,
+    "sunstone": 1,
+    "horse": 1
+   },
+   "param_add": {
+    "atk": 15,
+    "mhp": 50,
+    "mat": 10,
+    "def": 10,
+    "weapon_power": 12,
+    "armor": 12
+   },
+   "capacitycost": "100",
+   "archetype": "heavy_cavalry",
+   "moveset_type": "cavalry",
+   "combatrange": "0:1",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 50,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 118,
+    "Morale": 100,
+    "Attack": 28,
+    "Armor": 40,
+    "Magic": 30,
+    "Leadership": 30,
+    "Skill": 23,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 225,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 70,
+    "Magic": 45,
+    "Leadership": 30,
+    "Skill": 35,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 3.57,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 1.02,
+    "Magic": 0.51,
+    "Leadership": 0.0,
+    "Skill": 0.41,
+    "WeaponPower": 1.33
+   }
+  },
+  "ranger": {
+   "symbol": "ranger",
+   "class_id": 17,
+   "name": "Ranger",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [],
+   "classdown": [
+    "skirmisher",
+    "scout",
+    "rogue",
+    "crossbowman"
+   ],
+   "param_req": {
+    "6": 38
+   },
+   "can_classup": false,
+   "description": "Specialized Light Infantry. Can Ambush, and gets a significant SKL bonus while fighting in Rough terrain, and can fire a precision bolt.",
+   "resource_cost": {},
+   "param_add": {
+    "mhp": 30,
+    "atk": 15,
+    "agi": 20,
+    "def": 10,
+    "weapon_power": 10,
+    "armor": 5
+   },
+   "capacitycost": "100",
+   "archetype": "light_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 35,
+    "Morale": 100,
+    "Attack": 15,
+    "Armor": 5,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 20,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 87,
+    "Morale": 100,
+    "Attack": 23,
+    "Armor": 14,
+    "Magic": 14,
+    "Leadership": 30,
+    "Skill": 32,
+    "WeaponPower": 44
+   },
+   "stats_L50": {
+    "HP": 168,
+    "Morale": 100,
+    "Attack": 34,
+    "Armor": 28,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 50,
+    "WeaponPower": 80
+   },
+   "growth_per_level_1to50": {
+    "HP": 2.71,
+    "Morale": 0.0,
+    "Attack": 0.39,
+    "Armor": 0.47,
+    "Magic": 0.2,
+    "Leadership": 0.0,
+    "Skill": 0.61,
+    "WeaponPower": 1.22
+   }
+  },
+  "assassin": {
+   "symbol": "assassin",
+   "class_id": 18,
+   "name": "Assassin",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [],
+   "classdown": [
+    "rogue"
+   ],
+   "param_req": {
+    "6": 45
+   },
+   "can_classup": false,
+   "description": "Specialized Light Infantry. On offense, will execute a Stealth attack, striking the back row, with much greater ability than the Rogue.",
+   "resource_cost": {
+    "obsidian": 2
+   },
+   "param_add": {
+    "atk": 10,
+    "agi": 5,
+    "weapon_power": 25,
+    "armor": 2
+   },
+   "capacitycost": "100",
+   "archetype": "light_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 35,
+    "Morale": 100,
+    "Attack": 15,
+    "Armor": 5,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 20,
+    "WeaponPower": 40
+   },
+   "stats_L20": {
+    "HP": 87,
+    "Morale": 100,
+    "Attack": 23,
+    "Armor": 14,
+    "Magic": 14,
+    "Leadership": 30,
+    "Skill": 32,
+    "WeaponPower": 62
+   },
+   "stats_L50": {
+    "HP": 168,
+    "Morale": 100,
+    "Attack": 34,
+    "Armor": 28,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 50,
+    "WeaponPower": 95
+   },
+   "growth_per_level_1to50": {
+    "HP": 2.71,
+    "Morale": 0.0,
+    "Attack": 0.39,
+    "Armor": 0.47,
+    "Magic": 0.2,
+    "Leadership": 0.0,
+    "Skill": 0.61,
+    "WeaponPower": 1.12
+   }
+  },
+  "hussar": {
+   "symbol": "hussar",
+   "class_id": 20,
+   "name": "Hussar",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [],
+   "classdown": [
+    "spearman",
+    "scout",
+    "horsebow",
+    "cavalier"
+   ],
+   "param_req": {
+    "6": 42
+   },
+   "can_classup": false,
+   "description": "Powerhouse Light Cavalry. Can Ambush, and is strong against enemy Cavalry, with much greater ability than the Scout.",
+   "resource_cost": {
+    "iron": 2,
+    "horse": 1
+   },
+   "param_add": {
+    "mhp": 30,
+    "atk": 15,
+    "agi": 10,
+    "def": 10,
+    "weapon_power": 12,
+    "armor": 4
+   },
+   "capacitycost": "100",
+   "archetype": "light_cavalry",
+   "moveset_type": "cavalry",
+   "combatrange": "0:1",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 35,
+    "Morale": 100,
+    "Attack": 18,
+    "Armor": 5,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 20,
+    "WeaponPower": 30
+   },
+   "stats_L20": {
+    "HP": 87,
+    "Morale": 100,
+    "Attack": 26,
+    "Armor": 14,
+    "Magic": 14,
+    "Leadership": 30,
+    "Skill": 32,
+    "WeaponPower": 54
+   },
+   "stats_L50": {
+    "HP": 168,
+    "Morale": 100,
+    "Attack": 37,
+    "Armor": 28,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 50,
+    "WeaponPower": 90
+   },
+   "growth_per_level_1to50": {
+    "HP": 2.71,
+    "Morale": 0.0,
+    "Attack": 0.39,
+    "Armor": 0.47,
+    "Magic": 0.2,
+    "Leadership": 0.0,
+    "Skill": 0.61,
+    "WeaponPower": 1.22
+   }
+  },
+  "warbow": {
+   "symbol": "warbow",
+   "class_id": 24,
+   "name": "Warbow",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [],
+   "classdown": [
+    "archer",
+    "crossbowman"
+   ],
+   "param_req": {
+    "2": 38
+   },
+   "can_classup": false,
+   "description": "Powerhouse Archery unit. Can attack from up to 3 tiles away.",
+   "resource_cost": {
+    "iron": 2,
+    "obsidian": 2
+   },
+   "param_add": {
+    "mhp": 5,
+    "atk": 8,
+    "agi": 5,
+    "def": 5,
+    "weapon_power": 12,
+    "armor": 5
+   },
+   "capacitycost": "100",
+   "archetype": "archery",
+   "moveset_type": "normal",
+   "combatrange": "1:3",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 35,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 5,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 15
+   },
+   "stats_L20": {
+    "HP": 87,
+    "Morale": 100,
+    "Attack": 28,
+    "Armor": 14,
+    "Magic": 14,
+    "Leadership": 30,
+    "Skill": 26,
+    "WeaponPower": 32
+   },
+   "stats_L50": {
+    "HP": 168,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 28,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 43,
+    "WeaponPower": 58
+   },
+   "growth_per_level_1to50": {
+    "HP": 2.71,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 0.47,
+    "Magic": 0.2,
+    "Leadership": 0.0,
+    "Skill": 0.57,
+    "WeaponPower": 0.88
+   }
+  },
+  "raider": {
+   "symbol": "raider",
+   "class_id": 26,
+   "name": "Raider",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [],
+   "classdown": [
+    "horsebow",
+    "archer"
+   ],
+   "param_req": {
+    "2": 38
+   },
+   "can_classup": false,
+   "description": "Powerhouse Light Cavalry Archer. Can fire from 2 tiles, ambush, and hit-and-run, with much greater ability than the Horsebow.",
+   "resource_cost": {
+    "iron": 1,
+    "obsidian": 1,
+    "horse": 1
+   },
+   "param_add": {
+    "mhp": 20,
+    "atk": 8,
+    "agi": 8,
+    "weapon_power": 12,
+    "armor": 5
+   },
+   "capacitycost": "100",
+   "archetype": "light_cavalry",
+   "moveset_type": "cavalry",
+   "combatrange": "1:2",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 35,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 5,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 15
+   },
+   "stats_L20": {
+    "HP": 87,
+    "Morale": 100,
+    "Attack": 28,
+    "Armor": 14,
+    "Magic": 14,
+    "Leadership": 30,
+    "Skill": 26,
+    "WeaponPower": 32
+   },
+   "stats_L50": {
+    "HP": 168,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 28,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 43,
+    "WeaponPower": 58
+   },
+   "growth_per_level_1to50": {
+    "HP": 2.71,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 0.47,
+    "Magic": 0.2,
+    "Leadership": 0.0,
+    "Skill": 0.57,
+    "WeaponPower": 0.88
+   }
+  },
+  "templar": {
+   "symbol": "templar",
+   "class_id": 30,
+   "name": "Templar",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [
+    "necromancer",
+    "darkmage"
+   ],
+   "classdown": [
+    "priestess"
+   ],
+   "param_req": {
+    "4": 56
+   },
+   "can_classup": true,
+   "description": "Ultimate Support unit. Able to provide healing in and out of battle, with the greatest possible proficiency.",
+   "resource_cost": {
+    "sunstone": 1,
+    "gems": 1
+   },
+   "param_add": {
+    "mhp": 20,
+    "mat": 15,
+    "def": 10,
+    "weapon_power": 40,
+    "armor": 6
+   },
+   "capacitycost": "100",
+   "archetype": "support",
+   "moveset_type": "normal",
+   "combatrange": "0:0",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 30,
+    "Morale": 100,
+    "Attack": 5,
+    "Armor": 1,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 10,
+    "WeaponPower": 30
+   },
+   "stats_L20": {
+    "HP": 73,
+    "Morale": 100,
+    "Attack": 13,
+    "Armor": 1,
+    "Magic": 40,
+    "Leadership": 30,
+    "Skill": 20,
+    "WeaponPower": 44
+   },
+   "stats_L50": {
+    "HP": 140,
+    "Morale": 100,
+    "Attack": 25,
+    "Armor": 1,
+    "Magic": 70,
+    "Leadership": 30,
+    "Skill": 35,
+    "WeaponPower": 65
+   },
+   "growth_per_level_1to50": {
+    "HP": 2.24,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 0.0,
+    "Magic": 1.02,
+    "Leadership": 0.0,
+    "Skill": 0.51,
+    "WeaponPower": 0.71
+   }
+  },
+  "hospitaller": {
+   "symbol": "hospitaller",
+   "class_id": 31,
+   "name": "Hospitaller",
+   "tier": 2,
+   "cxp_limit": 3000,
+   "classup": [
+    "valkyrie",
+    "templar",
+    "paladin",
+    "oracle",
+    "gunner",
+    "dragoon",
+    "siegecannon",
+    "fieldcannon"
+   ],
+   "classdown": [
+    "medic",
+    "militia"
+   ],
+   "param_req": {
+    "4": 20
+   },
+   "can_classup": true,
+   "description": "Specialized Support unit. Able to provide healing in and out of battle, with the mobility of Cavalry.",
+   "resource_cost": {
+    "horse": 1,
+    "gems": 1
+   },
+   "param_add": {
+    "mhp": 10,
+    "mat": 10,
+    "def": 5,
+    "weapon_power": 20,
+    "armor": 5
+   },
+   "capacitycost": "100",
+   "archetype": "support",
+   "moveset_type": "cavalry",
+   "combatrange": "0:0",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 30,
+    "Morale": 100,
+    "Attack": 5,
+    "Armor": 1,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 10,
+    "WeaponPower": 30
+   },
+   "stats_L20": {
+    "HP": 73,
+    "Morale": 100,
+    "Attack": 13,
+    "Armor": 1,
+    "Magic": 40,
+    "Leadership": 30,
+    "Skill": 20,
+    "WeaponPower": 44
+   },
+   "stats_L50": {
+    "HP": 140,
+    "Morale": 100,
+    "Attack": 25,
+    "Armor": 1,
+    "Magic": 70,
+    "Leadership": 30,
+    "Skill": 35,
+    "WeaponPower": 65
+   },
+   "growth_per_level_1to50": {
+    "HP": 2.24,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 0.0,
+    "Magic": 1.02,
+    "Leadership": 0.0,
+    "Skill": 0.51,
+    "WeaponPower": 0.71
+   }
+  },
+  "firemage": {
+   "symbol": "firemage",
+   "class_id": 35,
+   "name": "Fire Mage",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [
+    "necromancer",
+    "darkmage"
+   ],
+   "classdown": [
+    "apprentice"
+   ],
+   "param_req": {
+    "4": 45
+   },
+   "can_classup": true,
+   "description": "Powerhouse Magician unit. Launches a powerful Fire elemental magic attack that hits the entire target Row.",
+   "resource_cost": {
+    "gems": 2,
+    "sunstone": 1
+   },
+   "param_add": {
+    "mat": 15,
+    "agi": 5,
+    "def": -50,
+    "weapon_power": 0,
+    "armor": 2
+   },
+   "capacitycost": "100",
+   "archetype": "magician",
+   "moveset_type": "normal",
+   "combatrange": "1:1",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 25,
+    "Morale": 100,
+    "Attack": 3,
+    "Armor": 1,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 59,
+    "Morale": 100,
+    "Attack": 6,
+    "Armor": 1,
+    "Magic": 35,
+    "Leadership": 30,
+    "Skill": 26,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 113,
+    "Morale": 100,
+    "Attack": 11,
+    "Armor": 1,
+    "Magic": 58,
+    "Leadership": 30,
+    "Skill": 43,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 1.8,
+    "Morale": 0.0,
+    "Attack": 0.16,
+    "Armor": 0.0,
+    "Magic": 0.78,
+    "Leadership": 0.0,
+    "Skill": 0.57,
+    "WeaponPower": 1.33
+   }
+  },
+  "icemage": {
+   "symbol": "icemage",
+   "class_id": 36,
+   "name": "Ice Mage",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [
+    "necromancer",
+    "darkmage"
+   ],
+   "classdown": [
+    "apprentice"
+   ],
+   "param_req": {
+    "4": 42
+   },
+   "can_classup": true,
+   "description": "Specialized Magician unit. Launches an Ice elemental magic attack that hits a large area of effect, and inflicts Chill on targets.",
+   "resource_cost": {
+    "gems": 2,
+    "sunstone": 1
+   },
+   "param_add": {
+    "mat": 10,
+    "agi": 10,
+    "def": -50,
+    "weapon_power": 0,
+    "armor": 2
+   },
+   "capacitycost": "100",
+   "archetype": "magician",
+   "moveset_type": "normal",
+   "combatrange": "1:1",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 25,
+    "Morale": 100,
+    "Attack": 3,
+    "Armor": 1,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 60,
+    "Morale": 100,
+    "Attack": 6,
+    "Armor": 1,
+    "Magic": 35,
+    "Leadership": 30,
+    "Skill": 26,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 113,
+    "Morale": 100,
+    "Attack": 11,
+    "Armor": 1,
+    "Magic": 58,
+    "Leadership": 30,
+    "Skill": 43,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 1.8,
+    "Morale": 0.0,
+    "Attack": 0.16,
+    "Armor": 0.0,
+    "Magic": 0.78,
+    "Leadership": 0.0,
+    "Skill": 0.57,
+    "WeaponPower": 1.33
+   }
+  },
+  "lightningmage": {
+   "symbol": "lightningmage",
+   "class_id": 37,
+   "name": "Lightning Mage",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [
+    "necromancer",
+    "darkmage"
+   ],
+   "classdown": [
+    "apprentice"
+   ],
+   "param_req": {
+    "4": 45
+   },
+   "can_classup": true,
+   "description": "Powerhouse Magician unit. Launches a powerful Lightning elemental magic attack that hits the entire target Column.",
+   "resource_cost": {
+    "gems": 2,
+    "sunstone": 1
+   },
+   "param_add": {
+    "mat": 5,
+    "agi": 15,
+    "def": -50,
+    "weapon_power": 0,
+    "armor": 2
+   },
+   "capacitycost": "100",
+   "archetype": "magician",
+   "moveset_type": "normal",
+   "combatrange": "1:1",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 25,
+    "Morale": 100,
+    "Attack": 3,
+    "Armor": 1,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 59,
+    "Morale": 100,
+    "Attack": 6,
+    "Armor": 1,
+    "Magic": 35,
+    "Leadership": 30,
+    "Skill": 26,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 113,
+    "Morale": 100,
+    "Attack": 11,
+    "Armor": 1,
+    "Magic": 58,
+    "Leadership": 30,
+    "Skill": 43,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 1.8,
+    "Morale": 0.0,
+    "Attack": 0.16,
+    "Armor": 0.0,
+    "Magic": 0.78,
+    "Leadership": 0.0,
+    "Skill": 0.57,
+    "WeaponPower": 1.33
+   }
+  },
+  "sorceress": {
+   "symbol": "sorceress",
+   "class_id": 38,
+   "name": "Sorceress",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [
+    "necromancer",
+    "darkmage"
+   ],
+   "classdown": [
+    "siren"
+   ],
+   "param_req": {
+    "4": 50
+   },
+   "can_classup": true,
+   "description": "Specialized Magician unit. Launches a Dark elemental magic attack that hits a large area of effect, with a chance to inflict Stun and Daze.",
+   "resource_cost": {
+    "gems": 2
+   },
+   "param_add": {
+    "mat": 10,
+    "agi": 20,
+    "def": -50,
+    "weapon_power": 0,
+    "armor": 2
+   },
+   "capacitycost": "100",
+   "archetype": "magician",
+   "moveset_type": "normal",
+   "combatrange": "1:1",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 25,
+    "Morale": 100,
+    "Attack": 3,
+    "Armor": 1,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 59,
+    "Morale": 100,
+    "Attack": 6,
+    "Armor": 1,
+    "Magic": 40,
+    "Leadership": 30,
+    "Skill": 26,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 113,
+    "Morale": 100,
+    "Attack": 11,
+    "Armor": 1,
+    "Magic": 70,
+    "Leadership": 30,
+    "Skill": 43,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 1.8,
+    "Morale": 0.0,
+    "Attack": 0.16,
+    "Armor": 0.0,
+    "Magic": 1.02,
+    "Leadership": 0.0,
+    "Skill": 0.57,
+    "WeaponPower": 1.33
+   }
+  },
+  "gunner": {
+   "symbol": "gunner",
+   "class_id": 42,
+   "name": "Gunner",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [],
+   "classdown": [
+    "soldier",
+    "spearman",
+    "cavalier",
+    "skirmisher",
+    "scout",
+    "rogue",
+    "horsebow",
+    "apprentice",
+    "archer",
+    "crossbowman"
+   ],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Standard Firearms unit. Attacks are extremely powerful and bypass almost all Armor.",
+   "resource_cost": {
+    "iron": 2,
+    "pyrocite": 1
+   },
+   "param_add": {
+    "def": 15,
+    "mat": -50,
+    "weapon_power": 0,
+    "armor": 3
+   },
+   "capacitycost": "100",
+   "archetype": "firearms",
+   "moveset_type": "normal",
+   "combatrange": "1:1",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 35,
+    "Morale": 100,
+    "Attack": 10,
+    "Armor": 5,
+    "Magic": 15,
+    "Leadership": 30,
+    "Skill": 10,
+    "WeaponPower": 160
+   },
+   "stats_L20": {
+    "HP": 87,
+    "Morale": 100,
+    "Attack": 16,
+    "Armor": 14,
+    "Magic": 15,
+    "Leadership": 30,
+    "Skill": 20,
+    "WeaponPower": 192
+   },
+   "stats_L50": {
+    "HP": 168,
+    "Morale": 100,
+    "Attack": 25,
+    "Armor": 28,
+    "Magic": 15,
+    "Leadership": 30,
+    "Skill": 35,
+    "WeaponPower": 240
+   },
+   "growth_per_level_1to50": {
+    "HP": 2.71,
+    "Morale": 0.0,
+    "Attack": 0.31,
+    "Armor": 0.47,
+    "Magic": 0.0,
+    "Leadership": 0.0,
+    "Skill": 0.51,
+    "WeaponPower": 1.63
+   }
+  },
+  "dragoon": {
+   "symbol": "dragoon",
+   "class_id": 43,
+   "name": "Dragoon",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [],
+   "classdown": [
+    "cavalier",
+    "scout",
+    "horsebow"
+   ],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Specialized Firearms unit. Attacks are extremely powerful and bypass almost all Armor. Has the mobility of Cavalry.",
+   "resource_cost": {
+    "iron": 2,
+    "horse": 1,
+    "pyrocite": 1
+   },
+   "param_add": {
+    "mhp": 20,
+    "def": 15,
+    "mat": -50,
+    "weapon_power": 0,
+    "armor": 3
+   },
+   "capacitycost": "100",
+   "archetype": "firearms",
+   "moveset_type": "cavalry",
+   "combatrange": "1:1",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 35,
+    "Morale": 100,
+    "Attack": 10,
+    "Armor": 5,
+    "Magic": 15,
+    "Leadership": 30,
+    "Skill": 10,
+    "WeaponPower": 160
+   },
+   "stats_L20": {
+    "HP": 87,
+    "Morale": 100,
+    "Attack": 16,
+    "Armor": 14,
+    "Magic": 15,
+    "Leadership": 30,
+    "Skill": 20,
+    "WeaponPower": 192
+   },
+   "stats_L50": {
+    "HP": 168,
+    "Morale": 100,
+    "Attack": 25,
+    "Armor": 28,
+    "Magic": 15,
+    "Leadership": 30,
+    "Skill": 35,
+    "WeaponPower": 240
+   },
+   "growth_per_level_1to50": {
+    "HP": 2.71,
+    "Morale": 0.0,
+    "Attack": 0.31,
+    "Armor": 0.47,
+    "Magic": 0.0,
+    "Leadership": 0.0,
+    "Skill": 0.51,
+    "WeaponPower": 1.63
+   }
+  },
+  "siegecannon": {
+   "symbol": "siegecannon",
+   "class_id": 44,
+   "name": "Siege Cannon",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [],
+   "classdown": [
+    "soldier",
+    "spearman",
+    "cavalier",
+    "skirmisher",
+    "scout",
+    "rogue",
+    "horsebow",
+    "apprentice",
+    "archer",
+    "crossbowman"
+   ],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Specialized Firearms unit. Can only attack on offense. Launches a powerful barrage from up to 3 tiles away.",
+   "resource_cost": {
+    "iron": 3,
+    "horse": 1,
+    "pyrocite": 2
+   },
+   "param_add": {
+    "mat": -50,
+    "weapon_power": 0,
+    "armor": 0
+   },
+   "capacitycost": "100",
+   "archetype": "firearms",
+   "moveset_type": "normal",
+   "combatrange": "1:2",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 35,
+    "Morale": 100,
+    "Attack": 10,
+    "Armor": 5,
+    "Magic": 15,
+    "Leadership": 30,
+    "Skill": 10,
+    "WeaponPower": 100
+   },
+   "stats_L20": {
+    "HP": 87,
+    "Morale": 100,
+    "Attack": 16,
+    "Armor": 11,
+    "Magic": 15,
+    "Leadership": 30,
+    "Skill": 20,
+    "WeaponPower": 120
+   },
+   "stats_L50": {
+    "HP": 168,
+    "Morale": 100,
+    "Attack": 25,
+    "Armor": 20,
+    "Magic": 15,
+    "Leadership": 30,
+    "Skill": 35,
+    "WeaponPower": 150
+   },
+   "growth_per_level_1to50": {
+    "HP": 2.71,
+    "Morale": 0.0,
+    "Attack": 0.31,
+    "Armor": 0.31,
+    "Magic": 0.0,
+    "Leadership": 0.0,
+    "Skill": 0.51,
+    "WeaponPower": 1.02
+   }
+  },
+  "swordmaster": {
+   "symbol": "swordmaster",
+   "class_id": 92,
+   "name": "Swordmaster",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [],
+   "classdown": [
+    "swordfighter"
+   ],
+   "param_req": {
+    "6": 52
+   },
+   "can_classup": false,
+   "description": "Powerhouse offensive Light Infantry. Executes a powerful double-attack.",
+   "resource_cost": {
+    "iron": 1,
+    "obsidian": 2
+   },
+   "param_add": {
+    "mhp": 20,
+    "agi": 25,
+    "atk": 10,
+    "def": 10,
+    "weapon_power": 18,
+    "armor": 2
+   },
+   "capacitycost": "100",
+   "archetype": "light_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 35,
+    "Morale": 100,
+    "Attack": 18,
+    "Armor": 5,
+    "Magic": 5,
+    "Leadership": 30,
+    "Skill": 30,
+    "WeaponPower": 40
+   },
+   "stats_L20": {
+    "HP": 87,
+    "Morale": 100,
+    "Attack": 27,
+    "Armor": 14,
+    "Magic": 8,
+    "Leadership": 30,
+    "Skill": 42,
+    "WeaponPower": 62
+   },
+   "stats_L50": {
+    "HP": 168,
+    "Morale": 100,
+    "Attack": 39,
+    "Armor": 28,
+    "Magic": 13,
+    "Leadership": 30,
+    "Skill": 60,
+    "WeaponPower": 95
+   },
+   "growth_per_level_1to50": {
+    "HP": 2.71,
+    "Morale": 0.0,
+    "Attack": 0.43,
+    "Armor": 0.47,
+    "Magic": 0.16,
+    "Leadership": 0.0,
+    "Skill": 0.61,
+    "WeaponPower": 1.12
+   }
+  },
+  "swordmaster2": {
+   "symbol": "swordmaster2",
+   "class_id": 108,
+   "name": "Blademaster",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [],
+   "classdown": [
+    "swordfighter"
+   ],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Powerhouse offensive Light Infantry. Executes a powerful double-attack. Attacks with a bow at 2+ range.",
+   "resource_cost": {},
+   "param_add": {
+    "mhp": 20,
+    "agi": 25,
+    "def": 10,
+    "atk": 5,
+    "weapon_power": 18,
+    "armor": 2
+   },
+   "capacitycost": "100",
+   "archetype": "light_infantry",
+   "moveset_type": "normal",
+   "combatrange": "1:2",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 35,
+    "Morale": 100,
+    "Attack": 18,
+    "Armor": 5,
+    "Magic": 5,
+    "Leadership": 30,
+    "Skill": 30,
+    "WeaponPower": 40
+   },
+   "stats_L20": {
+    "HP": 87,
+    "Morale": 100,
+    "Attack": 29,
+    "Armor": 14,
+    "Magic": 8,
+    "Leadership": 30,
+    "Skill": 42,
+    "WeaponPower": 62
+   },
+   "stats_L50": {
+    "HP": 168,
+    "Morale": 100,
+    "Attack": 44,
+    "Armor": 28,
+    "Magic": 13,
+    "Leadership": 30,
+    "Skill": 60,
+    "WeaponPower": 95
+   },
+   "growth_per_level_1to50": {
+    "HP": 2.71,
+    "Morale": 0.0,
+    "Attack": 0.53,
+    "Armor": 0.47,
+    "Magic": 0.16,
+    "Leadership": 0.0,
+    "Skill": 0.61,
+    "WeaponPower": 1.12
+   }
+  },
+  "titan": {
+   "symbol": "titan",
+   "class_id": 77,
+   "name": "Titan",
+   "tier": 3,
+   "cxp_limit": 0,
+   "classup": [],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": true,
+   "description": "Diana's empowered form.",
+   "resource_cost": {},
+   "param_add": {
+    "def": 20,
+    "weapon_power": 12,
+    "armor": 15
+   },
+   "capacitycost": "100",
+   "archetype": "heavy_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:2",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 150,
+    "Morale": 100,
+    "Attack": 30,
+    "Armor": 15,
+    "Magic": 18,
+    "Leadership": 67,
+    "Skill": 15,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 247,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 35,
+    "Magic": 32,
+    "Leadership": 67,
+    "Skill": 24,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 400,
+    "Morale": 100,
+    "Attack": 55,
+    "Armor": 65,
+    "Magic": 53,
+    "Leadership": 67,
+    "Skill": 38,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 5.1,
+    "Morale": 0.0,
+    "Attack": 0.51,
+    "Armor": 1.02,
+    "Magic": 0.71,
+    "Leadership": 0.0,
+    "Skill": 0.47,
+    "WeaponPower": 1.33
+   }
+  },
+  "titan2": {
+   "symbol": "titan2",
+   "class_id": 109,
+   "name": "Exemplar",
+   "tier": 3,
+   "cxp_limit": 0,
+   "classup": [],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": true,
+   "description": "Diana's smaller form, with the same abilities as the Titan.",
+   "resource_cost": {},
+   "param_add": {
+    "def": 20,
+    "weapon_power": 12,
+    "armor": 15
+   },
+   "capacitycost": "100",
+   "archetype": "heavy_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:2",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 150,
+    "Morale": 100,
+    "Attack": 30,
+    "Armor": 15,
+    "Magic": 18,
+    "Leadership": 67,
+    "Skill": 15,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 247,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 35,
+    "Magic": 32,
+    "Leadership": 67,
+    "Skill": 24,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 400,
+    "Morale": 100,
+    "Attack": 55,
+    "Armor": 65,
+    "Magic": 53,
+    "Leadership": 67,
+    "Skill": 38,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 5.1,
+    "Morale": 0.0,
+    "Attack": 0.51,
+    "Armor": 1.02,
+    "Magic": 0.71,
+    "Leadership": 0.0,
+    "Skill": 0.47,
+    "WeaponPower": 1.33
+   }
+  },
+  "arbalest": {
+   "symbol": "arbalest",
+   "class_id": 111,
+   "name": "Arbalest",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [],
+   "classdown": [
+    "crossbowman",
+    "soldier"
+   ],
+   "param_req": {
+    "2": 38
+   },
+   "can_classup": false,
+   "description": "Archery class that fires 3x slightly weaker bolts and resists enemy ranged attacks.",
+   "resource_cost": {
+    "iron": 3
+   },
+   "param_add": {
+    "atk": 5,
+    "mat": -50,
+    "def": 15,
+    "weapon_power": 0,
+    "armor": 3
+   },
+   "capacitycost": "100",
+   "archetype": "archery",
+   "moveset_type": "normal",
+   "combatrange": "1:2",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 35,
+    "Morale": 100,
+    "Attack": 17,
+    "Armor": 5,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 10,
+    "WeaponPower": 55
+   },
+   "stats_L20": {
+    "HP": 87,
+    "Morale": 100,
+    "Attack": 25,
+    "Armor": 14,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 20,
+    "WeaponPower": 87
+   },
+   "stats_L50": {
+    "HP": 168,
+    "Morale": 100,
+    "Attack": 37,
+    "Armor": 28,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 35,
+    "WeaponPower": 135
+   },
+   "growth_per_level_1to50": {
+    "HP": 2.71,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 0.47,
+    "Magic": 0.0,
+    "Leadership": 0.0,
+    "Skill": 0.51,
+    "WeaponPower": 1.63
+   }
+  },
+  "warcat": {
+   "symbol": "warcat",
+   "class_id": 112,
+   "name": "Warcat",
+   "tier": 2,
+   "cxp_limit": 3000,
+   "classup": [
+    "behemoth"
+   ],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": true,
+   "description": "Light Infantry Large Beast that attacks in a wide arc. Increased Critical chance during Night.",
+   "resource_cost": {},
+   "param_add": {
+    "mhp": 10,
+    "atk": 5,
+    "agi": 10,
+    "def": 2
+   },
+   "capacitycost": null,
+   "archetype": "light_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 100,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 5,
+    "Magic": 5,
+    "Leadership": 30,
+    "Skill": 20,
+    "WeaponPower": 40
+   },
+   "stats_L20": {
+    "HP": 197,
+    "Morale": 100,
+    "Attack": 32,
+    "Armor": 14,
+    "Magic": 7,
+    "Leadership": 30,
+    "Skill": 32,
+    "WeaponPower": 62
+   },
+   "stats_L50": {
+    "HP": 350,
+    "Morale": 100,
+    "Attack": 50,
+    "Armor": 28,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 50,
+    "WeaponPower": 95
+   },
+   "growth_per_level_1to50": {
+    "HP": 5.1,
+    "Morale": 0.0,
+    "Attack": 0.61,
+    "Armor": 0.47,
+    "Magic": 0.1,
+    "Leadership": 0.0,
+    "Skill": 0.61,
+    "WeaponPower": 1.12
+   }
+  },
+  "behemoth": {
+   "symbol": "behemoth",
+   "class_id": 113,
+   "name": "Behemoth",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [],
+   "classdown": [
+    "warcat"
+   ],
+   "param_req": {
+    "2": 50,
+    "6": 60
+   },
+   "can_classup": false,
+   "description": "Upgrade to War Cat that gains the ability to bypass blocking when attacking from high ground to lower ground.",
+   "resource_cost": {},
+   "param_add": {
+    "mhp": 40,
+    "atk": 20,
+    "agi": 20,
+    "def": 5
+   },
+   "capacitycost": null,
+   "archetype": "light_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 100,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 5,
+    "Magic": 5,
+    "Leadership": 30,
+    "Skill": 20,
+    "WeaponPower": 40
+   },
+   "stats_L20": {
+    "HP": 197,
+    "Morale": 100,
+    "Attack": 32,
+    "Armor": 14,
+    "Magic": 7,
+    "Leadership": 30,
+    "Skill": 32,
+    "WeaponPower": 62
+   },
+   "stats_L50": {
+    "HP": 350,
+    "Morale": 100,
+    "Attack": 50,
+    "Armor": 28,
+    "Magic": 10,
+    "Leadership": 30,
+    "Skill": 50,
+    "WeaponPower": 95
+   },
+   "growth_per_level_1to50": {
+    "HP": 5.1,
+    "Morale": 0.0,
+    "Attack": 0.61,
+    "Armor": 0.47,
+    "Magic": 0.1,
+    "Leadership": 0.0,
+    "Skill": 0.61,
+    "WeaponPower": 1.12
+   }
+  },
+  "necromancer": {
+   "symbol": "necromancer",
+   "class_id": 114,
+   "name": "Necromancer",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [],
+   "classdown": [
+    "firemage",
+    "icemage",
+    "lightningmage",
+    "templar",
+    "sorceress",
+    "oracle"
+   ],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Magician that steals life to heal themselves and allies. Summons Risen. Greatly increases Unlife Essence accumulation.",
+   "resource_cost": {
+    "gems": 2,
+    "sunstone": 1
+   },
+   "param_add": {
+    "weapon_power": 0,
+    "armor": 2
+   },
+   "capacitycost": null,
+   "archetype": "magician",
+   "moveset_type": "normal",
+   "combatrange": "1:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 25,
+    "Morale": 100,
+    "Attack": 3,
+    "Armor": 1,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 59,
+    "Morale": 100,
+    "Attack": 6,
+    "Armor": 1,
+    "Magic": 35,
+    "Leadership": 30,
+    "Skill": 26,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 113,
+    "Morale": 100,
+    "Attack": 11,
+    "Armor": 1,
+    "Magic": 58,
+    "Leadership": 30,
+    "Skill": 43,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 1.8,
+    "Morale": 0.0,
+    "Attack": 0.16,
+    "Armor": 0.0,
+    "Magic": 0.78,
+    "Leadership": 0.0,
+    "Skill": 0.57,
+    "WeaponPower": 1.33
+   }
+  },
+  "oracle": {
+   "symbol": "oracle",
+   "class_id": 121,
+   "name": "Oracle",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [
+    "necromancer",
+    "darkmage"
+   ],
+   "classdown": [
+    "apprentice",
+    "priestess",
+    "siren",
+    "hospitaller"
+   ],
+   "param_req": {
+    "4": 40
+   },
+   "can_classup": true,
+   "description": "Support class that casts a shield on all allies at the start of battle.",
+   "resource_cost": {
+    "sunstone": 1,
+    "gems": 1
+   },
+   "param_add": {
+    "mhp": 10,
+    "mat": 5,
+    "def": 20,
+    "weapon_power": 40,
+    "armor": 6
+   },
+   "capacitycost": "100",
+   "archetype": "support",
+   "moveset_type": "normal",
+   "combatrange": "0:0",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 30,
+    "Morale": 100,
+    "Attack": 5,
+    "Armor": 1,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 10,
+    "WeaponPower": 30
+   },
+   "stats_L20": {
+    "HP": 73,
+    "Morale": 100,
+    "Attack": 13,
+    "Armor": 1,
+    "Magic": 40,
+    "Leadership": 30,
+    "Skill": 20,
+    "WeaponPower": 44
+   },
+   "stats_L50": {
+    "HP": 140,
+    "Morale": 100,
+    "Attack": 25,
+    "Armor": 1,
+    "Magic": 70,
+    "Leadership": 30,
+    "Skill": 35,
+    "WeaponPower": 65
+   },
+   "growth_per_level_1to50": {
+    "HP": 2.24,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 0.0,
+    "Magic": 1.02,
+    "Leadership": 0.0,
+    "Skill": 0.51,
+    "WeaponPower": 0.71
+   }
+  },
+  "fieldcannon": {
+   "symbol": "fieldcannon",
+   "class_id": 122,
+   "name": "Field Cannon",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [],
+   "classdown": [
+    "soldier",
+    "spearman",
+    "cavalier",
+    "skirmisher",
+    "scout",
+    "rogue",
+    "horsebow",
+    "apprentice",
+    "archer",
+    "crossbowman"
+   ],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Firearms. Can only attack on offense. Attacks from up to 3 tiles away. Cavalry movement type.",
+   "resource_cost": {
+    "iron": 2,
+    "horse": 2,
+    "pyrocite": 2
+   },
+   "param_add": {
+    "mat": -50,
+    "weapon_power": 0,
+    "armor": 0
+   },
+   "capacitycost": "100",
+   "archetype": "firearms",
+   "moveset_type": "cavalry",
+   "combatrange": "1:2",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 35,
+    "Morale": 100,
+    "Attack": 10,
+    "Armor": 5,
+    "Magic": 15,
+    "Leadership": 30,
+    "Skill": 10,
+    "WeaponPower": 88
+   },
+   "stats_L20": {
+    "HP": 87,
+    "Morale": 100,
+    "Attack": 16,
+    "Armor": 11,
+    "Magic": 15,
+    "Leadership": 30,
+    "Skill": 20,
+    "WeaponPower": 104
+   },
+   "stats_L50": {
+    "HP": 168,
+    "Morale": 100,
+    "Attack": 25,
+    "Armor": 20,
+    "Magic": 15,
+    "Leadership": 30,
+    "Skill": 35,
+    "WeaponPower": 129
+   },
+   "growth_per_level_1to50": {
+    "HP": 2.71,
+    "Morale": 0.0,
+    "Attack": 0.31,
+    "Armor": 0.31,
+    "Magic": 0.0,
+    "Leadership": 0.0,
+    "Skill": 0.51,
+    "WeaponPower": 0.84
+   }
+  },
+  "darkmage": {
+   "symbol": "darkmage",
+   "class_id": 39,
+   "name": "Dark Mage",
+   "tier": 3,
+   "cxp_limit": 4500,
+   "classup": [],
+   "classdown": [
+    "firemage",
+    "icemage",
+    "lightningmage",
+    "templar",
+    "sorceress",
+    "oracle"
+   ],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Magician class that attacks in a large area. Lowers effectiveness of heals, Mage and Dragon attacks.",
+   "resource_cost": {
+    "gems": 2,
+    "sunstone": 1
+   },
+   "param_add": {
+    "mat": 30,
+    "mhp": 5,
+    "weapon_power": 0,
+    "armor": 5
+   },
+   "capacitycost": "100",
+   "archetype": "magician",
+   "moveset_type": "normal",
+   "combatrange": "1:2",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 50,
+    "Morale": 100,
+    "Attack": 3,
+    "Armor": 10,
+    "Magic": 20,
+    "Leadership": 30,
+    "Skill": 10,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 118,
+    "Morale": 100,
+    "Attack": 6,
+    "Armor": 20,
+    "Magic": 35,
+    "Leadership": 30,
+    "Skill": 16,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 225,
+    "Morale": 100,
+    "Attack": 11,
+    "Armor": 35,
+    "Magic": 58,
+    "Leadership": 30,
+    "Skill": 25,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 3.57,
+    "Morale": 0.0,
+    "Attack": 0.16,
+    "Armor": 0.51,
+    "Magic": 0.78,
+    "Leadership": 0.0,
+    "Skill": 0.31,
+    "WeaponPower": 1.33
+   }
+  },
+  "queenofdragons": {
+   "symbol": "queenofdragons",
+   "class_id": 120,
+   "name": "Queen of Dragons",
+   "tier": 4,
+   "cxp_limit": 0,
+   "classup": [],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Abigayle's ultimate form. Flying unit. Can heal allies, and use a powerful breath attack.",
+   "resource_cost": {},
+   "param_add": {
+    "mhp": 100,
+    "atk": 50,
+    "def": 10
+   },
+   "capacitycost": "200",
+   "archetype": "dragon",
+   "moveset_type": "flying",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 30,
+    "Morale": 100,
+    "Attack": 5,
+    "Armor": 10,
+    "Magic": 20,
+    "Leadership": 50,
+    "Skill": 10,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 73,
+    "Morale": 100,
+    "Attack": 13,
+    "Armor": 26,
+    "Magic": 40,
+    "Leadership": 50,
+    "Skill": 20,
+    "WeaponPower": 20
+   },
+   "stats_L50": {
+    "HP": 140,
+    "Morale": 100,
+    "Attack": 25,
+    "Armor": 50,
+    "Magic": 70,
+    "Leadership": 50,
+    "Skill": 35,
+    "WeaponPower": 20
+   },
+   "growth_per_level_1to50": {
+    "HP": 2.24,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 0.82,
+    "Magic": 1.02,
+    "Leadership": 0.0,
+    "Skill": 0.51,
+    "WeaponPower": 0.0
+   }
+  },
+  "captain_f": {
+   "symbol": "captain_f",
+   "class_id": 60,
+   "name": "Captain",
+   "tier": 1,
+   "cxp_limit": 0,
+   "classup": [],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Hero's Heavy Infantry class.",
+   "resource_cost": {},
+   "param_add": {
+    "weapon_power": 8,
+    "armor": 6
+   },
+   "capacitycost": "0",
+   "archetype": "heavy_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 60,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 13,
+    "Leadership": 50,
+    "Skill": 17,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 146,
+    "Morale": 100,
+    "Attack": 30,
+    "Armor": 40,
+    "Magic": 25,
+    "Leadership": 50,
+    "Skill": 30,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 280,
+    "Morale": 100,
+    "Attack": 45,
+    "Armor": 70,
+    "Magic": 43,
+    "Leadership": 50,
+    "Skill": 49,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 4.49,
+    "Morale": 0.0,
+    "Attack": 0.51,
+    "Armor": 1.02,
+    "Magic": 0.61,
+    "Leadership": 0.0,
+    "Skill": 0.65,
+    "WeaponPower": 1.33
+   }
+  },
+  "captain_m": {
+   "symbol": "captain_m",
+   "class_id": 61,
+   "name": "Captain",
+   "tier": 1,
+   "cxp_limit": 0,
+   "classup": [],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Hero's Heavy Infantry class.",
+   "resource_cost": {},
+   "param_add": {
+    "weapon_power": 8,
+    "armor": 6
+   },
+   "capacitycost": "0",
+   "archetype": "heavy_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 60,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 13,
+    "Leadership": 50,
+    "Skill": 17,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 146,
+    "Morale": 100,
+    "Attack": 30,
+    "Armor": 40,
+    "Magic": 25,
+    "Leadership": 50,
+    "Skill": 30,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 280,
+    "Morale": 100,
+    "Attack": 45,
+    "Armor": 70,
+    "Magic": 43,
+    "Leadership": 50,
+    "Skill": 49,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 4.49,
+    "Morale": 0.0,
+    "Attack": 0.51,
+    "Armor": 1.02,
+    "Magic": 0.61,
+    "Leadership": 0.0,
+    "Skill": 0.65,
+    "WeaponPower": 1.33
+   }
+  },
+  "strider_f": {
+   "symbol": "strider_f",
+   "class_id": 95,
+   "name": "Strider",
+   "tier": 1,
+   "cxp_limit": 0,
+   "classup": [],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Hero's Light Stealth class.",
+   "resource_cost": {},
+   "param_add": {
+    "weapon_power": 8,
+    "armor": 6
+   },
+   "capacitycost": "0",
+   "archetype": "light_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 60,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 13,
+    "Leadership": 50,
+    "Skill": 17,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 146,
+    "Morale": 100,
+    "Attack": 30,
+    "Armor": 40,
+    "Magic": 25,
+    "Leadership": 50,
+    "Skill": 30,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 280,
+    "Morale": 100,
+    "Attack": 45,
+    "Armor": 70,
+    "Magic": 43,
+    "Leadership": 50,
+    "Skill": 49,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 4.49,
+    "Morale": 0.0,
+    "Attack": 0.51,
+    "Armor": 1.02,
+    "Magic": 0.61,
+    "Leadership": 0.0,
+    "Skill": 0.65,
+    "WeaponPower": 1.33
+   }
+  },
+  "strider_m": {
+   "symbol": "strider_m",
+   "class_id": 96,
+   "name": "Strider",
+   "tier": 1,
+   "cxp_limit": 0,
+   "classup": [],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Hero's Light Stealth class.",
+   "resource_cost": {},
+   "param_add": {
+    "weapon_power": 8,
+    "armor": 6
+   },
+   "capacitycost": "0",
+   "archetype": "light_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 60,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 13,
+    "Leadership": 50,
+    "Skill": 17,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 146,
+    "Morale": 100,
+    "Attack": 30,
+    "Armor": 40,
+    "Magic": 25,
+    "Leadership": 50,
+    "Skill": 30,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 280,
+    "Morale": 100,
+    "Attack": 45,
+    "Armor": 70,
+    "Magic": 43,
+    "Leadership": 50,
+    "Skill": 49,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 4.49,
+    "Morale": 0.0,
+    "Attack": 0.51,
+    "Armor": 1.02,
+    "Magic": 0.61,
+    "Leadership": 0.0,
+    "Skill": 0.65,
+    "WeaponPower": 1.33
+   }
+  },
+  "cleric_f": {
+   "symbol": "cleric_f",
+   "class_id": 97,
+   "name": "Cleric",
+   "tier": 1,
+   "cxp_limit": 0,
+   "classup": [],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Hero's Healer class.",
+   "resource_cost": {},
+   "param_add": {
+    "weapon_power": 8,
+    "armor": 6
+   },
+   "capacitycost": "0",
+   "archetype": "support",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 60,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 13,
+    "Leadership": 50,
+    "Skill": 17,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 146,
+    "Morale": 100,
+    "Attack": 30,
+    "Armor": 40,
+    "Magic": 25,
+    "Leadership": 50,
+    "Skill": 30,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 280,
+    "Morale": 100,
+    "Attack": 45,
+    "Armor": 70,
+    "Magic": 43,
+    "Leadership": 50,
+    "Skill": 49,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 4.49,
+    "Morale": 0.0,
+    "Attack": 0.51,
+    "Armor": 1.02,
+    "Magic": 0.61,
+    "Leadership": 0.0,
+    "Skill": 0.65,
+    "WeaponPower": 1.33
+   }
+  },
+  "cleric_m": {
+   "symbol": "cleric_m",
+   "class_id": 98,
+   "name": "Cleric",
+   "tier": 1,
+   "cxp_limit": 0,
+   "classup": [],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Hero's Healer class.",
+   "resource_cost": {},
+   "param_add": {
+    "weapon_power": 8,
+    "armor": 6
+   },
+   "capacitycost": "0",
+   "archetype": "support",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 60,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 13,
+    "Leadership": 50,
+    "Skill": 17,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 146,
+    "Morale": 100,
+    "Attack": 30,
+    "Armor": 40,
+    "Magic": 25,
+    "Leadership": 50,
+    "Skill": 30,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 280,
+    "Morale": 100,
+    "Attack": 45,
+    "Armor": 70,
+    "Magic": 43,
+    "Leadership": 50,
+    "Skill": 49,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 4.49,
+    "Morale": 0.0,
+    "Attack": 0.51,
+    "Armor": 1.02,
+    "Magic": 0.61,
+    "Leadership": 0.0,
+    "Skill": 0.65,
+    "WeaponPower": 1.33
+   }
+  },
+  "lord_f": {
+   "symbol": "lord_f",
+   "class_id": 62,
+   "name": "Lord",
+   "tier": 2,
+   "cxp_limit": 0,
+   "classup": [],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Hero's Heavy Infantry class.",
+   "resource_cost": {},
+   "param_add": {
+    "weapon_power": 10,
+    "armor": 8
+   },
+   "capacitycost": "0",
+   "archetype": "heavy_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 62,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 13,
+    "Leadership": 50,
+    "Skill": 17,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 147,
+    "Morale": 100,
+    "Attack": 30,
+    "Armor": 40,
+    "Magic": 25,
+    "Leadership": 50,
+    "Skill": 30,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 281,
+    "Morale": 100,
+    "Attack": 45,
+    "Armor": 70,
+    "Magic": 43,
+    "Leadership": 50,
+    "Skill": 49,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 4.47,
+    "Morale": 0.0,
+    "Attack": 0.51,
+    "Armor": 1.02,
+    "Magic": 0.61,
+    "Leadership": 0.0,
+    "Skill": 0.65,
+    "WeaponPower": 1.33
+   }
+  },
+  "lord_m": {
+   "symbol": "lord_m",
+   "class_id": 63,
+   "name": "Lord",
+   "tier": 2,
+   "cxp_limit": 0,
+   "classup": [],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Hero's Heavy Infantry class.",
+   "resource_cost": {},
+   "param_add": {
+    "weapon_power": 10,
+    "armor": 8
+   },
+   "capacitycost": "0",
+   "archetype": "heavy_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 62,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 13,
+    "Leadership": 50,
+    "Skill": 17,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 147,
+    "Morale": 100,
+    "Attack": 30,
+    "Armor": 40,
+    "Magic": 25,
+    "Leadership": 50,
+    "Skill": 30,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 281,
+    "Morale": 100,
+    "Attack": 45,
+    "Armor": 70,
+    "Magic": 43,
+    "Leadership": 50,
+    "Skill": 49,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 4.47,
+    "Morale": 0.0,
+    "Attack": 0.51,
+    "Armor": 1.02,
+    "Magic": 0.61,
+    "Leadership": 0.0,
+    "Skill": 0.65,
+    "WeaponPower": 1.33
+   }
+  },
+  "infiltrator_f": {
+   "symbol": "infiltrator_f",
+   "class_id": 99,
+   "name": "Infiltrator",
+   "tier": 2,
+   "cxp_limit": 0,
+   "classup": [],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Hero's Light Stealth class.",
+   "resource_cost": {},
+   "param_add": {
+    "weapon_power": 8,
+    "armor": 6
+   },
+   "capacitycost": "0",
+   "archetype": "light_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 60,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 13,
+    "Leadership": 50,
+    "Skill": 17,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 146,
+    "Morale": 100,
+    "Attack": 30,
+    "Armor": 40,
+    "Magic": 25,
+    "Leadership": 50,
+    "Skill": 30,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 280,
+    "Morale": 100,
+    "Attack": 45,
+    "Armor": 70,
+    "Magic": 43,
+    "Leadership": 50,
+    "Skill": 49,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 4.49,
+    "Morale": 0.0,
+    "Attack": 0.51,
+    "Armor": 1.02,
+    "Magic": 0.61,
+    "Leadership": 0.0,
+    "Skill": 0.65,
+    "WeaponPower": 1.33
+   }
+  },
+  "infiltrator_m": {
+   "symbol": "infiltrator_m",
+   "class_id": 100,
+   "name": "Infiltrator",
+   "tier": 2,
+   "cxp_limit": 0,
+   "classup": [],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Hero's Light Stealth class.",
+   "resource_cost": {},
+   "param_add": {
+    "weapon_power": 8,
+    "armor": 6
+   },
+   "capacitycost": "0",
+   "archetype": "light_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 60,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 13,
+    "Leadership": 50,
+    "Skill": 17,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 146,
+    "Morale": 100,
+    "Attack": 30,
+    "Armor": 40,
+    "Magic": 25,
+    "Leadership": 50,
+    "Skill": 30,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 280,
+    "Morale": 100,
+    "Attack": 45,
+    "Armor": 70,
+    "Magic": 43,
+    "Leadership": 50,
+    "Skill": 49,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 4.49,
+    "Morale": 0.0,
+    "Attack": 0.51,
+    "Armor": 1.02,
+    "Magic": 0.61,
+    "Leadership": 0.0,
+    "Skill": 0.65,
+    "WeaponPower": 1.33
+   }
+  },
+  "savior_f": {
+   "symbol": "savior_f",
+   "class_id": 101,
+   "name": "Savior",
+   "tier": 2,
+   "cxp_limit": 0,
+   "classup": [],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Hero's Healer class.",
+   "resource_cost": {},
+   "param_add": {
+    "weapon_power": 8,
+    "armor": 6
+   },
+   "capacitycost": "0",
+   "archetype": "support",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 60,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 13,
+    "Leadership": 50,
+    "Skill": 17,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 146,
+    "Morale": 100,
+    "Attack": 30,
+    "Armor": 40,
+    "Magic": 25,
+    "Leadership": 50,
+    "Skill": 30,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 280,
+    "Morale": 100,
+    "Attack": 45,
+    "Armor": 70,
+    "Magic": 43,
+    "Leadership": 50,
+    "Skill": 49,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 4.49,
+    "Morale": 0.0,
+    "Attack": 0.51,
+    "Armor": 1.02,
+    "Magic": 0.61,
+    "Leadership": 0.0,
+    "Skill": 0.65,
+    "WeaponPower": 1.33
+   }
+  },
+  "savior_m": {
+   "symbol": "savior_m",
+   "class_id": 102,
+   "name": "Savior",
+   "tier": 2,
+   "cxp_limit": 0,
+   "classup": [],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Hero's Healer class.",
+   "resource_cost": {},
+   "param_add": {
+    "weapon_power": 8,
+    "armor": 6
+   },
+   "capacitycost": "0",
+   "archetype": "support",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 60,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 13,
+    "Leadership": 50,
+    "Skill": 17,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 146,
+    "Morale": 100,
+    "Attack": 30,
+    "Armor": 40,
+    "Magic": 25,
+    "Leadership": 50,
+    "Skill": 30,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 280,
+    "Morale": 100,
+    "Attack": 45,
+    "Armor": 70,
+    "Magic": 43,
+    "Leadership": 50,
+    "Skill": 49,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 4.49,
+    "Morale": 0.0,
+    "Attack": 0.51,
+    "Armor": 1.02,
+    "Magic": 0.61,
+    "Leadership": 0.0,
+    "Skill": 0.65,
+    "WeaponPower": 1.33
+   }
+  },
+  "knightofdonar_f": {
+   "symbol": "knightofdonar_f",
+   "class_id": 86,
+   "name": "Knight of Donar",
+   "tier": 3,
+   "cxp_limit": 0,
+   "classup": [],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Hero's Heavy Infantry class.",
+   "resource_cost": {},
+   "param_add": {
+    "weapon_power": 10,
+    "armor": 8
+   },
+   "capacitycost": "0",
+   "archetype": "heavy_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 62,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 13,
+    "Leadership": 50,
+    "Skill": 17,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 147,
+    "Morale": 100,
+    "Attack": 30,
+    "Armor": 40,
+    "Magic": 25,
+    "Leadership": 50,
+    "Skill": 30,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 281,
+    "Morale": 100,
+    "Attack": 45,
+    "Armor": 70,
+    "Magic": 43,
+    "Leadership": 50,
+    "Skill": 49,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 4.47,
+    "Morale": 0.0,
+    "Attack": 0.51,
+    "Armor": 1.02,
+    "Magic": 0.61,
+    "Leadership": 0.0,
+    "Skill": 0.65,
+    "WeaponPower": 1.33
+   }
+  },
+  "knightofdonar_m": {
+   "symbol": "knightofdonar_m",
+   "class_id": 87,
+   "name": "Knight of Donar",
+   "tier": 3,
+   "cxp_limit": 0,
+   "classup": [],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Hero's Heavy Infantry class.",
+   "resource_cost": {},
+   "param_add": {
+    "weapon_power": 10,
+    "armor": 8
+   },
+   "capacitycost": "0",
+   "archetype": "heavy_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 62,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 13,
+    "Leadership": 50,
+    "Skill": 17,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 147,
+    "Morale": 100,
+    "Attack": 30,
+    "Armor": 40,
+    "Magic": 25,
+    "Leadership": 50,
+    "Skill": 30,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 281,
+    "Morale": 100,
+    "Attack": 45,
+    "Armor": 70,
+    "Magic": 43,
+    "Leadership": 50,
+    "Skill": 49,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 4.47,
+    "Morale": 0.0,
+    "Attack": 0.51,
+    "Armor": 1.02,
+    "Magic": 0.61,
+    "Leadership": 0.0,
+    "Skill": 0.65,
+    "WeaponPower": 1.33
+   }
+  },
+  "scionofdonar_f": {
+   "symbol": "scionofdonar_f",
+   "class_id": 103,
+   "name": "Scion of Donar",
+   "tier": 3,
+   "cxp_limit": 0,
+   "classup": [],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Hero's Light Stealth class.",
+   "resource_cost": {},
+   "param_add": {
+    "weapon_power": 8,
+    "armor": 6
+   },
+   "capacitycost": "0",
+   "archetype": "light_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 60,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 13,
+    "Leadership": 50,
+    "Skill": 17,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 146,
+    "Morale": 100,
+    "Attack": 30,
+    "Armor": 40,
+    "Magic": 25,
+    "Leadership": 50,
+    "Skill": 30,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 280,
+    "Morale": 100,
+    "Attack": 45,
+    "Armor": 70,
+    "Magic": 43,
+    "Leadership": 50,
+    "Skill": 49,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 4.49,
+    "Morale": 0.0,
+    "Attack": 0.51,
+    "Armor": 1.02,
+    "Magic": 0.61,
+    "Leadership": 0.0,
+    "Skill": 0.65,
+    "WeaponPower": 1.33
+   }
+  },
+  "scionofdonar_m": {
+   "symbol": "scionofdonar_m",
+   "class_id": 104,
+   "name": "Scion of Donar",
+   "tier": 3,
+   "cxp_limit": 0,
+   "classup": [],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Hero's Light Stealth class.",
+   "resource_cost": {},
+   "param_add": {
+    "weapon_power": 8,
+    "armor": 6
+   },
+   "capacitycost": "0",
+   "archetype": "light_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 60,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 13,
+    "Leadership": 50,
+    "Skill": 17,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 146,
+    "Morale": 100,
+    "Attack": 30,
+    "Armor": 40,
+    "Magic": 25,
+    "Leadership": 50,
+    "Skill": 30,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 280,
+    "Morale": 100,
+    "Attack": 45,
+    "Armor": 70,
+    "Magic": 43,
+    "Leadership": 50,
+    "Skill": 49,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 4.49,
+    "Morale": 0.0,
+    "Attack": 0.51,
+    "Armor": 1.02,
+    "Magic": 0.61,
+    "Leadership": 0.0,
+    "Skill": 0.65,
+    "WeaponPower": 1.33
+   }
+  },
+  "avatarofdonar_f": {
+   "symbol": "avatarofdonar_f",
+   "class_id": 105,
+   "name": "Avatar of Donar",
+   "tier": 3,
+   "cxp_limit": 0,
+   "classup": [],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Hero's Healer class.",
+   "resource_cost": {},
+   "param_add": {
+    "weapon_power": 8,
+    "armor": 6
+   },
+   "capacitycost": "0",
+   "archetype": "support",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 60,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 13,
+    "Leadership": 50,
+    "Skill": 17,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 146,
+    "Morale": 100,
+    "Attack": 30,
+    "Armor": 40,
+    "Magic": 25,
+    "Leadership": 50,
+    "Skill": 30,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 280,
+    "Morale": 100,
+    "Attack": 45,
+    "Armor": 70,
+    "Magic": 43,
+    "Leadership": 50,
+    "Skill": 49,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 4.49,
+    "Morale": 0.0,
+    "Attack": 0.51,
+    "Armor": 1.02,
+    "Magic": 0.61,
+    "Leadership": 0.0,
+    "Skill": 0.65,
+    "WeaponPower": 1.33
+   }
+  },
+  "avatarofdonar_m": {
+   "symbol": "avatarofdonar_m",
+   "class_id": 106,
+   "name": "Avatar of Donar",
+   "tier": 3,
+   "cxp_limit": 0,
+   "classup": [],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Hero's Healer class.",
+   "resource_cost": {},
+   "param_add": {
+    "weapon_power": 8,
+    "armor": 6
+   },
+   "capacitycost": "0",
+   "archetype": "support",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": null,
+   "stats_L1": {
+    "HP": 60,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 13,
+    "Leadership": 50,
+    "Skill": 17,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 146,
+    "Morale": 100,
+    "Attack": 30,
+    "Armor": 40,
+    "Magic": 25,
+    "Leadership": 50,
+    "Skill": 30,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 280,
+    "Morale": 100,
+    "Attack": 45,
+    "Armor": 70,
+    "Magic": 43,
+    "Leadership": 50,
+    "Skill": 49,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 4.49,
+    "Morale": 0.0,
+    "Attack": 0.51,
+    "Armor": 1.02,
+    "Magic": 0.61,
+    "Leadership": 0.0,
+    "Skill": 0.65,
+    "WeaponPower": 1.33
+   }
+  },
+  "risenspearman": {
+   "symbol": "risenspearman",
+   "class_id": 115,
+   "name": "Risen Spearman",
+   "tier": 2,
+   "cxp_limit": 0,
+   "classup": [],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Heavy Polearm Risen minion.",
+   "resource_cost": {},
+   "param_add": {},
+   "capacitycost": null,
+   "archetype": "heavy_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": "500",
+   "stats_L1": {
+    "HP": 50,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 1,
+    "Leadership": 30,
+    "Skill": 10,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 118,
+    "Morale": 100,
+    "Attack": 28,
+    "Armor": 40,
+    "Magic": 1,
+    "Leadership": 30,
+    "Skill": 16,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 225,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 70,
+    "Magic": 1,
+    "Leadership": 30,
+    "Skill": 25,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 3.57,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 1.02,
+    "Magic": 0.0,
+    "Leadership": 0.0,
+    "Skill": 0.31,
+    "WeaponPower": 1.33
+   }
+  },
+  "risensoldier": {
+   "symbol": "risensoldier",
+   "class_id": 116,
+   "name": "Risen Soldier",
+   "tier": 2,
+   "cxp_limit": 0,
+   "classup": [],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Heavy Infantry Risen minion.",
+   "resource_cost": {},
+   "param_add": {
+    "mhp": 10,
+    "atk": 3,
+    "def": 3
+   },
+   "capacitycost": null,
+   "archetype": "heavy_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": "500",
+   "stats_L1": {
+    "HP": 50,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 1,
+    "Leadership": 30,
+    "Skill": 10,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 118,
+    "Morale": 100,
+    "Attack": 28,
+    "Armor": 40,
+    "Magic": 1,
+    "Leadership": 30,
+    "Skill": 16,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 225,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 70,
+    "Magic": 1,
+    "Leadership": 30,
+    "Skill": 25,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 3.57,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 1.02,
+    "Magic": 0.0,
+    "Leadership": 0.0,
+    "Skill": 0.31,
+    "WeaponPower": 1.33
+   }
+  },
+  "risenswordsman": {
+   "symbol": "risenswordsman",
+   "class_id": 117,
+   "name": "Risen Swordsman",
+   "tier": 2,
+   "cxp_limit": 0,
+   "classup": [],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Skirmisher style Risen minion.",
+   "resource_cost": {},
+   "param_add": {
+    "agi": 5
+   },
+   "capacitycost": null,
+   "archetype": "light_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": "500",
+   "stats_L1": {
+    "HP": 50,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 10,
+    "Magic": 1,
+    "Leadership": 30,
+    "Skill": 10,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 118,
+    "Morale": 100,
+    "Attack": 28,
+    "Armor": 26,
+    "Magic": 1,
+    "Leadership": 30,
+    "Skill": 16,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 225,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 50,
+    "Magic": 1,
+    "Leadership": 30,
+    "Skill": 25,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 3.57,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 0.82,
+    "Magic": 0.0,
+    "Leadership": 0.0,
+    "Skill": 0.31,
+    "WeaponPower": 1.33
+   }
+  },
+  "risenarcher": {
+   "symbol": "risenarcher",
+   "class_id": 118,
+   "name": "Risen Archer",
+   "tier": 2,
+   "cxp_limit": 0,
+   "classup": [],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Archery Risen minion.",
+   "resource_cost": {},
+   "param_add": {},
+   "capacitycost": null,
+   "archetype": "archery",
+   "moveset_type": "normal",
+   "combatrange": "1:2",
+   "classup_maxmastery": "500",
+   "stats_L1": {
+    "HP": 50,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 1,
+    "Magic": 1,
+    "Leadership": 30,
+    "Skill": 10,
+    "WeaponPower": 30
+   },
+   "stats_L20": {
+    "HP": 118,
+    "Morale": 100,
+    "Attack": 28,
+    "Armor": 9,
+    "Magic": 1,
+    "Leadership": 30,
+    "Skill": 16,
+    "WeaponPower": 56
+   },
+   "stats_L50": {
+    "HP": 225,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 21,
+    "Magic": 1,
+    "Leadership": 30,
+    "Skill": 25,
+    "WeaponPower": 95
+   },
+   "growth_per_level_1to50": {
+    "HP": 3.57,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 0.41,
+    "Magic": 0.0,
+    "Leadership": 0.0,
+    "Skill": 0.31,
+    "WeaponPower": 1.33
+   }
+  },
+  "risenwarrior": {
+   "symbol": "risenwarrior",
+   "class_id": 119,
+   "name": "Risen Warrior",
+   "tier": 2,
+   "cxp_limit": 0,
+   "classup": [],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": false,
+   "description": "Champion style Risen minion.",
+   "resource_cost": {},
+   "param_add": {},
+   "capacitycost": null,
+   "archetype": "heavy_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": "500",
+   "stats_L1": {
+    "HP": 50,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 1,
+    "Magic": 1,
+    "Leadership": 30,
+    "Skill": 10,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 118,
+    "Morale": 100,
+    "Attack": 28,
+    "Armor": 9,
+    "Magic": 1,
+    "Leadership": 30,
+    "Skill": 16,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 225,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 21,
+    "Magic": 1,
+    "Leadership": 30,
+    "Skill": 25,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 3.57,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 0.41,
+    "Magic": 0.0,
+    "Leadership": 0.0,
+    "Skill": 0.31,
+    "WeaponPower": 1.33
+   }
+  },
+  "risenknight": {
+   "symbol": "risenknight",
+   "class_id": 123,
+   "name": "Risen Knight",
+   "tier": 3,
+   "cxp_limit": 0,
+   "classup": [],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": false,
+   "description": null,
+   "resource_cost": {},
+   "param_add": {
+    "mhp": 50,
+    "atk": 20,
+    "def": 20
+   },
+   "capacitycost": null,
+   "archetype": "heavy_infantry",
+   "moveset_type": "normal",
+   "combatrange": "0:1",
+   "classup_maxmastery": "500",
+   "stats_L1": {
+    "HP": 50,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 1,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 118,
+    "Morale": 100,
+    "Attack": 28,
+    "Armor": 40,
+    "Magic": 1,
+    "Leadership": 30,
+    "Skill": 23,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 225,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 70,
+    "Magic": 1,
+    "Leadership": 30,
+    "Skill": 35,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 3.57,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 1.02,
+    "Magic": 0.0,
+    "Leadership": 0.0,
+    "Skill": 0.41,
+    "WeaponPower": 1.33
+   }
+  },
+  "risenarchmage": {
+   "symbol": "risenarchmage",
+   "class_id": 124,
+   "name": "Risen Archmage",
+   "tier": 3,
+   "cxp_limit": 0,
+   "classup": [],
+   "classdown": [],
+   "param_req": {},
+   "can_classup": false,
+   "description": null,
+   "resource_cost": {},
+   "param_add": {},
+   "capacitycost": null,
+   "archetype": "magician",
+   "moveset_type": "normal",
+   "combatrange": "1:1",
+   "classup_maxmastery": "1500",
+   "stats_L1": {
+    "HP": 50,
+    "Morale": 100,
+    "Attack": 20,
+    "Armor": 20,
+    "Magic": 30,
+    "Leadership": 30,
+    "Skill": 15,
+    "WeaponPower": 20
+   },
+   "stats_L20": {
+    "HP": 118,
+    "Morale": 100,
+    "Attack": 28,
+    "Armor": 40,
+    "Magic": 44,
+    "Leadership": 30,
+    "Skill": 23,
+    "WeaponPower": 46
+   },
+   "stats_L50": {
+    "HP": 225,
+    "Morale": 100,
+    "Attack": 40,
+    "Armor": 70,
+    "Magic": 65,
+    "Leadership": 30,
+    "Skill": 35,
+    "WeaponPower": 85
+   },
+   "growth_per_level_1to50": {
+    "HP": 3.57,
+    "Morale": 0.0,
+    "Attack": 0.41,
+    "Armor": 1.02,
+    "Magic": 0.71,
+    "Leadership": 0.0,
+    "Skill": 0.41,
+    "WeaponPower": 1.33
+   }
+  }
+ }
+}
