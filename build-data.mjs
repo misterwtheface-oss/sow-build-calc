@@ -49,6 +49,21 @@ const AFFINITIES = [
 ];
 const affinityIds = new Set(AFFINITIES.map((a) => a.id));
 
+// The formation grid, verbatim from 0241_UnitGrid.rb. The game draws the squad on
+// sowgrid.png (431×95), a right-skewed 3-rank parallelogram (front rank = high x, on
+// the right / enemy-facing; the 5 columns step down the slant at 16px half-tiles).
+// GRID.origins[position] is the per-tile foot-origin (bottom-center) for a normal-size
+// unit (SIZED_ORIGINS[1]); position = slot index (leader = 0). Sprites anchor there.
+const GRID = {
+  width: 431,
+  height: 95,
+  origins: [
+    [376, 12], [368, 29], [361, 44], [351, 61], [343, 78], // front rank (row 0)
+    [283, 12], [266, 29], [248, 44], [232, 61], [215, 78], // middle rank (row 1)
+    [185, 12], [164, 29], [141, 44], [119, 61], [94, 78],  // back rank (row 2)
+  ],
+};
+
 // Stat display metadata. Keys match classtree stat objects verbatim. Caps are the
 // engine's hard clamps (02_stats_scaling.md); combat softcaps are NG+-gated and not
 // applied to this base-table view.
@@ -96,6 +111,15 @@ const cxpLimits = ctRaw.cxp_limits || {};
 const actorsRaw = readJSON("Actors.json");
 const actors = (Array.isArray(actorsRaw) ? actorsRaw : Object.values(actorsRaw)).filter(Boolean);
 
+// Per-class cover/block ability (keyed by engine class_id), precomputed from the extract:
+// archetype sets (0264 LIGHT/HEAVY_COVER/BLOCK_ARCHETYPES) OR explicit <classgroup lightcover/
+// heavycover/lightblock/heavyblock> tags. {cl,ch,bl,bh} = can cover/block light/heavy.
+const classGroups = readJSON("classgroups.json");
+const abilitiesFor = (classId) => {
+  const g = classGroups[String(classId)] || {};
+  return { cover: { light: !!g.cl, heavy: !!g.ch }, block: { light: !!g.bl, heavy: !!g.bh } };
+};
+
 // Resolve a class's card art. Most classes have classcard_<symbol w/o underscores>.png;
 // the gendered story-classes (captain_f, lord_m, …) reuse the game's generic tier cards
 // (classcard_t{1..3}_{f|m}.png), which is exactly what the game does for them.
@@ -108,6 +132,39 @@ function classCard(c) {
     if (has(gen)) return gen;
   }
   return null;
+}
+
+// Resolve a class's grid sprite (assets/sprites/class_<symbol>.png). Only the ~21
+// name-matched base-class templates get a sliced sprite; every other class walks
+// classdown to the nearest ancestor that has one, then falls back to an
+// archetype-representative sprite so every class shows a thematically-fitting unit.
+// Requires classBySymbol populated.
+const ARCHETYPE_SPRITE = {
+  heavy_infantry: "fighter", light_infantry: "soldier", archery: "archer",
+  heavy_cavalry: "cavalier", light_cavalry: "cavalier", support: "priestess",
+  magician: "apprentice", firearms: "crossbowman", dragon: "bluedragon",
+};
+function classSprite(c) {
+  const seen = new Set();
+  let cur = c;
+  while (cur && !seen.has(cur.id)) {
+    seen.add(cur.id);
+    const p = `assets/sprites/class_${cur.id}.png`;
+    if (has(p)) return p;
+    const down = Array.isArray(cur.classdown) ? cur.classdown[0] : cur.classdown;
+    cur = down ? classBySymbol.get(down) : null;
+  }
+  // fall back to the archetype's representative sprite (which itself resolves via a template)
+  const rep = ARCHETYPE_SPRITE[c.archetype];
+  if (rep) {
+    const repClass = classBySymbol.get(rep);
+    if (repClass) {
+      const rp = `assets/sprites/class_${rep}.png`;
+      if (has(rp)) return rp;
+      return classSprite(repClass); // rep resolves via classdown to a real sprite
+    }
+  }
+  return `assets/sprites/class_soldier.png`; // final default (soldier template always exists)
 }
 
 function combatMax(cr) { const m = /:(\d+)/.exec(String(cr || "")); return m ? Number(m[1]) : 0; }
@@ -156,6 +213,7 @@ const classes = classNodes.map((c) => {
     growth: c.growth_per_level_1to50 || {},
     description: c.description || "",
     traits,
+    ...abilitiesFor(c.class_id),
     icon: has(card) ? card : null,
   };
   if (classBySymbol.has(rec.id)) err(`duplicate class symbol "${rec.id}"`);
@@ -164,6 +222,15 @@ const classes = classNodes.map((c) => {
   if (!rec.icon) warn(`class "${rec.id}" has no class card (${card})`);
   return rec;
 });
+
+// second pass (classBySymbol now complete): resolve each class's grid sprite via
+// its own template or the nearest classdown ancestor that has one.
+let classSpriteCount = 0;
+for (const c of classes) {
+  c.sprite = classSprite(c);
+  if (c.sprite) classSpriteCount++;
+  else warn(`class "${c.id}" has no grid sprite (no template up the classdown chain)`);
+}
 
 // ── parse the hero roster from actor note-tags ──
 function tag(note, re) { const m = re.exec(note || ""); return m ? m[1].trim() : null; }
@@ -191,6 +258,11 @@ function parseHero(a) {
     cands.push(`assets/portraits/info_hero${gender === "f" ? "f" : "m"}.png`);
   }
   const portrait = cands.find(has) || null;
+  // battle sprite (assets/sprites/hero_<id>.png): the hero's class battle sprite, resolved
+  // by tools/slice_sprites.py from Graphics/Animations (00single_*_blue). Heroes with no
+  // resolvable sprite fall back to their class sprite in the app.
+  const spritePath = `assets/sprites/hero_${a.id}.png`;
+  const sprite = has(spritePath) ? spritePath : null;
   return {
     id: `hero_${a.id}`,
     actorId: a.id,
@@ -204,6 +276,8 @@ function parseHero(a) {
     customTree: customTree || null,
     innateTraits: innate,
     portrait,
+    sprite,
+    ...abilitiesFor(a.class_id),
   };
 }
 
@@ -242,16 +316,24 @@ for (const c of classes) {
     if (!(k in PARAM_LABEL)) warn(`class "${c.id}" param_req uses unmapped param id "${k}"`);
   }
   if (c.icon && !has(c.icon)) err(`class "${c.id}" -> ${c.icon} (missing asset)`);
+  if (c.sprite && !has(c.sprite)) err(`class "${c.id}" -> ${c.sprite} (missing asset)`);
 }
 for (const a of AFFINITIES) if (!has(a.icon)) err(`affinity "${a.id}" -> ${a.icon} (missing asset)`);
 for (const s of STAT_META) if (s.icon && !has(s.icon)) warn(`stat "${s.key}" -> ${s.icon} (missing asset)`);
-for (const h of heroes) if (h.portrait && !has(h.portrait)) err(`hero "${h.name}" -> ${h.portrait} (missing asset)`);
+for (const h of heroes) {
+  if (h.portrait && !has(h.portrait)) err(`hero "${h.name}" -> ${h.portrait} (missing asset)`);
+  if (h.sprite && !has(h.sprite)) err(`hero "${h.name}" -> ${h.sprite} (missing asset)`);
+}
+const heroSpriteCount = heroes.filter((h) => h.sprite).length;
+for (const g of GRID.origins) if (g.length !== 2) err(`GRID.origins entry malformed: ${JSON.stringify(g)}`);
+if (GRID.origins.length !== 15) err(`GRID.origins must have 15 entries, has ${GRID.origins.length}`);
 
 // ── hygiene report ──
 const assetCount = classes.filter((c) => c.icon).length + heroes.filter((h) => h.portrait).length
-  + AFFINITIES.length + STAT_META.length;
+  + classSpriteCount + heroSpriteCount + AFFINITIES.length + STAT_META.length;
 console.log("── Data hygiene report ──────────────────────────");
 console.log(`✓ ${classes.length} classes, ${heroes.length} heroes, ${traits.length} traits, ~${assetCount} assets checked`);
+console.log(`  sprites: ${heroSpriteCount}/${heroes.length} heroes, ${classSpriteCount}/${classes.length} classes have a grid sprite`);
 if (errors.length) { console.log(`✗ ${errors.length} error(s):`); errors.forEach((e) => console.log(`    ${e}`)); }
 if (warnings.length) { console.log(`⚠ ${warnings.length} warning(s):`); warnings.forEach((w) => console.log(`    ${w}`)); }
 console.log("─".repeat(50));
@@ -269,6 +351,15 @@ const data = {
   statMeta: STAT_META,
   paramLabel: PARAM_LABEL,
   cxpLimits,
+  grid: GRID,
+  // formation combat constants (0264/0462): cover/block column ranges + multipliers.
+  // A rank is 6 rectangles; a unit is 2 wide at column 0-4, so |Δcol| is in half-tiles.
+  combat: {
+    coverMod: 0.8, rowMod: 0.8,          // damage ×0.8 if covered; ×0.8 per occupied rank in front
+    coverCol: { light: 1, heavy: 2 },     // covered if a front ally is within this |Δcol|
+    block: { fullLimit: 1, halfLimit: 2, fullMult: 0, halfMult: 0.5 }, // targeting-rate mults
+    unitWidth: 2, rowRects: 6,            // a unit spans 2 of the row's 6 rectangles
+  },
 };
 fs.writeFileSync(OUT, `window.${ACRONYM}_DATA = ${JSON.stringify(data)};\n`);
 console.log(`Wrote ${OUT} (window.${ACRONYM}_DATA): ${classes.length} classes, ${heroes.length} heroes.`);

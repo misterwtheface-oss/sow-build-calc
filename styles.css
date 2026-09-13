@@ -25,7 +25,6 @@
   --neg:           #d0685a;
   --cap:           #e6c374;
   --radius: 8px;
-  --cell: 96px;               /* formation cell size (mobile) */
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -66,33 +65,104 @@ button.danger { background: linear-gradient(var(--crimson-lite), var(--crimson))
 .app-header .tagline { font-size: .72rem; color: var(--muted); font-weight: 400; }
 .planning-main { padding: 1rem; max-height: 100dvh; overflow-y: auto; }
 
-/* ── formation grid (3 rows × 5 cols) ── */
+/* ── formation stage: the game's 3D-angled squad grid (sowgrid.png) ── */
 .formation-wrap { margin-bottom: 1.2rem; }
 .formation-legend { display: flex; gap: .8rem; flex-wrap: wrap; font-size: .75rem; color: var(--muted); margin-bottom: .5rem; }
-.formation-grid {
-  display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px;
-  background: rgba(0,0,0,.25); padding: 8px; border: 1px solid var(--border);
-  border-radius: var(--radius); overflow-x: auto;
+/* battlefield: the game's own grassland battleback (skybox+hills+grass), grid sits on it */
+.battlefield {
+  position: relative; width: 100%; max-width: 620px; margin: 0 auto 1rem;
+  aspect-ratio: 1000 / 480;
+  background: url("assets/grid/battleback.png") center/cover no-repeat #1a2410;
+  border: 2px solid var(--border); border-radius: var(--radius); overflow: hidden;
+  box-shadow: inset 0 0 46px rgba(0,0,0,.4), 0 6px 16px rgba(0,0,0,.5);
+  image-rendering: auto;
 }
-.rowlabel { grid-column: 1 / -1; font-size: .7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: .2rem; }
-.cell {
-  position: relative; aspect-ratio: 1; min-width: 0;
-  background: linear-gradient(160deg, var(--surface), var(--bg2));
-  border: 1px solid var(--border); border-radius: 6px;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 2px; padding: 3px; text-align: center; overflow: hidden;
+.formation-stage {
+  position: relative;
+  width: 100%; max-width: 560px;
+  margin: 5.5rem auto 1rem;         /* top room for sprites standing above the back rank */
+  container-type: size;             /* sprite sizing via cqh (below) */
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,.4));
 }
-.cell:hover { border-color: var(--gold); }
-.cell.filled { background: linear-gradient(160deg, #2e2a1c, var(--bg2)); }
-.cell.leader { border-color: var(--gold); box-shadow: inset 0 0 0 1px var(--gold); }
-.cell .leader-badge { position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; z-index: 2; }
-.cell img.unit-art { width: 74%; height: 58%; }
-.cell .unit-name { font-size: .62rem; line-height: 1.05; color: var(--text); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.cell .unit-class { font-size: .56rem; color: var(--muted); }
-.cell .unit-meta { position: absolute; bottom: 2px; right: 2px; display: flex; align-items: center; gap: 2px; }
-.cell .unit-meta img { width: 13px; height: 13px; }
-.cell .unit-lv { font-size: .55rem; color: var(--gold-bright); background: rgba(0,0,0,.55); border-radius: 3px; padding: 0 2px; }
-.cell .slot-empty { color: var(--muted); font-size: .8rem; }
+/* inside the battlefield: sit the grid low on the grass, sprites rise onto the field */
+.battlefield .formation-stage {
+  position: absolute; left: 5%; right: 5%; bottom: 8%;
+  width: auto; max-width: none; margin: 0; filter: none;
+}
+.formation-stage .grid-bg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: fill; opacity: .55; pointer-events: none;
+  image-rendering: pixelated; mix-blend-mode: screen;
+}
+/* a slot is a zero-size anchor at its foot-origin; children rise from the feet.
+   --foot-drop nudges sprites down so their feet sit onto the grid surface. */
+.formation-stage { --foot-drop: 11px; }
+.grid-slot {
+  position: absolute; transform: translate(-50%, calc(-100% + var(--foot-drop)));
+  padding: 0; margin: 0; border: 0; background: none; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; line-height: 0;
+}
+.grid-slot .grid-sprite {
+  height: 66cqh; width: auto; max-width: 240cqw;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 1px 0 rgba(0,0,0,.5));
+  transition: transform .08s ease;
+}
+.grid-slot:hover .grid-sprite,
+.grid-slot:focus-visible .grid-sprite { transform: translateY(-3px); filter: drop-shadow(0 3px 4px rgba(0,0,0,.6)) brightness(1.08); }
+.grid-slot .leader-badge { position: absolute; top: -6px; left: 50%; transform: translateX(-50%); width: 16px; height: 16px; z-index: 5; }
+/* name/level tag: subtle at rest, full on hover (mobile taps open the editor) */
+.grid-slot .grid-tag {
+  display: inline-flex; align-items: center; gap: 3px;
+  margin-top: 2px; padding: 0 4px; height: 15px; line-height: 15px;
+  font-size: .58rem; white-space: nowrap; color: var(--text);
+  background: rgba(0,0,0,.6); border-radius: 3px;
+  opacity: 0; transition: opacity .1s ease; pointer-events: none;
+}
+.grid-slot .grid-tag img { width: 11px; height: 11px; }
+.grid-slot .grid-tag em { color: var(--gold-bright); font-style: normal; }
+.grid-slot .grid-tag .gt-name { max-width: 84px; overflow: hidden; text-overflow: ellipsis; }
+.grid-slot:hover .grid-tag, .grid-slot:focus-visible .grid-tag { opacity: 1; }
+.grid-slot.leader .grid-tag { opacity: .85; }
+/* empty tiles: a faint marker sitting on the tile */
+.grid-slot.empty { transform: translate(-50%, calc(-50% + var(--foot-drop))); }
+.grid-slot.empty .tile-mark {
+  display: grid; place-items: center; width: 26px; height: 26px;
+  font-size: .95rem; color: var(--muted);
+  background: radial-gradient(rgba(0,0,0,.35), rgba(0,0,0,.05));
+  border: 1px dashed var(--border-lite); border-radius: 50%;
+  line-height: 1;
+}
+.grid-slot.empty:hover .tile-mark { color: var(--gold-bright); border-color: var(--gold); }
+.grid-slot.empty.leader .tile-mark { color: var(--gold); border-color: var(--gold); border-style: solid; }
+.grid-slot.filled .tile-mark { font-size: 1.4rem; color: var(--gold-bright); }
+/* rank orientation hints */
+.formation-stage .rank-label {
+  position: absolute; bottom: -1.15rem; font-size: .62rem; letter-spacing: .5px;
+  color: var(--muted); text-transform: uppercase; pointer-events: none;
+}
+.formation-stage .rank-label.front { right: 2%; color: var(--gold); }
+.formation-stage .rank-label.back { left: 2%; }
+
+/* cover: badge on covered units + on-hover "who shields whom" highlight */
+.grid-slot .cover-badge {
+  position: absolute; top: -4px; right: -2px; z-index: 6;
+  font-size: .72rem; line-height: 1; filter: drop-shadow(0 1px 1px rgba(0,0,0,.7));
+  pointer-events: none;
+}
+.grid-slot.is-covered .grid-sprite { filter: drop-shadow(0 0 3px var(--steel-bright)) drop-shadow(0 1px 0 rgba(0,0,0,.5)); }
+.grid-slot.coverer .grid-sprite { filter: drop-shadow(0 0 4px var(--gold-bright)) brightness(1.1); }
+.grid-slot.coverer::after {
+  content: "shields ▶"; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
+  font-size: .55rem; color: var(--gold-bright); white-space: nowrap; text-shadow: 0 1px 2px #000;
+}
+.grid-slot.cover-target { }
+.grid-slot.cover-target .grid-sprite { filter: drop-shadow(0 0 5px var(--gold)) drop-shadow(0 0 2px var(--gold-bright)); }
+.grid-slot.cover-target::before {
+  content: ""; position: absolute; left: 50%; bottom: -3px; transform: translateX(-50%);
+  width: 70%; height: 10px; border-radius: 50%;
+  background: radial-gradient(var(--gold-bright), rgba(201,162,75,0)); opacity: .8; z-index: -1;
+}
 
 /* ── squad summary ── */
 .squad-summary { margin-bottom: 1.2rem; }
@@ -205,9 +275,13 @@ table.squad-xref thead th { position: sticky; top: 0; z-index: 2; background: va
 }
 .ovl-card:hover { border-color: var(--gold); }
 .ovl-card.selected { box-shadow: inset 0 0 0 2px var(--gold-bright); background: #322c1c; }
-.ovl-card img { width: 100%; aspect-ratio: 1; }
+.ovl-card img { width: 100%; height: 56px; object-fit: contain; image-rendering: pixelated; }
 .ovl-card .oc-name { font-size: .68rem; text-align: center; line-height: 1.05; }
 .ovl-card .oc-aff { position: absolute; top: 3px; right: 3px; width: 15px; height: 15px; }
+/* generic-unit card (first entry in the roster) */
+.ovl-card.generic { justify-content: center; border-style: dashed; border-color: var(--border-lite); min-height: 84px; }
+.ovl-card.generic .oc-generic { font-size: 2rem; color: var(--muted); height: 56px; display: grid; place-items: center; }
+.ovl-card.generic:hover .oc-generic { color: var(--gold-bright); }
 
 /* unit editor controls (right panel) */
 .editor-row { margin: .7rem 0; }
@@ -247,7 +321,7 @@ table.squad-xref thead th { position: sticky; top: 0; z-index: 2; background: va
 
 /* ── mobile-first: overlays full-screen; single info scroller ── */
 @media (max-width: 640px) {
-  :root { --cell: 19vw; }
+  .formation-stage { margin-top: 4.5rem; }
   .overlay-panel, .detail-panel { width: 100vw; height: 100dvh; max-height: 100dvh; max-width: none; border: none; border-radius: 0; }
   .overlay-body { flex-direction: column; }
   /* stack the info panels into a single scroller below the grid */
