@@ -181,8 +181,12 @@ function parseHero(a) {
   while ((mm = reT.exec(note))) innate.push(mm[1].trim());
   // portrait candidate: info_<nickname|name>.png (game single-portrait art). The
   // Protagonist uses the gendered generic hero portrait (info_herom/info_herof).
-  const cands = [a.nickname, a.name].filter(Boolean)
-    .map((s) => `assets/portraits/info_${String(s).toLowerCase()}.png`);
+  // Try the raw lowercased name and a space-free variant (the shipped portrait files are
+  // renamed space-free so URLs stay clean, e.g. "Captain Antares" -> info_captainantares.png).
+  const cands = [a.nickname, a.name].filter(Boolean).flatMap((s) => {
+    const low = String(s).toLowerCase();
+    return [`assets/portraits/info_${low.replace(/\s+/g, "")}.png`, `assets/portraits/info_${low}.png`];
+  });
   if (/^hero$/i.test(a.nickname || "") || /protagonist/i.test(a.name || "")) {
     cands.push(`assets/portraits/info_hero${gender === "f" ? "f" : "m"}.png`);
   }
