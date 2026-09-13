@@ -223,6 +223,30 @@ const classes = classNodes.map((c) => {
   return rec;
 });
 
+// gavail: gender availability by classup reachability from the gendered bases (15 §2a).
+// Male bases Fighter/Bowman, female bases Militia/Medic; SHARED = reachable from both.
+// Verified against the in-game class-history rule (matches the 11-shared set exactly).
+{
+  const reach = (roots) => {
+    const seen = new Set(), stack = [...roots];
+    while (stack.length) {
+      const s = stack.pop();
+      if (seen.has(s) || !classBySymbol.has(s)) continue;
+      seen.add(s);
+      (classBySymbol.get(s).classup || []).forEach((c) => stack.push(c));
+    }
+    return seen;
+  };
+  const maleReach = reach(["fighter", "bowman"]), femaleReach = reach(["militia", "medic"]);
+  let shared = 0, maleOnly = 0, femaleOnly = 0;
+  for (const c of classes) {
+    const m = maleReach.has(c.id), f = femaleReach.has(c.id);
+    c.gavail = (m && f) ? "shared" : f ? "f" : m ? "m" : "any";
+    if (c.gavail === "shared") shared++; else if (c.gavail === "f") femaleOnly++; else if (c.gavail === "m") maleOnly++;
+  }
+  console.log(`  gavail: ${maleOnly} male-only / ${femaleOnly} female-only / ${shared} shared`);
+}
+
 // second pass (classBySymbol now complete): resolve each class's grid sprite via
 // its own template or the nearest classdown ancestor that has one.
 let classSpriteCount = 0;

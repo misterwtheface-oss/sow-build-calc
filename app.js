@@ -47,8 +47,43 @@
   const PARAM_ADD_MAP = { mhp: "HP", atk: "Attack", mat: "Magic", def: "Armor", armor: "Armor", weapon_power: "WeaponPower", skl: "Skill" };
   const RESOURCE_LABEL = { iron: "Iron", obsidian: "Obsidian", gems: "Gems", horse: "Horse", sunstone: "Sunstone", pyrocite: "Pyrocite" };
 
+  // ── gender availability by classup reachability from the gendered bases (15 §2a).
+  // Male bases Fighter/Bowman, female bases Militia/Medic; SHARED = reachable from both.
+  const _reach = (roots) => {
+    const seen = new Set(), stack = roots.slice();
+    while (stack.length) { const s = stack.pop(); if (seen.has(s) || !classById.has(s)) continue; seen.add(s);
+      (classById.get(s).classup || []).forEach((c) => stack.push(c)); }
+    return seen;
+  };
+  const _male = _reach(["fighter", "bowman"]), _female = _reach(["militia", "medic"]);
+  // Prefer the build-time `gavail` field (build-data.mjs); fall back to the client reachability calc.
+  function gavail(id) {
+    const c = classById.get(id);
+    if (c && c.gavail) return c.gavail;
+    const m = _male.has(id), f = _female.has(id);
+    return (m && f) ? "shared" : f ? "f" : m ? "m" : "any";
+  }
+  const GBADGE = { m: "♂", f: "♀", shared: "⚥" }, GLABEL = { m: "Male tree", f: "Female tree", shared: "Shared (both genders)", any: "" };
+  // battle sprite (assets/sprites/class_<id>.png), falling back to the classcard icon
+  const battleSprite = (cls) => (cls ? `assets/sprites/class_${cls.id}.png` : "");
+
+  const lensFromGavail = (g) => (g === "f" ? "f" : g === "m" ? "m" : "all");
+  // Set the class-tree lens from the unit being edited: heroes LOCK to their gender;
+  // generics default from the class's gavail but stay toggleable (generic gender is ambiguous).
+  function setLensForEditedUnit() {
+    if (!state.ovl) { state.treeLockGender = null; return; }
+    const hero = state.ovl.heroId ? heroById.get(state.ovl.heroId) : null;
+    if (hero) {
+      const g = hero.gender === "f" ? "f" : "m";
+      state.treeLens = g; state.treeLockGender = g;
+    } else {
+      const cls = state.ovl.classId ? classById.get(state.ovl.classId) : null;
+      state.treeLens = lensFromGavail(cls && cls.gavail); state.treeLockGender = null;
+    }
+  }
+
   // ── state ──
-  const state = { squad: load(), ovl: null };
+  const state = { squad: load(), ovl: null, treeLens: "all", treeLockGender: null };
 
   function makeUnit(hero) {
     return { heroId: hero.id, classId: hero.startClass || null, level: hero.level || 1, affinity: hero.affinity, homegrown: true };
@@ -516,6 +551,8 @@
   // `editing` = opened from the roster editor, so an "Assign to unit" action is offered.
   function openClassDetail(symbol, editing) {
     const cls = classById.get(symbol); if (!cls) return;
+    if (!editing) state.treeLockGender = null;   // browsing from the main app is unlocked
+    state.detailClass = cls.id; state.detailEditing = editing;   // remembered so the gender lens can re-render
     const root = document.getElementById("detail-overlay-root");
     root.innerHTML = `
       <div class="overlay-panel detail-panel" role="dialog" aria-modal="true">
@@ -534,40 +571,70 @@
   }
   const isLocked = () => { const h = state.ovl && state.ovl.heroId ? heroById.get(state.ovl.heroId) : null; return h ? h.locked : false; };
 
-  function chip(symbol, down) {
+  // lens: which genders' classes are shown. 'all' shows everything; 'm'/'f' hide the other
+  // gender's exclusive classes (shared classes always show) — mirrors the class-history rule (15 §2a).
+  const lensAllows = (id) => { const g = gavail(id); return state.treeLens === "all" || g === "shared" || g === "any" || g === state.treeLens; };
+  const gBadge = (id) => { const g = gavail(id); return GBADGE[g] ? `<span class="gbadge ${g}" title="${GLABEL[g]}">${GBADGE[g]}</span>` : ""; };
+
+  // a clickable class node card for the demote/promote columns
+  function treeNode(symbol, showEntry) {
     const c = classById.get(symbol); if (!c) return "";
-    return `<span class="tree-chip ${down ? "down" : ""}" data-action="nav-class" data-class="${esc(c.id)}">
-      ${c.icon ? `<img src="${esc(c.icon)}" alt="" onerror="this.style.display='none'">` : ""}${esc(c.name)}</span>`;
+    const req = Object.entries(c.paramReq || {}).map(([k, v]) => `<span class="tn-req stat">${esc(PARAM_LABEL[k] || k)}≥${v}</span>`).join("");
+    const cost = Object.entries(c.resourceCost || {}).map(([k, v]) => `<span class="tn-req">${esc(RESOURCE_LABEL[k] || k)}×${v}</span>`).join("");
+    return `<div class="tree-node" data-action="nav-class" data-class="${esc(c.id)}" title="${esc(c.name)}">
+      <span class="tn-tier">T${c.tier}</span>${gBadge(c.id)}
+      <img src="${esc(battleSprite(c))}" alt="" onerror="this.onerror=null;this.src='${esc(c.icon || "")}'">
+      <div class="tn-name">${esc(c.name)}</div>
+      ${showEntry && (req || cost) ? `<div class="tn-reqs">${req}${cost}</div>` : ""}
+    </div>`;
   }
+  function lensBar() {
+    if (state.treeLockGender) {   // locked to a hero's gender — no toggle
+      return `<div class="tree-lens locked"><span class="lens-locked">${state.treeLockGender === "f" ? "♀ Female" : "♂ Male"} — locked to this unit's gender</span></div>`;
+    }
+    const b = (l, txt) => `<button class="${state.treeLens === l ? "on" : ""}" data-action="tree-lens" data-lens="${l}">${txt}</button>`;
+    return `<div class="tree-lens">${b("all", "All")}${b("m", "♂ Male")}${b("f", "♀ Female")}</div>`;
+  }
+
   function classDetailInner(cls, editing) {
+    const g = gavail(cls.id);
     const req = Object.entries(cls.paramReq || {}).map(([k, v]) => `<span class="req-chip stat">${esc(PARAM_LABEL[k] || "param " + k)} ≥ ${v}</span>`).join(" ") || `<span class="req-none">No stat gate</span>`;
     const cost = Object.entries(cls.resourceCost || {}).map(([k, v]) => `<span class="req-chip">${esc(RESOURCE_LABEL[k] || k)} ×${v}</span>`).join(" ") || `<span class="req-none">Free</span>`;
     const padd = Object.entries(cls.paramAdd || {}).map(([k, v]) => `<span class="req-chip">${esc(k)} ${v > 0 ? "+" : ""}${v}</span>`).join(" ") || `<span class="req-none">None</span>`;
-    const up = (cls.classup || []).map((s) => chip(s, false)).join("") || `<span class="req-none">Top of its line</span>`;
-    const down = (cls.classdown || []).map((s) => chip(s, true)).join("") || `<span class="req-none">Base class</span>`;
+
+    const upAll = cls.classup || [], downAll = cls.classdown || [];
+    const up = upAll.filter(lensAllows), down = downAll.filter(lensAllows);
+    const downHidden = downAll.length - down.length;
+    const upHTML = up.map((s) => treeNode(s, true)).join("") || `<div class="tree-empty">Top of its line — no promotions</div>`;
+    const downHTML = down.map((s) => treeNode(s, false)).join("") ||
+      `<div class="tree-empty">${downAll.length ? "No same-gender demote (base for this gender)" : "Base class — nothing to demote to"}</div>`;
+    const crossNote = (downHidden > 0 && state.treeLens !== "all")
+      ? `<div class="tree-cross">${downHidden} cross-gender base hidden — a unit reverts only along its own history (15 §2a)</div>` : "";
 
     return `
-      <div class="class-head">
-        ${cls.icon ? `<img src="${esc(cls.icon)}" alt="" onerror="this.style.display='none'">` : ""}
-        <div>
-          <span class="ch-tier">Tier ${cls.tier}</span>
-          <div class="ch-meta">${esc(cls.archetype.replace(/_/g, " "))} · range ${esc(cls.combatRange)} · mastery ${cls.cxpLimit} CXP · capacity ${Math.max(1, Math.round((cls.capacityCost || 100) / 10))}</div>
-          <p>${esc(cls.description || "")}</p>
-          ${classTraitsHTML(cls)}
+      ${lensBar()}
+      <div class="tree-explorer">
+        <div class="tree-col demote"><div class="tcol-h">◀ Demote to</div>${downHTML}${crossNote}</div>
+        <div class="tree-col center">
+          <div class="class-head center-card">
+            <img class="ch-sprite" src="${esc(battleSprite(cls))}" alt="" onerror="this.onerror=null;this.src='${esc(cls.icon || "")}'">
+            <div>
+              <span class="ch-tier">Tier ${cls.tier}</span>${gBadge(cls.id)}
+              <div class="ch-meta">${esc(GLABEL[g] || "any gender")} · ${esc(cls.archetype.replace(/_/g, " "))} · range ${esc(cls.combatRange)} · mastery ${cls.cxpLimit} CXP</div>
+              <p>${esc(cls.description || "")}</p>
+              ${classTraitsHTML(cls)}
+            </div>
+          </div>
+          <div class="req-block">
+            <div class="req-card"><h4>To become this class</h4>${req}<br>${cost}</div>
+            <div class="req-card"><h4>Flat class bonus (param_add)</h4>${padd}</div>
+          </div>
+          <h3>Stat curve (raw class table)</h3>
+          ${statCurveHTML(cls)}
         </div>
+        <div class="tree-col promote"><div class="tcol-h">Promote to ▶</div>${upHTML}</div>
       </div>
-      <div class="req-block">
-        <div class="req-card"><h4>Stat requirement</h4>${req}</div>
-        <div class="req-card"><h4>Resource cost</h4>${cost}</div>
-        <div class="req-card"><h4>Flat class bonus (param_add)</h4>${padd}</div>
-      </div>
-      <div class="tree-nav">
-        <h4>▲ Upgrades into</h4><div class="tree-chips">${up}</div>
-        <h4>▼ Reverts to (class-down)</h4><div class="tree-chips">${down}</div>
-      </div>
-      <h3>Stat curve (raw class table)</h3>
-      ${statCurveHTML(cls)}
-      <p class="muted">Requirements assume the source class's mastery bar is full and the tech-tree tier is unlocked. Stats are the raw class-table curve; see Progress.md for the full effective-stat model (P1).</p>`;
+      <p class="muted">Class-up needs the source's mastery bar full + tech tier unlocked. Demotion follows the unit's actual class history, so shared classes can't bridge genders (15 §2a). Stats are the raw class-table curve.</p>`;
   }
   function statCurveHTML(cls) {
     const keys = ["HP", "Attack", "Magic", "Skill", "Armor", "WeaponPower", "Leadership"];
@@ -612,7 +679,7 @@
         refreshOverlay(); break;
       }
       case "set-aff": state.ovl.affinity = el.dataset.aff; refreshOverlay(); break;
-      case "open-tree": openClassDetail(el.dataset.class, true); break;
+      case "open-tree": setLensForEditedUnit(); openClassDetail(el.dataset.class, true); break;
       case "remove": removeUnit(); break;
       case "cancel": closeOverlay(false); break;
       case "confirm": closeOverlay(true); break;
@@ -632,6 +699,7 @@
     switch (el.dataset.action) {
       case "close-detail": closeDetail(); break;
       case "nav-class": openClassDetail(el.dataset.class, isEditingContext()); break;
+      case "tree-lens": if (!state.treeLockGender) { state.treeLens = el.dataset.lens; openClassDetail(state.detailClass, state.detailEditing); } break;
       case "nav-trait": openTraitDetail(el.dataset.trait); break;
       case "assign-class":
         if (state.ovl && !isLocked()) { state.ovl.classId = el.dataset.class; closeDetail(); refreshOverlay(); }

@@ -46,6 +46,10 @@ class sprite; empty tiles show a dashed marker. **Generic (unnamed) units** are 
       other themes — forest / desert / plains / snow / fort / cave / factory / hell — all in the same
       layered skybox+backdrop+ground format in `Graphics/Battlebacks1`; composite each via slice_sprites.py.
 - [ ] Damage simulator (12 presets, 3-trial hit, crit/glancing).
+- [ ] **Affinity × Gender build recommender** — surface the optimization matrix from
+      `_sow_extract/code/procedural/15_affinity_gender_optimization.md`: per affinity+gender, the
+      best T3 class paths, keyed off **effective/scaling stat** (not just promotion gate). Needs the
+      not-yet-built machine-readable `data/affinity_gender_paths.json` export.
 - [ ] Loyalty / relationship capacity discounts; LXP→Leadership planner.
 - [ ] Equipment channel (Weapons/Armors/Items) + conflict tags.
 - [ ] Resource-budget planner; collection/ownership.
@@ -90,8 +94,28 @@ class sprite; empty tiles show a dashed marker. **Generic (unnamed) units** are 
   → `assets/grid/battleback.png`) instead of black. `.battlefield` wrapper frames it; the grid sits low
   on the grass with the magenta sowgrid softened (screen blend, .55 opacity). Verified desktop + mobile.
   DEPLOYED to live Pages (commit 0651661).
+- 2026-09-13: **Datamine spec added (feeds calc, not yet wired):**
+  `_sow_extract/code/procedural/15_affinity_gender_optimization.md` — affinity×gender → best T3
+  class paths. Full 32-T3 assignment matrix + a **gate-stat ≠ effective-stat** layer (match affinity
+  to the damage preset's scaling stat): WP classes (xbow/firearms/cannon) are affinity-agnostic for
+  damage; `dragon_damage` scales Str+Mag (dark best for all dragons); Paladin/Valkyrie use Str-attack
+  + Mag-heal (dark); earth = survivability-only (anvils = Sentinel♂/Paladin♀). Backlog item added
+  under P2 (build recommender) — pending a machine-readable `affinity_gender_paths.json` export.
 - 2026-09-12 (session 2d): **Planner declutter** — moved the composition-coverage (trait×unit) table
   behind a header **"Composition ▸"** overlay (`openXref`, detail-overlay pattern); removed the grid
   orientation labels (Front/Back), the on-grid leader badge + cover shield 🛡, and the formation legend.
   Cover still conveyed by the subtle glow + hover "who shields whom" + tooltips.
   DEPLOYED to live Pages (commit 7b7e11c).
+- 2026-09-13 (session 3): **Class-upgrade overlay → focus navigator + gender lens.** Rebuilt
+  `classDetailInner` from a vertical detail page into a 3-column explorer: **◀ Demote to** (classdown)
+  / center card / **Promote to ▶** (classup), each neighbour a clickable class node with its **battle
+  sprite** (`assets/sprites/class_<id>.png`, classcard fallback), tier, entry `param_req` + resource
+  cost, and a ♂/♀/⚥ availability badge; center card keeps the stat curve, traits, param_add, mastery.
+  Preserves nav-class navigation + the editing "Assign to unit" flow. Added a **gender lens** (All/♂/♀)
+  that filters demote/promote by reachability and notes hidden cross-gender bases (the class-history
+  rule, `_sow_extract` doc 15 §2a). **Baked `gavail` into the data pipeline** — `build-data.mjs` now
+  tags every class shared/m/f/any by classup-reachability from the gendered bases (23 male / 12 female
+  / 11 shared / 39 off-recruit-tree); `app.js` reads the field (client calc kept as fallback). Lens is
+  **auto-set from the edited unit**: heroes **lock** to `hero.gender` (no toggle); generics **default**
+  from the class's `gavail` but stay toggleable. Styled with the existing palette vars; mobile-first
+  (stacks <720px). Verified via headless render (hero-lock + generic-default both correct).
