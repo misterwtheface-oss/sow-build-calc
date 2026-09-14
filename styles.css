@@ -94,11 +94,12 @@ button.danger { background: linear-gradient(var(--crimson-lite), var(--crimson))
   object-fit: fill; opacity: .55; pointer-events: none;
   image-rendering: pixelated; mix-blend-mode: screen;
 }
-/* a slot is a zero-size anchor at its foot-origin; children rise from the feet.
-   --foot-drop nudges sprites down so their feet sit onto the grid surface. */
-.formation-stage { --foot-drop: 11px; }
+/* a slot is a zero-size anchor at its tile CENTRE; the sprite is centred on that point so
+   the model sits firmly inside its cell instead of towering above it. --sprite-lift nudges
+   everything up a touch so the model's mass lands dead-centre in its space. */
+.formation-stage { --sprite-lift: 12cqh; }
 .grid-slot {
-  position: absolute; transform: translate(-50%, calc(-100% + var(--foot-drop)));
+  position: absolute; transform: translate(-50%, calc(-50% - var(--sprite-lift)));
   padding: 0; margin: 0; border: 0; background: none; cursor: pointer;
   display: flex; flex-direction: column; align-items: center; line-height: 0;
 }
@@ -110,8 +111,10 @@ button.danger { background: linear-gradient(var(--crimson-lite), var(--crimson))
 }
 .grid-slot:hover .grid-sprite,
 .grid-slot:focus-visible .grid-sprite { transform: translateY(-3px); filter: drop-shadow(0 3px 4px rgba(0,0,0,.6)) brightness(1.08); }
-/* name/level tag: subtle at rest, full on hover (mobile taps open the editor) */
+/* name/level tag: subtle at rest, full on hover (mobile taps open the editor). Absolutely
+   positioned below the sprite so it never shifts the sprite off the tile centre. */
 .grid-slot .grid-tag {
+  position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
   display: inline-flex; align-items: center; gap: 3px;
   margin-top: 2px; padding: 0 4px; height: 15px; line-height: 15px;
   font-size: .58rem; white-space: nowrap; color: var(--text);
@@ -122,8 +125,7 @@ button.danger { background: linear-gradient(var(--crimson-lite), var(--crimson))
 .grid-slot .grid-tag em { color: var(--gold-bright); font-style: normal; }
 .grid-slot .grid-tag .gt-name { max-width: 84px; overflow: hidden; text-overflow: ellipsis; }
 .grid-slot:hover .grid-tag, .grid-slot:focus-visible .grid-tag { opacity: 1; }
-/* empty tiles: a faint marker sitting on the tile */
-.grid-slot.empty { transform: translate(-50%, calc(-50% + var(--foot-drop))); }
+/* empty tiles: a faint marker centred in the tile */
 .grid-slot.empty .tile-mark {
   display: grid; place-items: center; width: 26px; height: 26px;
   font-size: .95rem; color: var(--muted);
@@ -253,6 +255,13 @@ table.squad-xref thead th { position: sticky; top: 0; z-index: 2; background: va
 
 /* roster grid */
 .ovl-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 8px; }
+/* full-width section label (Heroes / Tier N) spanning the grid */
+.ovl-section {
+  grid-column: 1 / -1; font-size: .72rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--gold); padding: 6px 2px 4px; margin-top: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.ovl-section:first-child { margin-top: 0; }
 .ovl-card {
   position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
   padding: 5px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px;
@@ -262,10 +271,6 @@ table.squad-xref thead th { position: sticky; top: 0; z-index: 2; background: va
 .ovl-card img { width: 100%; height: 56px; object-fit: contain; image-rendering: pixelated; }
 .ovl-card .oc-name { font-size: .68rem; text-align: center; line-height: 1.05; }
 .ovl-card .oc-aff { position: absolute; top: 3px; right: 3px; width: 15px; height: 15px; }
-/* generic-unit card (first entry in the roster) */
-.ovl-card.generic { justify-content: center; border-style: dashed; border-color: var(--border-lite); min-height: 84px; }
-.ovl-card.generic .oc-generic { font-size: 2rem; color: var(--muted); height: 56px; display: grid; place-items: center; }
-.ovl-card.generic:hover .oc-generic { color: var(--gold-bright); }
 
 /* unit editor controls (right panel) */
 .editor-row { margin: .7rem 0; }

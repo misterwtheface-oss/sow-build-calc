@@ -354,15 +354,18 @@
   // rank on the right (enemy-facing), the 5 columns stepping down the slant. Each slot is
   // absolutely positioned at its foot-origin (GRID.origins[i]) and holds the unit's sprite,
   // anchored bottom-center, painted back-to-front so ranks overlap like the battle view.
-  const GRID = DATA.grid || { width: 431, height: 95, origins: [] };
+  const GRID = DATA.grid || { width: 431, height: 95, origins: [], centers: [] };
 
+  // Anchor at the tile CENTRE (SIZED_CENTERS[1]) so the sprite/marker sits firmly inside
+  // its cell; depth still orders by the foot-origin's y so ranks overlap back-to-front.
   const pctPos = (i) => {
-    const [ox, oy] = GRID.origins[i] || [0, 0];
-    return { left: ((ox / GRID.width) * 100).toFixed(2), top: ((oy / GRID.height) * 100).toFixed(2), oy };
+    const [cx, cy] = (GRID.centers && GRID.centers[i]) || GRID.origins[i] || [0, 0];
+    const [, foy] = GRID.origins[i] || [cx, cy];
+    return { left: ((cx / GRID.width) * 100).toFixed(2), top: ((cy / GRID.height) * 100).toFixed(2), foy };
   };
   function slotHTML(u, i, isLeader) {
-    const { left, top, oy } = pctPos(i);
-    const z = Math.round(oy) + (2 - rowOf(i));
+    const { left, top, foy } = pctPos(i);
+    const z = Math.round(foy) + (2 - rowOf(i));
     const style = `left:${left}%;top:${top}%;z-index:${z}`;
     if (!u) {
       return `<button class="grid-slot empty ${isLeader ? "leader" : ""}" style="${style}"
@@ -446,7 +449,7 @@
         <div class="overlay-body">
           <div class="ovl-info"><div class="ovl-left"></div><div class="ovl-right"></div></div>
           <div class="ovl-center">
-            <div class="ovl-center-search"><input class="ovl-search" type="search" placeholder="Search heroes…" /></div>
+            <div class="ovl-center-search"><input class="ovl-search" type="search" placeholder="Search units…" /></div>
             <div class="ovl-center-scroll"><div class="ovl-grid"></div></div>
           </div>
         </div>
@@ -458,7 +461,7 @@
       </div>`;
     root.classList.remove("hidden"); root.setAttribute("aria-hidden", "false");
     refreshOverlay();
-    const input = root.querySelector(".ovl-search"); if (input) input.focus();
+    // (no auto-focus on the search box — it stole focus / popped the mobile keyboard)
   }
 
   const SCROLLERS = [".ovl-center-scroll", ".ovl-info", ".ovl-left", ".ovl-right-body"];
@@ -468,18 +471,47 @@
     const saved = SCROLLERS.map((s) => { const el = panel.querySelector(s); return el ? el.scrollTop : 0; });
 
     const q = state.ovl.search.trim().toLowerCase();
-    const heroes = (DATA.heroes || []).filter((h) => !q || h.name.toLowerCase().includes(q));
-    // first card = a generic (unnamed) unit; you set its class via the upgrade tree.
-    const genericCard = `<div class="ovl-card generic ${state.ovl.generic ? "selected" : ""}" data-action="pick-generic" title="Generic unit">
-        <span class="oc-generic">＋</span><span class="oc-name">Generic unit</span></div>`;
-    panel.querySelector(".ovl-grid").innerHTML = genericCard + (heroes.length ? heroes.map((h) => {
+    const matches = (name) => !q || name.toLowerCase().includes(q);
+
+    // Generic classes come first, grouped by Tier (highest → lowest). Heroes sit ABOVE
+    // Tier 4, but only ONE hero may be in the squad at a time — if another slot already
+    // holds a hero, hide the roster entirely (you can still swap the hero in THIS slot).
+    const otherHeroActive = state.squad.some((u, idx) => u && u.heroId && idx !== state.ovl.slotIndex);
+
+    const heroCard = (h) => {
       const cls = h.startClass ? classById.get(h.startClass) : null;
       const art = h.sprite || h.portrait || cls?.sprite || cls?.icon || "";
       return `<div class="ovl-card ${h.id === state.ovl.heroId ? "selected" : ""}" data-action="pick" data-hero="${esc(h.id)}" title="${esc(h.name)}">
         ${affIcon(h.affinity) ? `<img class="oc-aff" src="${esc(affIcon(h.affinity))}" alt="" onerror="this.style.display='none'">` : ""}
         ${art ? `<img src="${esc(art)}" alt="" onerror="this.style.visibility='hidden'">` : `<span>${esc(h.name[0])}</span>`}
         <span class="oc-name">${esc(h.name)}</span></div>`;
-    }).join("") : `<p class="muted">No matching heroes.</p>`);
+    };
+    const classCard = (c) => {
+      const sel = state.ovl.generic && !state.ovl.heroId && state.ovl.classId === c.id;
+      const art = c.sprite || c.icon || "";
+      return `<div class="ovl-card ${sel ? "selected" : ""}" data-action="pick-class" data-class="${esc(c.id)}" title="${esc(c.name)}">
+        ${art ? `<img src="${esc(art)}" alt="" onerror="this.style.visibility='hidden'">` : `<span>${esc(c.name[0])}</span>`}
+        <span class="oc-name">${esc(c.name)}</span></div>`;
+    };
+    const section = (t) => `<div class="ovl-section">${esc(t)}</div>`;
+
+    // only obtainable units are offered: party heroes + classes buildable from a recruit base
+    // (drops NPC/boss heroes and hero/boss-exclusive classes). Classes group by displayTier,
+    // where depth-3 promotions (Dark Mage/Necromancer) sit in Tier 4 with the Dragon Riders.
+    const obtainableClasses = (DATA.classes || []).filter((c) => c.obtainable !== false);
+    let html = "";
+    if (!otherHeroActive) {
+      const hs = (DATA.heroes || []).filter((h) => h.obtainable !== false && matches(h.name));
+      if (hs.length) html += section("Heroes") + hs.map(heroCard).join("");
+    }
+    const tierOf = (c) => c.displayTier || c.tier;
+    const tiers = [...new Set(obtainableClasses.map(tierOf))].sort((a, b) => b - a);
+    for (const t of tiers) {
+      const cs = obtainableClasses.filter((c) => tierOf(c) === t && matches(c.name))
+        .sort((a, b) => a.name.localeCompare(b.name));
+      if (cs.length) html += section(`Tier ${t}`) + cs.map(classCard).join("");
+    }
+    panel.querySelector(".ovl-grid").innerHTML = html || `<p class="muted">No matching units.</p>`;
 
     const hero = state.ovl.heroId ? heroById.get(state.ovl.heroId) : null;
     const cls = state.ovl.classId ? classById.get(state.ovl.classId) : null;
@@ -497,7 +529,7 @@
   }
 
   function renderEditor(hero, cls) {
-    const name = hero ? hero.name : "Generic unit";
+    const name = hero ? hero.name : (cls ? "Generic " + cls.name : "Generic unit");
     const locked = hero ? hero.locked : false;
     const innate = ((hero && hero.innateTraits) || []).map((id) => `<span class="req-chip">${esc(id)}</span>`).join(" ");
     const affChips = (DATA.affinities || []).map((a) => `
@@ -673,9 +705,15 @@
         else { const h = heroById.get(id); state.ovl.heroId = id; state.ovl.generic = false; state.ovl.classId = h.startClass || null; state.ovl.level = h.level || 1; state.ovl.affinity = h.affinity; state.ovl.homegrown = true; }
         refreshOverlay(); break;
       }
-      case "pick-generic": {
-        if (state.ovl.generic) { state.ovl.generic = false; state.ovl.classId = null; }
-        else { state.ovl.generic = true; state.ovl.heroId = null; if (!state.ovl.classId) state.ovl.classId = "soldier"; if (!state.ovl.affinity) state.ovl.affinity = "fire"; state.ovl.level = state.ovl.level || 1; state.ovl.homegrown = true; }
+      case "pick-class": {
+        const id = el.dataset.class;
+        if (state.ovl.generic && !state.ovl.heroId && state.ovl.classId === id) {
+          state.ovl.generic = false; state.ovl.classId = null;   // toggle off
+        } else {
+          state.ovl.generic = true; state.ovl.heroId = null; state.ovl.classId = id;
+          if (!state.ovl.affinity) state.ovl.affinity = "fire";
+          state.ovl.level = state.ovl.level || 1; state.ovl.homegrown = true;
+        }
         refreshOverlay(); break;
       }
       case "set-aff": state.ovl.affinity = el.dataset.aff; refreshOverlay(); break;

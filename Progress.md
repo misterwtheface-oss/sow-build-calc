@@ -106,6 +106,23 @@ class sprite; empty tiles show a dashed marker. **Generic (unnamed) units** are 
   orientation labels (Front/Back), the on-grid leader badge + cover shield 🛡, and the formation legend.
   Cover still conveyed by the subtle glow + hover "who shields whom" + tooltips.
   DEPLOYED to live Pages (commit 7b7e11c).
+- 2026-09-13: **Extract-side visual reference added (feeds calc; not the SPA):**
+  `_sow_extract/stat_affinity_guide.html` (+ `tools/build_stat_affinity_guide.py`, idempotent). Per the
+  56 player-buildable classes: **promotion gate** (`param_req`), **combat scaling stat** (damage preset,
+  often ≠ the gate — `15 §3c`), and a six-tile **affinity-fit row** (Great/Good/Neutral/Avoid + gold ★
+  on the doc-verified standout). Affinity-fit model = growth-bias signs (`STAT_CONTEXT §3a`) scored vs
+  each class's gate + scaling stats; `Avoid` only for a malus on a **damage** stat, gate-only maluses
+  stay Neutral-caution. **Combat levers are evidence-based, not archetype-guessed:** `Skill focus` =
+  Strength attacker that *also* gates on Skill **or** has `agi param_add ≥15` (Skill = secondary
+  hit/evasion/crit ×1.5 layer, shown `2°`); `Triple Shot` = archery fires-3× multi-hit; `WP-scaled` =
+  affinity-agnostic offense. Key correction baked in: **Skill *gate* ≠ Skill *scaling*** — Blue Dragon
+  gates Skl40 but scales Str+Mag (not Skill-focused); Atk-gated bows (Warbow/**Raider**/Horsebow) are
+  pure-Strength attackers (Raider = mounted Warbow), so earth is Neutral not Avoid for them. Also
+  clarified this session (from the decompile) that **Weapon Power** = engine param 7 (LUK slot; UI
+  "Reputation" vestigial), a class/gear property read straight off the class table with no
+  variance/affinity/homegrown growth, feeding `luk_scaled` on every weapon preset — the mechanical basis
+  for the WP-scaled = affinity-agnostic rule. **Candidate to fold into the P2 build recommender** (this
+  guide's per-class gate/scaling/affinity model overlaps the not-yet-built `affinity_gender_paths.json`).
 - 2026-09-13 (session 3): **Class-upgrade overlay → focus navigator + gender lens.** Rebuilt
   `classDetailInner` from a vertical detail page into a 3-column explorer: **◀ Demote to** (classdown)
   / center card / **Promote to ▶** (classup), each neighbour a clickable class node with its **battle
@@ -119,3 +136,52 @@ class sprite; empty tiles show a dashed marker. **Generic (unnamed) units** are 
   **auto-set from the edited unit**: heroes **lock** to `hero.gender` (no toggle); generics **default**
   from the class's `gavail` but stay toggleable. Styled with the existing palette vars; mobile-first
   (stacks <720px). Verified via headless render (hero-lock + generic-default both correct).
+- 2026-09-14 (session 4): **Selector reorg + hero-unique sprites + tile-centred models (5 asks).**
+  (1) Roster selector is now **generic-CLASS-first, grouped by Tier, highest→lowest** (T4→T1) — every
+  class is a directly-pickable card (`pick-class` sets a generic unit of that class; the single "Generic
+  unit ＋" card + its dead CSS/`pick-generic` handler are gone). (2) **Dropped the search-box auto-focus**
+  (it stole focus / popped the mobile keyboard). (3) **Sprites & the empty "+" markers now sit centred
+  IN their tile**, not floating above it: added `GRID.centers` (`SIZED_CENTERS[1]` from
+  `0241_UnitGrid.rb`) to `build-data.mjs`; `pctPos` anchors at the tile centre while depth still orders
+  by the foot-origin y; `.grid-slot` centres content via `translate(-50%,-50%)` (foot-drop removed) and
+  `.grid-tag` is absolutely positioned so it never shifts the sprite. (4) **Heroes use their UNIQUE
+  battle art** — `slice_sprites.py` now lifts frame 0 of each hero's personal animation atlas
+  (`HERO_ATLAS`: `<charaaffix>` variants Jules/Sybil/Barnabas/Abigayle/Jaromir/Ragavi + own-name
+  Diana/Stefan/Lysander/Beatrix/Zelos/Narima/Raskuja/Zanatus + protagonist `1hero[f]` + Antares/Cadet
+  Barnabas); e.g. Jules = archer body, black hair, no helmet. 19/21 regenerated (Kuroda/Edelia keep the
+  class sprite — no unique art). (5) **Heroes sit ABOVE Tier 4 but only one hero per squad** — the
+  Heroes section is hidden when another slot already holds a hero (`otherHeroActive`). All five verified
+  via headless Chrome (formation centring, tier-grouped selector, hero-filter, unique sprites). Data
+  hygiene: 0 errors.
+- 2026-09-14 (session 4, follow-up): **Sprite orientation + a touch more centring.** (a) Hero sprites
+  now face the same way as the class/generic sprites. `copy_sprite` flips class art, so most hero
+  atlases (which share the authored orientation — Sybil/Abigayle silhouette-match the raw priestess
+  source at IoU 1.000, Ragavi = 1.000 vs its class sprite) are flipped too. A few OWN-ART atlases were
+  authored mirrored and are exempted in `HERO_NOFLIP = {13,17,22,90,91}` (Diana — confirmed vs her exact
+  Paladin class; Raskuja & Zanatus/variants — confirmed vs matching quadruped/dragon sources). Decisions
+  were made by silhouette-IoU, not eyeballing (absolute L/R reads proved unreliable). (b) Added
+  `--sprite-lift: 5cqh` to `.formation-stage` so every model/marker sits a little higher — dead-centre
+  in its tile. Verified in-app: all 21 heroes + generics face one direction and sit centred.
+- 2026-09-14 (session 4, follow-up 2): **Obtainable-only selector + depth-based Tier 4 + more lift.**
+  (1) `--sprite-lift` raised 5cqh → **12cqh** (models were still low). (2) **Selector now offers only
+  obtainable units.** `build-data.mjs` BFS's promotion depth from the recruit bases (Fighter/Bowman/
+  Militia/Medic/**Drakeling**) over classup; a class not reachable = hero/boss/merc-exclusive and gets
+  `obtainable:false` (drops 31: Donar line, Risen, Captain/Lord/Strider/Cleric/Infiltrator/Savior,
+  Titan/Exemplar/Blademaster/Warcat/Behemoth/Queen of Dragons). Heroes get `obtainable` from the game's
+  relationship cast (0225 party set); drops the 6 NPC/boss actors (Zanatus×3, General Ragavi, Captain
+  Antares, Cadet Barnabas) → 15 heroes, 54 classes. (3) **Depth-3 classes shown as Tier 4:** each class
+  gets `displayTier = depth + 1` (== tier for all but the deep-T3 Dark Mage & Necromancer, reached at
+  the 3rd promotion → now grouped in Tier 4 with the Dragon Riders). Selector groups + filters on the
+  new fields. Verified in-app (Heroes = 15, Tier 4 = 3 riders + Dark Mage + Necromancer).
+- 2026-09-14 (session 4, follow-up 3): **Fixed class battle-sprite mis-resolution.** Several classes
+  wrongly borrowed another class's sprite. Two compounding game-file quirks + one resolver ordering bug
+  in `slice_sprites.py`: (1) a stray **double `.png.png`** extension on `00single_1necromancer_blue` and
+  `00single_1halberdiergeneral_blue` made the index regex skip them (Necromancer fell back to a mage) —
+  regex now accepts the optional second `.png`; (2) classes whose ONLY export is the big-canvas
+  `_huge` variant (Champion/Knight/Zweihander/Hussar/Scout/Valkyrie/Behemoth/Warcat) were out-ranked by
+  the classdown/archetype fallback → all collapsed to the Soldier sprite; `resolve_class` now tries the
+  class's own `_huge` art **before** any fallback; (3) `copy_sprite` now trims to the bounding box so
+  those `_huge` canvases display at the right size; (4) Centurion has no sprite under its own name, so
+  aliased to the matching orphan `halberdiergeneral`. Audited via sprite-hash dedup: no OBTAINABLE class
+  shares art anymore; remaining duplicate groups are non-obtainable hero/boss classes (off-selector) or
+  intended aliases (dragon riders→dragon, swordmaster2→swordmaster). Verified in-app.

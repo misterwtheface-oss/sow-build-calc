@@ -52,8 +52,11 @@ const affinityIds = new Set(AFFINITIES.map((a) => a.id));
 // The formation grid, verbatim from 0241_UnitGrid.rb. The game draws the squad on
 // sowgrid.png (431×95), a right-skewed 3-rank parallelogram (front rank = high x, on
 // the right / enemy-facing; the 5 columns step down the slant at 16px half-tiles).
-// GRID.origins[position] is the per-tile foot-origin (bottom-center) for a normal-size
-// unit (SIZED_ORIGINS[1]); position = slot index (leader = 0). Sprites anchor there.
+// GRID.origins[position] is the per-tile foot-origin (bottom of the tile, SIZED_ORIGINS[1])
+// — used for back-to-front depth ordering. GRID.centers[position] is the physical CENTRE
+// of the tile a normal-size unit occupies (SIZED_CENTERS[1] from 0241_UnitGrid.rb) — the
+// sprite/marker anchors there so the model sits firmly IN its cell, not on top of it.
+// position = slot index (leader = 0).
 const GRID = {
   width: 431,
   height: 95,
@@ -61,6 +64,11 @@ const GRID = {
     [376, 12], [368, 29], [361, 44], [351, 61], [343, 78], // front rank (row 0)
     [283, 12], [266, 29], [248, 44], [232, 61], [215, 78], // middle rank (row 1)
     [185, 12], [164, 29], [141, 44], [119, 61], [94, 78],  // back rank (row 2)
+  ],
+  centers: [
+    [376, 2], [368, 19], [361, 34], [351, 51], [343, 68], // front rank (row 0)
+    [283, 2], [266, 19], [248, 34], [232, 51], [215, 68], // middle rank (row 1)
+    [185, 2], [164, 19], [141, 34], [119, 51], [94, 68],  // back rank (row 2)
   ],
 };
 
@@ -247,6 +255,32 @@ const classes = classNodes.map((c) => {
   console.log(`  gavail: ${maleOnly} male-only / ${femaleOnly} female-only / ${shared} shared`);
 }
 
+// Promotion depth + obtainability, from the recruit bases (the T1 units you can actually
+// field): Fighter/Bowman (male), Militia/Medic (female), Drakeling (dragon line). BFS over
+// classup gives each class its fewest-hops depth (0=base). A class NOT reachable this way is
+// hero/boss/merc-exclusive (Donar line, Risen, Captain/Lord/Titan/Behemoth/Queen of Dragons…)
+// → not a buildable generic, so it's dropped from the selector. `displayTier = depth + 1`
+// (matches the tier field for every reachable class except the deep-T3 Dark Mage/Necromancer,
+// which are reached at the 3rd promotion → shown as Tier 4 alongside the Dragon Riders).
+{
+  const RECRUIT_BASES = ["fighter", "bowman", "militia", "medic", "drakeling"];
+  const depth = new Map(), queue = [];
+  for (const b of RECRUIT_BASES) if (classBySymbol.has(b)) { depth.set(b, 0); queue.push(b); }
+  while (queue.length) {
+    const s = queue.shift(), d = depth.get(s);
+    for (const c of classBySymbol.get(s).classup || [])
+      if (classBySymbol.has(c) && (!depth.has(c) || depth.get(c) > d + 1)) { depth.set(c, d + 1); queue.push(c); }
+  }
+  let obtainableCount = 0;
+  for (const c of classes) {
+    c.obtainable = depth.has(c.id);
+    c.depth = c.obtainable ? depth.get(c.id) : null;
+    c.displayTier = c.obtainable ? c.depth + 1 : c.tier;
+    if (c.obtainable) obtainableCount++;
+  }
+  console.log(`  obtainable: ${obtainableCount}/${classes.length} classes buildable from a recruit base`);
+}
+
 // second pass (classBySymbol now complete): resolve each class's grid sprite via
 // its own template or the nearest classdown ancestor that has one.
 let classSpriteCount = 0;
@@ -257,6 +291,12 @@ for (const c of classes) {
 }
 
 // ── parse the hero roster from actor note-tags ──
+// Obtainable = a real party member (the relationship cast, 0225 VALID_TAGS). Note-tagged
+// actors NOT in this set are NPC/boss-only (Zanatus line, General Ragavi, Captain Antares,
+// Cadet Barnabas) and are dropped from the selector. Matched on the first word of the name.
+const PARTY_FIRST = new Set(["protagonist", "zelos", "jules", "sybil", "barnabas", "diana",
+  "stefan", "abigayle", "narima", "raskuja", "lysander", "jaromir", "beatrix", "edelia", "alex", "kuroda"]);
+const isParty = (name) => PARTY_FIRST.has(String(name || "").trim().split(/\s+/)[0].toLowerCase());
 function tag(note, re) { const m = re.exec(note || ""); return m ? m[1].trim() : null; }
 function parseHero(a) {
   const note = String(a.note || "");
@@ -299,6 +339,7 @@ function parseHero(a) {
     locked,
     customTree: customTree || null,
     innateTraits: innate,
+    obtainable: isParty(a.name),
     portrait,
     sprite,
     ...abilitiesFor(a.class_id),
@@ -351,6 +392,8 @@ for (const h of heroes) {
 const heroSpriteCount = heroes.filter((h) => h.sprite).length;
 for (const g of GRID.origins) if (g.length !== 2) err(`GRID.origins entry malformed: ${JSON.stringify(g)}`);
 if (GRID.origins.length !== 15) err(`GRID.origins must have 15 entries, has ${GRID.origins.length}`);
+for (const g of GRID.centers) if (g.length !== 2) err(`GRID.centers entry malformed: ${JSON.stringify(g)}`);
+if (GRID.centers.length !== 15) err(`GRID.centers must have 15 entries, has ${GRID.centers.length}`);
 
 // ── hygiene report ──
 const assetCount = classes.filter((c) => c.icon).length + heroes.filter((h) => h.portrait).length

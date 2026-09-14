@@ -50,6 +50,8 @@ ALIAS = {
     "gunner": "rifleman", "siegecannon": "artillery", "cannon": "artillery",
     "fieldcannon": "fieldcannon", "swordmaster2": "swordmaster",
     "bluedragon": "bluedragon", "silverdragon": "silverdragon", "reddragon": "reddragon",
+    # Centurion has no sprite under its own name; halberdiergeneral is the matching orphan.
+    "centurion": "halberdiergeneral",
 }
 # archetype → a representative token that has a battle sprite
 ARCHETYPE_TOKEN = {
@@ -62,6 +64,27 @@ HERO_CLASS_TOKEN = {
     66: "paladin", 67: "samurai", 69: "sorceress", 70: "assassin",
     71: "zelos1", 73: "swordmaster", 80: "darkmage",
 }
+# Heroes with UNIQUE personal battle art (actorId → animation-atlas stem in Animations/).
+# The game gives named heroes their own sprite via a `<charaaffix>` note-tag (class art +
+# personal suffix, e.g. Jules = archer body, black hair, no helmet) or a fully own-name
+# sheet (Diana/Stefan/Lysander/Beatrix/Protagonist). Those come ONLY as the wide 960px
+# animation ATLAS (no 00single_ static form), so we lift frame 0 (top-left cell). Player
+# team = _blue, plainest variant (no _gold/_huge). Heroes absent here fall back to the
+# class sprite via the resolver below.
+HERO_ATLAS = {
+    10: "1archer_blue_jules", 11: "1priestess_blue_sybil", 12: "1knight_blue_barnabas",
+    15: "1priestess_blue_abigayle", 19: "1knight_blue_jaromir", 131: "1swordmaster_blue_ragavi",
+    144: "1knight_blue_captainantares", 145: "1cavalier_blue_cadetbarnabas",
+    13: "1diana", 14: "1stefan", 18: "1lysander_blue", 20: "1beatrix",
+    9: "1zelos1_blue", 16: "1swordmaster2_blue", 17: "1raskuja_blue",
+    8: "1hero[f]", 22: "1zanatus", 90: "1zanatus", 91: "1zanatus",
+}
+# Class sprites are flipped by copy_sprite so the player faces the enemy. MOST hero animation
+# atlases share that same authored orientation (verified by silhouette-IoU of each recolor hero
+# vs its class sprite — flipped matches, e.g. Ragavi/Sybil = 1.000), so their frames are flipped
+# too. A few own-art atlases were authored facing the OTHER way (confirmed by IoU vs their exact
+# class / a matching quadruped source) and must NOT be flipped:
+HERO_NOFLIP = {13, 17, 22, 90, 91}  # Diana (vs Paladin), Raskuja, Zanatus + its two boss variants
 
 def load_json(rel, base=None):
     with open(os.path.join(base or os.path.join(ROOT, "data"), rel), encoding="utf-8") as f:
@@ -76,7 +99,9 @@ def build_index():
     if not os.path.isdir(ANIM):
         sys.exit(f"extract not found: {ANIM} (is _sow_extract present?)")
     for f in os.listdir(ANIM):
-        m = re.match(r"00single_[12](.+?)_blue(_huge)?\.png$", f)
+        # some game files carry a stray double ".png.png" extension (necromancer,
+        # halberdiergeneral) — accept it so those sprites are indexed, not silently dropped.
+        m = re.match(r"00single_[12](.+?)_blue(_huge)?\.png(?:\.png)?$", f)
         if not m:
             continue
         token, is_huge = m.group(1).lower(), bool(m.group(2))
@@ -86,8 +111,26 @@ def build_index():
     return idx
 
 def copy_sprite(src, dst):
-    """Copy a battle sprite, horizontally flipped so the player squad faces the enemy."""
-    Image.open(src).convert("RGBA").transpose(Image.FLIP_LEFT_RIGHT).save(dst)
+    """Copy a battle sprite, horizontally flipped so the player squad faces the enemy, and
+    trimmed to its bounding box so big-canvas ("_huge") exports display at the right size."""
+    im = Image.open(src).convert("RGBA").transpose(Image.FLIP_LEFT_RIGHT)
+    bb = im.getbbox()
+    if bb:
+        im = im.crop(bb)
+    im.save(dst)
+
+def extract_hero_frame(src, dst, flip):
+    """Lift the idle pose (frame 0 = top-left 192px cell) from a hero animation atlas, trim
+    to the sprite's bounding box, and flip horizontally iff this hero's atlas faces left
+    natively — so every hero ends up facing the enemy (right) like the class sprites."""
+    im = Image.open(src).convert("RGBA")
+    cell = im.crop((0, 0, min(192, im.width), min(192, im.height)))
+    bb = cell.getbbox()
+    if bb:
+        cell = cell.crop(bb)
+    if flip:
+        cell = cell.transpose(Image.FLIP_LEFT_RIGHT)
+    cell.save(dst)
 
 def plain(idx, token):
     s = idx.get(token)
@@ -98,13 +141,21 @@ def huge(idx, token):
     return s.get("huge") if s else None
 
 def resolve_class(sym, animbn, archetype, classdown, ct_by_sym, idx, seen=None):
-    """Resolve a classtree class to a battle-sprite path via the documented priority."""
+    """Resolve a classtree class to a battle-sprite path via the documented priority. The
+    class's OWN sprite (plain, then the big-canvas "_huge" variant) always wins over a
+    classdown/archetype fallback — otherwise huge-only classes (Champion/Knight/Zweihander/
+    Hussar/Scout/Valkyrie) would wrongly borrow a parent's art."""
     seen = seen or set()
-    # 1. exact token (symbol, animation basename, alias), non-huge
-    for cand in (sym, animbn, ALIAS.get(sym), ALIAS.get(animbn)):
+    cands = (sym, animbn, ALIAS.get(sym), ALIAS.get(animbn))
+    # 1. exact token, non-huge
+    for cand in cands:
         if cand and plain(idx, cand):
             return plain(idx, cand)
-    # 2. classdown chain
+    # 2. exact token, huge variant (own art on a big canvas — trimmed by copy_sprite)
+    for cand in cands:
+        if cand and huge(idx, cand):
+            return huge(idx, cand)
+    # 3. classdown chain (nearest ancestor with a sprite)
     down = (classdown or [None])[0] if isinstance(classdown, list) else classdown
     if down and down not in seen and down in ct_by_sym:
         seen.add(down)
@@ -112,14 +163,10 @@ def resolve_class(sym, animbn, archetype, classdown, ct_by_sym, idx, seen=None):
         r = resolve_class(d["symbol"], d.get("animbn"), d.get("archetype"), d.get("classdown"), ct_by_sym, idx, seen)
         if r:
             return r
-    # 3. archetype representative
+    # 4. archetype representative
     rep = ARCHETYPE_TOKEN.get(archetype)
     if rep and plain(idx, rep):
         return plain(idx, rep)
-    # 4. exact token, huge variant
-    for cand in (sym, animbn, ALIAS.get(sym), ALIAS.get(animbn)):
-        if cand and huge(idx, cand):
-            return huge(idx, cand)
     # 5. default
     return plain(idx, "soldier")
 
@@ -168,6 +215,15 @@ def main():
         if name in seen_names:
             continue
         seen_names.add(name)
+        aid = get(a, "id")
+        # 0) unique personal hero art (frame 0 of the animation atlas), if any
+        stem = HERO_ATLAS.get(aid)
+        if stem:
+            atlas = os.path.join(ANIM, stem + ".png")
+            if os.path.exists(atlas):
+                extract_hero_frame(atlas, os.path.join(SPRITES_OUT, f"hero_{aid}.png"), aid not in HERO_NOFLIP)
+                n_hero += 1
+                continue
         cid = get(a, "class_id")
         src = None
         if cid in ct_by_id:                       # in-tree: reuse the class sprite
