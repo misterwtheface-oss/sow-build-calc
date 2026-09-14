@@ -23,11 +23,19 @@ parallelogram with units placed at their exact per-tile foot-origins (from `0241
 on the right (facing the enemy), the 5 columns stepping down the slant at 16px half-tiles**, ranks
 painted back-to-front for 3D overlap. Units render as **detailed BATTLE sprites** (not portraits, not
 map sprites): the `00single_*_blue` player-team art from `Graphics/Animations`, keyed per-class via
-`<animation basename>` and resolved by `tools/slice_sprites.py` (symbol/alias → classdown → archetype
-→ default; dragons/mounts included). A slot shows the hero's class battle sprite, or a generic unit's
-class sprite; empty tiles show a dashed marker. **Generic (unnamed) units** are now placeable via a
-"Generic unit" card in the roster (class set through the upgrade tree). Verified in headless Chrome
-(desktop + 390px mobile).
+`<animation basename>` and resolved by `tools/slice_sprites.py` (own-token plain → own-token `_huge`
+→ classdown → archetype → default; dragons/mounts included). Sprites & the empty-tile markers anchor
+at the tile CENTRE (`SIZED_CENTERS[1]`) + `--sprite-lift` so the model sits inside its cell. **Heroes
+use their UNIQUE battle art** (frame-0 of the personal animation atlas), flipped per-hero to face the
+enemy like the class sprites. Verified in headless Chrome (desktop + 390px mobile).
+
+**Selector + sprite pass shipped & deployed (2026-09-14, session 4, commit `2d4c0d7`).** Roster is
+**generic-class-first, grouped by Tier high→low**, with **Heroes above Tier 4**; only ONE hero per
+squad (roster hidden when another slot holds a hero). Selector offers **only obtainable units** — party
+heroes (game relationship cast) + classes buildable from a recruit base (BFS over `classup`); NPC/boss
+heroes and hero/boss-exclusive classes are dropped. **Depth-3 promotions (Dark Mage/Necromancer) show
+as Tier 4** via `displayTier`. Search auto-focus removed. Class sprite mis-resolution fixed (double
+`.png.png` indexing, own-`_huge`-before-fallback, canvas trim, Centurion→halberdiergeneral).
 
 ## Backlog
 ### In progress
@@ -40,7 +48,8 @@ class sprite; empty tiles show a dashed marker. **Generic (unnamed) units** are 
       adjacency bonus, wideguard/monarch/protectme/bodyguard trait modifiers, straight-shot cover.
 - [ ] Full 85-node tier graph view with the unit's path highlighted.
 - [ ] Class-change legality (edges + mastery/req/tech gates) vs. free-sandbox toggle.
-- [ ] Save / load / share squads (schema-versioned localStorage).
+- [ ] Save / load / share squads (schema-versioned localStorage). (Squad already persists to
+      `sowbc.squad`; this is the shareable/multi-slot version.)
 ### Later (P2)
 - [ ] Terrain backdrop picker: swap the battlefield battleback (grassland default) among the game's
       other themes — forest / desert / plains / snow / fort / cave / factory / hell — all in the same
@@ -55,6 +64,12 @@ class sprite; empty tiles show a dashed marker. **Generic (unnamed) units** are 
 - [ ] Resource-budget planner; collection/ownership.
 ### Done
 - [x] Skeleton scaffolded, P0 flow runnable (2026-09-12).
+- [x] Formation battle grid + cover/block/row-bypass engine (session 2/2b).
+- [x] Class-upgrade focus navigator + gender lens (session 3).
+- [x] Selector overhaul: generic-class-first by Tier, heroes above Tier 4, one-hero limit,
+      obtainable-only filtering, depth-3→Tier 4, no auto-focus (session 4).
+- [x] Sprites: hero-unique battle art (per-hero flip), tile-centred models, class
+      sprite-resolution fixes (double-ext / own-_huge / trim / Centurion alias) (session 4).
 
 ## Known issues / warnings
 - **Data is a raw extract, unverified.** Treat all numbers as extracted-not-golden until hand-checked.
